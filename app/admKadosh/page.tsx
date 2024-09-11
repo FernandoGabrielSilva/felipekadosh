@@ -1,5 +1,11 @@
+import { Button } from "../_components/ui/button";
+
 const AdmKadosh = () => {
-  return <h1>kadosh</h1>;
+  return (
+    <>
+      <Button />
+    </>
+  );
 };
 
 export default AdmKadosh;
