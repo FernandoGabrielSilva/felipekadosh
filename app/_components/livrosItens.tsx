@@ -23,8 +23,9 @@ const LivrosItens = ({ livros }) => {
           <Button
             variant="outline"
             className="bg-blue-500 text-black mt-3 w-full hover:bg-transparent border-2 border-blue-500 hover:text-blue-500"
+            asChild
           >
-            <Link href={livros.linkUrl}>SAIBA MAIS</Link>
+            <Link href={`/livro/${livros.id}`}>SAIBA MAIS</Link>
           </Button>
         </div>
       </CardContent>

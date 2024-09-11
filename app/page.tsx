@@ -18,7 +18,10 @@ export default function Home() {
           trabalhando com o que amam e fazendo um dinheiro de forma escalável e
           exponencial.
         </p>
-        <Button className="bg-orange-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-orange-500 hover:text-orange-500 md:w-[70%] lg:w-[60%] xl:w-[40%]  xl:text-xl">
+        <Button
+          className="bg-orange-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-orange-500 hover:text-orange-500 md:w-[70%] lg:w-[60%] xl:w-[40%]  xl:text-xl"
+          asChild
+        >
           <Link href="cursos">SAIBA MAIS</Link>
         </Button>
       </div>
@@ -33,7 +36,10 @@ export default function Home() {
           Conquiste sua liberdade financeira e entre para o mundo dos
           investimentos.
         </p>
-        <Button className="bg-blue-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-blue-500 hover:text-blue-500 md:w-[70%] lg:w-[60%] xl:w-[40%]  xl:text-xl">
+        <Button
+          className="bg-blue-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-blue-500 hover:text-blue-500 md:w-[70%] lg:w-[60%] xl:w-[40%]  xl:text-xl"
+          asChild
+        >
           <Link href="livros">SAIBA MAIS</Link>
         </Button>
       </div>
