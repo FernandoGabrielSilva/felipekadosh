@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
 
 @layer base {
   .dark {
@@ -13,10 +15,10 @@
     --popover: 228 9% 11%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 24 100% 50%;
+    --primary: #f3720a;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 24 6% 16%;
+    --secondary: #f3720a;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 228 6% 16%;
@@ -34,6 +36,63 @@
 
     --radius: 0.5rem;
   }
+}
+
+.bg1 {
+  background-image: url(../public/backgroung.jpg);
+  border-image: fill 0 linear-gradient(#0001, #000f);
+  -webkit-border-image: fill 0 linear-gradient(#0001, #000f);
+  -moz-border-image: fill 0 linear-gradient(#0001, #000f);
+}
+
+.bg2 {
+  background-image: url(../public/background_mark.jpg);
+  border-image: fill 0 linear-gradient(#000e, #000e);
+  -webkit-border-image: fill 0 linear-gradient(#000e, #000e);
+  -moz-border-image: fill 0 linear-gradient(#000e, #000e);
+}
+
+.bg3 {
+  background-image: url(../public/background_sub.jpg);
+  border-image: fill 0 linear-gradient(#000e, #000e);
+  -webkit-border-image: fill 0 linear-gradient(#000e, #000e);
+  -moz-border-image: fill 0 linear-gradient(#000e, #000e);
+}
+
+.oswald {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.hind-siliguri-light {
+  font-family: "Hind Siliguri", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.hind-siliguri-regular {
+  font-family: "Hind Siliguri", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.hind-siliguri-medium {
+  font-family: "Hind Siliguri", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.hind-siliguri-semibold {
+  font-family: "Hind Siliguri", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.hind-siliguri-bold {
+  font-family: "Hind Siliguri", sans-serif;
+  font-weight: 700;
+  font-style: normal;
 }
 
 @layer base {

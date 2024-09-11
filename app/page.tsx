@@ -1,101 +1,42 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Button } from "./_components/ui/button";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    <>
+      <div className="w-full h-full bg-cover bg1"></div>
+      <div className="w-full h-full bg-cover bg2 justify-center flex flex-col p-3 gap-2 md:items-center lg:items-start">
+        <h1 className="text-lg font-bold text-orange-500 oswald md:w-[70%] lg:w-[50%] xl:w-[40%] xl:text-3xl">
+          APRENDA MARKETING DIGITAL DO ZERO
+        </h1>
+        <h2 className="text-base font-bold hind-siliguri-bold md:w-[70%] lg:w-[60%] xl:w-[40%] xl:text-xl">
+          CRIE UM NEGÓCIO ONLINE SEJA UM PROFISSIONAL DA INTERNET TENHA UMA NOVA
+          FONTE DE RENDA
+        </h2>
+        <p className="text-sm hind-siliguri-regular md:w-[70%] lg:w-[60%] xl:w-[40%] xl:text-lg">
+          Faça parte do grupo de pessoas que vivem com mais liberdade,
+          trabalhando com o que amam e fazendo um dinheiro de forma escalável e
+          exponencial.
+        </p>
+        <Button className="bg-orange-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-orange-500 hover:text-orange-500 md:w-[70%] lg:w-[60%] xl:w-[40%]  xl:text-xl">
+          <Link href="cursos">SAIBA MAIS</Link>
+        </Button>
+      </div>
+      <div className="w-full h-full bg-cover bg3 justify-center flex flex-col p-3 gap-2 md:items-center lg:items-start">
+        <h1 className="text-lg font-bold text-blue-500 oswald md:w-[70%] lg:w-[50%] xl:w-[40%] xl:text-3xl">
+          BIBLIOTECA DOS MILIONÁRIOS
+        </h1>
+        <h2 className="text-base font-bold hind-siliguri-bold md:w-[70%] lg:w-[60%] xl:w-[40%] xl:text-xl">
+          PORQUE NÃO PENSAR DAS MESMAS FORMAS QUE OS MILIONÁRIOS
+        </h2>
+        <p className="text-sm hind-siliguri-regular md:w-[70%] lg:w-[60%] xl:w-[40%] xl:text-lg]">
+          Conquiste sua liberdade financeira e entre para o mundo dos
+          investimentos.
+        </p>
+        <Button className="bg-blue-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-blue-500 hover:text-blue-500 md:w-[70%] lg:w-[60%] xl:w-[40%]  xl:text-xl">
+          <Link href="livros">SAIBA MAIS</Link>
+        </Button>
+      </div>
+    </>
   );
 }
