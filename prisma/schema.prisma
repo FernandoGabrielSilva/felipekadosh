@@ -7,7 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Products {
+model Cursos {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  imageUrl    String
+  linkUrl     String
+}
+
+model Livros {
   id          String @id @default(uuid())
   name        String
   description String
