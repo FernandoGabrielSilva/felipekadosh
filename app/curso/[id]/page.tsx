@@ -4,7 +4,13 @@ import { ChevronLeftIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const CursoPage = async ({ params }) => {
+interface CursosPageProps {
+  params: {
+    id: string;
+  };
+}
+
+const CursoPage = async ({ params }: CursosPageProps) => {
   const cursos = await db.cursos.findUnique({
     where: {
       id: params.id,
