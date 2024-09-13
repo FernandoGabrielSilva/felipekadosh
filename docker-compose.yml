@@ -3,7 +3,7 @@ version: "3"
 services:
   postgres:
     image: postgres:latest
-    container_name: felipekadish-postgres
+    container_name: felipe-kadish-postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
