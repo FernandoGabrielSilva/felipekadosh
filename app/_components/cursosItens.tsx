@@ -2,8 +2,13 @@ import { Card, CardContent } from "../_components/ui/card";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { Cursos } from "@prisma/client";
 
-const CursoItens = ({ cursos }) => {
+interface CursosItemProps {
+  cursos: Cursos;
+}
+
+const CursoItens = ({ cursos }: CursosItemProps) => {
   return (
     <>
       <Card className="max-w-[100%]">

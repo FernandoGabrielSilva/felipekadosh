@@ -3,6 +3,7 @@ import { db } from "@/app/_lib/prisma";
 import { ChevronLeftIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface LivrosPageProps {
   params: {
@@ -16,6 +17,10 @@ const LivroPage = async ({ params }: LivrosPageProps) => {
       id: params.id,
     },
   });
+
+  if (!livros) {
+    return notFound();
+  }
 
   return (
     <div className="flex flex-col lg:flex-row lg:h-full">

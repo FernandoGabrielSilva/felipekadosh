@@ -9,8 +9,7 @@ import { useRouter } from "next/navigation";
 const CursoSearch = () => {
   const [search, setSearch] = useState("");
   const router = useRouter();
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     router.push(`/curso?search=${search}`);
   };
 

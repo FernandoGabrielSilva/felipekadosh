@@ -3,6 +3,7 @@ import { db } from "@/app/_lib/prisma";
 import { ChevronLeftIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface CursosPageProps {
   params: {
@@ -17,13 +18,17 @@ const CursoPage = async ({ params }: CursosPageProps) => {
     },
   });
 
+  if (!cursos) {
+    return notFound();
+  }
+
   return (
     <div className="flex flex-col lg:flex-row lg:h-full">
       <div className="relative w-full h-[250px] lg:h-full lg:w-1/2">
         <Image
           src={cursos?.imageUrl}
           fill
-          alt={cursos?.name}
+          alt={cursos.name}
           className="object-cover"
         />
 
