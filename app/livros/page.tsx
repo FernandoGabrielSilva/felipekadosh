@@ -3,11 +3,7 @@ import LivrosItens from "../_components/livrosItens";
 import LivroSearch from "../_components/livrosSearch";
 
 const Livros = async () => {
-  const livros = await db.livros.findMany({
-    orderBy: {
-      name: "desc",
-    },
-  });
+  const livros = await db.livros.findMany({});
 
   return (
     <div className="flex flex-col w-full h-full">
