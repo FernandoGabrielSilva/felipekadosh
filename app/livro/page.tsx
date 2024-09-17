@@ -26,7 +26,7 @@ const LivroPageSearch = async ({ searchParams }: LivrosPageProps) => {
       <h2 className="my-3 text-gray-400">
         Resultados para &quot;{searchParams.search}&quot;
       </h2>
-      <div className="grid grid-cols-2 m-3 col-span-2 gap-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
+      <div className="grid grid-cols-2 col-span-2 gap-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
         {livros.map((livros) => (
           <LivroItens key={livros.id} livros={livros} />
         ))}
