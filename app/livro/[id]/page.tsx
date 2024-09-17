@@ -18,8 +18,8 @@ const LivroPage = async ({ params }: LivrosPageProps) => {
   });
 
   return (
-    <div>
-      <div className="relative w-full h-[250px]">
+    <div className="flex flex-col lg:flex-row lg:h-full">
+      <div className="relative w-full h-[250px] lg:h-full lg:w-1/2">
         <Image
           src={livros?.imageUrl}
           fill
@@ -38,24 +38,28 @@ const LivroPage = async ({ params }: LivrosPageProps) => {
           </Link>
         </Button>
       </div>
-      <div className="p-5 border-b border-solid">
-        <h1 className="text-2xl font-bold hind-siliguri-bold">{livros.name}</h1>
-      </div>
-      <div className="p-5 border-b border-solid">
-        <h2 className="text-xl font-bold hind-siliguri-regular mb-2 text-gray-400">
-          Descrição
-        </h2>
-        <p>{livros.description}</p>
-      </div>
-      <div className="p-5">
-        <Button
-          className="bg-blue-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-blue-500 hover:text-blue-500 md:w-[70%] lg:w-[60%] xl:w-[40%]  xl:text-xl"
-          asChild
-        >
-          <Link href={livros?.linkUrl} target="_blank">
-            ADQUIRIR
-          </Link>
-        </Button>
+      <div className="flex flex-col lg:h-full lg:w-1/2">
+        <div className="p-5 border-b border-solid">
+          <h1 className="text-2xl font-bold hind-siliguri-bold">
+            {livros.name}
+          </h1>
+        </div>
+        <div className="h-[40vh] overflow-scroll p-5 border-b border-solid lg:h-3/4 lg:overflow-scroll">
+          <h2 className="text-xl font-bold hind-siliguri-regular mb-2 text-gray-400">
+            Descrição
+          </h2>
+          <p>{livros.description}</p>
+        </div>
+        <div className="p-5">
+          <Button
+            className="bg-blue-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-blue-500 hover:text-blue-500 xl:text-xl"
+            asChild
+          >
+            <Link href={livros?.linkUrl} target="_blank">
+              ADQUIRIR
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

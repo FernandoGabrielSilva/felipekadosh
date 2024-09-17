@@ -18,8 +18,8 @@ const CursoPage = async ({ params }: CursosPageProps) => {
   });
 
   return (
-    <div>
-      <div className="relative w-full h-[250px]">
+    <div className="flex flex-col lg:flex-row lg:h-full">
+      <div className="relative w-full h-[250px] lg:h-full lg:w-1/2">
         <Image
           src={cursos?.imageUrl}
           fill
@@ -38,24 +38,28 @@ const CursoPage = async ({ params }: CursosPageProps) => {
           </Link>
         </Button>
       </div>
-      <div className="p-5 border-b border-solid">
-        <h1 className="text-2xl font-bold hind-siliguri-bold">{cursos.name}</h1>
-      </div>
-      <div className="p-5 border-b border-solid">
-        <h2 className="text-xl font-bold hind-siliguri-regular mb-2 text-gray-400">
-          Descrição
-        </h2>
-        <p>{cursos.description}</p>
-      </div>
-      <div className="p-5">
-        <Button
-          className="bg-orange-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-orange-500 hover:text-orange-500 md:w-[70%] lg:w-[60%] xl:w-[40%]  xl:text-xl"
-          asChild
-        >
-          <Link href={cursos?.linkUrl} target="_blank">
-            ADQUIRIR
-          </Link>
-        </Button>
+      <div className="flex flex-col lg:h-full lg:w-1/2">
+        <div className="p-5 border-b border-solid">
+          <h1 className="text-2xl font-bold hind-siliguri-bold">
+            {cursos.name}
+          </h1>
+        </div>
+        <div className="h-[40vh] overflow-scroll p-5 border-b border-solid lg:h-3/4 lg:overflow-scroll">
+          <h2 className="text-xl font-bold hind-siliguri-regular mb-2 text-gray-400">
+            Descrição
+          </h2>
+          <p>{cursos.description}</p>
+        </div>
+        <div className="flex p-5 lg:text-end">
+          <Button
+            className="bg-orange-500 text-black text-base w-[100%] mt-3 hover:bg-transparent border-2 border-orange-500 hover:text-orange-500 xl:text-xl"
+            asChild
+          >
+            <Link href={cursos?.linkUrl} target="_blank">
+              ADQUIRIR
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
