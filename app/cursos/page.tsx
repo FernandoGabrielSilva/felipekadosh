@@ -3,7 +3,11 @@ import CursoItens from "../_components/cursosItens";
 import CursoSearch from "../_components/cursosSeach";
 
 const Cursos = async () => {
-  const cursos = await db.cursos.findMany({});
+  const cursos = await db.cursos.findMany({
+    orderBy: {
+      name: "desc",
+    },
+  });
 
   return (
     <div className="flex flex-col w-full h-full">
