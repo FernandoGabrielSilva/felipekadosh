@@ -53,7 +53,7 @@ const CursoPage = async ({ params }: CursosPageProps) => {
           <h2 className="text-xl font-bold hind-siliguri-regular mb-2 text-gray-400">
             Descrição
           </h2>
-          <p className-"overflow-scroll lg:overflow-scroll ">{cursos.description}</p>
+          <p className="overflow-scroll lg:overflow-scroll">{cursos.description}</p>
         </div>
         <div className="flex p-5 lg:text-end">
           <Button
