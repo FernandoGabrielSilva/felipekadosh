@@ -20,9 +20,7 @@ const CursoSearch = () => {
       )[0] as HTMLElement;
       element.click();
 
-      if (element instanceof HTMLElement) {
-        element.click();
-      }
+     
     }
   });
 
