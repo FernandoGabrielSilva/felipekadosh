@@ -13,11 +13,10 @@ const CursoSearch = () => {
     router.push(`/curso?search=${search}`);
   };
 
-  const input = document.getElementsByClassName("input")
-  input.document.addEventListener("keypress", function (e) {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-      document.getElementsByClassName("button").click();
+  document.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      const btn = document.getElementByClassName("button");
+      btn.click();
     }
   });
 
