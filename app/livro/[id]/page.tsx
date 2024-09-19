@@ -50,7 +50,7 @@ const LivroPage = async ({ params }: LivrosPageProps) => {
           </h1>
         </div>
         <div className="p-5 border-b border-solid">
-          <h2 className="text-xl font-bold hind-siliguri-regular mb-2 text-gray-400">
+          <h2 className="text-xl font-bold hind-siliguri-regular mb-2 text-gray-400 border-b border-solid">
             Descrição
           </h2>
           <p className="overflow-scroll h-[40vh] lg:overflow-scroll">{livros.description}</p>
