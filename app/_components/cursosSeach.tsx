@@ -13,7 +13,8 @@ const CursoSearch = () => {
     router.push(`/curso?search=${search}`);
   };
 
-  /*document.addEventListener("keypress", function (e) {
+  const input = docundocumdocunent.getElementsBy("input")
+  input.document.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       const element: HTMLElement = document.getElementsByClassName(
         "button"
@@ -25,7 +26,7 @@ const CursoSearch = () => {
       }
      
     }
-  });*/
+  });
 
   return (
     <>
@@ -34,6 +35,7 @@ const CursoSearch = () => {
         placeholder="Pesquisa..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        className="input"
       />
       <Button
         className="bg-orange-500 text-black text-base hover:bg-transparent border-2 border-orange-500 hover:text-orange-500 button"
