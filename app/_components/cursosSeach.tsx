@@ -13,7 +13,7 @@ const CursoSearch = () => {
     router.push(`/curso?search=${search}`);
   };
 
-  const input = docundocumdocunent.getElementsBy("input")
+  const input = document.getElementsByClassName("input")
   input.document.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       const element: HTMLElement = document.getElementsByClassName(
