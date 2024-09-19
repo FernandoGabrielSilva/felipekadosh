@@ -15,7 +15,7 @@ const CursoSearch = () => {
 
   const input = document.getElementsByClassName("input")
   input.document.addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
+    if (e.keyCode === 13) {
       e.preventDefault();
       document.getElementsByClassName("button").click();
     }
