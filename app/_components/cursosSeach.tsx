@@ -13,11 +13,11 @@ const CursoSearch = () => {
     router.push(`/curso?search=${search}`);
   };
 
-  const input = document.getElementByClassName("input");
+  const input = document.getElementById("input");
   input.document.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       e.preventDefault();
-      const btn = document.getElementByClassName("button").click();
+      const btn = document.getElementById("button").click();
     }
   });
 
@@ -28,10 +28,11 @@ const CursoSearch = () => {
         placeholder="Pesquisa..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="input"
+        id="input"
       />
       <Button
-        className="bg-orange-500 text-black text-base hover:bg-transparent border-2 border-orange-500 hover:text-orange-500 button"
+        className="bg-orange-500 text-black text-base hover:bg-transparent border-2 border-orange-500 hover:text-orange-500"
+        id="button"
         onClick={handleSubmit}
         type="submit"
       >
