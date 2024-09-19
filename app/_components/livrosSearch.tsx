@@ -13,7 +13,7 @@ const LivroSearch = () => {
     router.push(`/livro?search=${search}`);
   };
 
-  document.addEventListener("keypress", function (e) {
+  /*document.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       const element: HTMLElement = document.getElementsByClassName(
         "button"
@@ -24,7 +24,7 @@ const LivroSearch = () => {
         element.click();
       }
     }
-  });
+  });*/
 
   return (
     <>
