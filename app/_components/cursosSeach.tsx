@@ -13,11 +13,11 @@ const CursoSearch = () => {
     router.push(`/curso?search=${search}`);
   };
 
-  const input = document.getElementById("input");
+  const input = document.querySelector("#input");
   input.document.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       e.preventDefault();
-      const btn = document.getElementById("button").click();
+      const btn = document.querySelector("#button").click();
     }
   });
 
