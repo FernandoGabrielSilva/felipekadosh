@@ -13,7 +13,7 @@ const CursoSearch = () => {
     router.push(`/curso?search=${search}`);
   };
 
-  document.addEventListener("keypress", function (e) {
+  /*document.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       const element: HTMLElement = document.getElementsByClassName(
         "button"
@@ -25,7 +25,7 @@ const CursoSearch = () => {
       }
      
     }
-  });
+  });*/
 
   return (
     <>
