@@ -16,15 +16,8 @@ const CursoSearch = () => {
   const input = document.getElementsByClassName("input")
   input.document.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
-      const element: HTMLElement = document.getElementsByClassName(
-        "button"
-      )[0] as HTMLElement;
-      element.click();
-
-      if (element instanceof HTMLElement) {
-        element.click();
-      }
-     
+      e.preventDefault();
+      document.getElementsByClassName("button").click();
     }
   });
 
