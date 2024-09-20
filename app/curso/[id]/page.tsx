@@ -27,7 +27,6 @@ const CursoPage = async ({ params }: CursosPageProps) => {
         navigator.share({
           title: '${cursos.name}',
           url: 'https://felipekadosh.vercel.app/curso/${cursos.id}',
-          description: 'Contato & Serviços para você.'
         })
       }
   }
