@@ -15,7 +15,7 @@ const CursoSearch = () => {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      router.push(`/curso?search=${search}`);
+      handleSubmit();
     }
   };
 
