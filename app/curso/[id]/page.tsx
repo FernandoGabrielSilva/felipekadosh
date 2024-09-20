@@ -22,12 +22,6 @@ const CursoPage = async ({ params }: CursosPageProps) => {
     return notFound();
   }
 
-  const share = () => {
-     if (navigator.share !== undefined) {
-        navigator.share({
-          title: '${cursos.name}',
-      }
-  }
 
   return (
     <div className="flex flex-col lg:flex-row lg:h-full">
@@ -54,7 +48,6 @@ const CursoPage = async ({ params }: CursosPageProps) => {
           variant="outline"
           className="absolute right-4 top-4"
           asChild
-          onClick={share}
         >
           <Link href="javascript:void(0)">
             <Share2 />
