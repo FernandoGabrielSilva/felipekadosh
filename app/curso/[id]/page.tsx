@@ -22,7 +22,7 @@ const CursoPage = async ({ params }: CursosPageProps) => {
     return notFound();
   }
 
-  const share = () => {
+  const share = (navigator) => {
     if (navigator.share !== undefined) {
       navigator.share({
          title:{cursos.name},
