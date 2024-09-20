@@ -1,4 +1,4 @@
-⁸import { Button } from "@/app/_components/ui/button";
+import { Button } from "@/app/_components/ui/button";
 import { db } from "@/app/_lib/prisma";
 import { ChevronLeftIcon, Share2 } from "lucide-react";
 import Image from "next/image";
