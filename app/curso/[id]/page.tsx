@@ -1,6 +1,6 @@
 import { Button } from "@/app/_components/ui/button";
 import { db } from "@/app/_lib/prisma";
-import { ChevronLeftIcon } from "lucide-react";
+import { ChevronLeftIcon, Share2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -40,6 +40,16 @@ const CursoPage = async ({ params }: CursosPageProps) => {
         >
           <Link href="/cursos">
             <ChevronLeftIcon />
+          </Link>
+        </Button>
+        <Button
+          size="icon"
+          variant="outline"
+          className="absolute right-4 top-4"
+          asChild
+        >
+          <Link href="/cursos">
+            <Share2 />
           </Link>
         </Button>
       </div>
