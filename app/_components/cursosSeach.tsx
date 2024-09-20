@@ -12,7 +12,7 @@ const CursoSearch = () => {
   const handleSubmit = () => {
     router.push(`/curso?search=${search}`);
   };
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: React.ChangeEvent<any>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       router.push(`/curso?search=${search}`);
