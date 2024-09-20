@@ -46,8 +46,11 @@ const CursoPage = async ({ params }: CursosPageProps) => {
           size="icon"
           variant="outline"
           className="absolute right-4 top-4"
+          asChild
         >
-          <Share2 />
+          <Link href="javascript:void(0)">
+            <Share2 />
+          </Link>
         </Button>
       </div>
       <div className="flex flex-col lg:h-full lg:w-1/2">
