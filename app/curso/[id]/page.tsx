@@ -24,12 +24,12 @@ const CursoPage = async ({ params }: CursosPageProps) => {
 
   const share = (navigator) => {
     navigator.share({
-         title:{cursos.name},
-         url:'https://felipekadosh.vercel.app/curso/{cursos.id}',
-         image:{cursos.imageUrl},
-         description:{cursos.description},
+         title: {cursos.name},
+         url: 'https://felipekadosh.vercel.app/curso/{cursos.id}',
+         image: {cursos.imageUrl},
+         description: {cursos.description}
     })
-   }
+  }
 
   return (
     <div className="flex flex-col lg:flex-row lg:h-full">
