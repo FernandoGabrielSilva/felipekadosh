@@ -1,4 +1,4 @@
-import { Button } from "@/app/_components/ui/button";
+⁸import { Button } from "@/app/_components/ui/button";
 import { db } from "@/app/_lib/prisma";
 import { ChevronLeftIcon, Share2 } from "lucide-react";
 import Image from "next/image";
@@ -46,7 +46,6 @@ const CursoPage = async ({ params }: CursosPageProps) => {
           size="icon"
           variant="outline"
           className="absolute right-4 top-4"
-          asChild
         >
           <Share2 />
         </Button>
