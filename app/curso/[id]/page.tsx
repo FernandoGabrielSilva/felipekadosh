@@ -60,7 +60,7 @@ const CursoPage = async ({ params }: CursosPageProps) => {
           className="absolute right-4 top-4 button"
           asChild
         >
-          <Link>
+          <Link href="javascript:void(0)">
             <Share2 />
           </Link>
         </Button>
