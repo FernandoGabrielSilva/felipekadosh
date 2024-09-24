@@ -31,9 +31,7 @@ const CursoPage = async ({ params }: CursosPageProps) => {
   const btn = document.querySelector(".button");
 
   btn.addEventListener("click", async () => {
-     try {
-       await navigator.share(shareData);
-     };
+     await navigator.share(shareData);
   });
 
   return (
