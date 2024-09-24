@@ -34,8 +34,8 @@ const CursoPage = async ({ params }: CursosPageProps) => {
      await navigator.share(shareData);
   });
   */
-  const share = async () => {
-     await navigator.share(shareData);
+  const share = () => {
+     navigator.share(shareData);
   };
  
   return (
