@@ -22,13 +22,21 @@ const CursoPage = async ({ params }: CursosPageProps) => {
     return notFound();
   }
 
-  const share = (navigator) => {
-     if(navigator.share !== undefined) {
-        navigator.share({
-           title: 'Felipe Kadosh'
-        )}
+  const shareData = {
+     title: "MDN",
+     text: "Aprenda desenvolvimento web no MDN!",
+     url: "https://developer.mozilla.org",
+  };
+
+  const btn = document.querySelector(".button")
+
+  btn.addEventListener("click", async () => {
+     try {
+       await navigator.share(shareData);
+     } catch (err) {
+       resultPara.textContent = "Error: " + e;
      }
-  }
+  });
 
 
   return (
@@ -54,12 +62,10 @@ const CursoPage = async ({ params }: CursosPageProps) => {
         <Button
           size="icon"
           variant="outline"
-          className="absolute right-4 top-4"
+          className="absolute right-4 top-4 button"
           asChild
         >
-          <Link href="javascript:void(0)"
-            onClick{share}
-          >
+          <Link>
             <Share2 />
           </Link>
         </Button>
