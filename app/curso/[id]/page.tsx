@@ -58,7 +58,7 @@ const CursoPage = async ({ params }: CursosPageProps) => {
           asChild
         >
           <Link href="javascript:void(0)"
-            onClike{share}
+            onClick{share}
           >
             <Share2 />
           </Link>
