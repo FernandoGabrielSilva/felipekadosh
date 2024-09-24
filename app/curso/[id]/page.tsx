@@ -22,6 +22,14 @@ const CursoPage = async ({ params }: CursosPageProps) => {
     return notFound();
   }
 
+  const share = (navigator) => {
+     if(navigator.share !== undefined) {
+        navigator.share({
+           title: 'Felipe Kadosh'
+        )}
+     }
+  }
+
 
   return (
     <div className="flex flex-col lg:flex-row lg:h-full">
