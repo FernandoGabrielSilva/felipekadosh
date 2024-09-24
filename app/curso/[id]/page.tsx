@@ -27,13 +27,13 @@ const CursoPage = async ({ params }: CursosPageProps) => {
      text: "Aprenda desenvolvimento web no MDN!",
      url: "https://developer.mozilla.org",
   };
-
+ /*
   const btn = document.querySelector(".button");
 
   btn.addEventListener("click", async () => {
      await navigator.share(shareData);
   });
-
+ */
   return (
     <div className="flex flex-col lg:flex-row lg:h-full">
       <div className="relative w-full h-[250px] lg:h-full lg:w-1/2">
