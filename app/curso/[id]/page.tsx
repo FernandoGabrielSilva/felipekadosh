@@ -21,19 +21,23 @@ const CursoPage = async ({ params }: CursosPageProps) => {
   if (!cursos) {
     return notFound();
   }
- /*
+ 
   const shareData = {
      title: "MDN",
      text: "Aprenda desenvolvimento web no MDN!",
      url: "https://developer.mozilla.org",
   };
- 
+ /*
   const btn = document.querySelector(".button");
 
   btn.addEventListener("click", async () => {
      await navigator.share(shareData);
   });
- */
+  */
+  const share = async () => {
+     await navigator.share(shareData);
+  };
+ 
   return (
     <div className="flex flex-col lg:flex-row lg:h-full">
       <div className="relative w-full h-[250px] lg:h-full lg:w-1/2">
@@ -57,10 +61,13 @@ const CursoPage = async ({ params }: CursosPageProps) => {
         <Button
           size="icon"
           variant="outline"
-          className="absolute right-4 top-4 button"
+          className="absolute right-4 top-4"
           asChild
         >
-          <Link href="javascript:void(0)">
+          <Link
+            href="javascript:void(0)"
+            onClick={share}
+          >
             <Share2 />
           </Link>
         </Button>
