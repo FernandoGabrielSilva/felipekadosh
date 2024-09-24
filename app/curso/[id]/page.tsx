@@ -21,22 +21,23 @@ const CursoPage = async ({ params }: CursosPageProps) => {
   if (!cursos) {
     return notFound();
   }
- 
+ /*
   const shareData = {
      title: "MDN",
      text: "Aprenda desenvolvimento web no MDN!",
      url: "https://developer.mozilla.org",
   };
- /*
+ 
   const btn = document.querySelector(".button");
 
   btn.addEventListener("click", async () => {
      await navigator.share(shareData);
   });
-  */
+
   const share = () => {
      navigator.share(shareData);
   };
+ */
  
   return (
     <div className="flex flex-col lg:flex-row lg:h-full">
@@ -66,7 +67,7 @@ const CursoPage = async ({ params }: CursosPageProps) => {
         >
           <Link
             href="javascript:void(0)"
-            onClick={share}
+            
           >
             <Share2 />
           </Link>
