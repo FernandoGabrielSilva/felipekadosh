@@ -33,9 +33,7 @@ const CursoPage = async ({ params }: CursosPageProps) => {
   btn.addEventListener("click", async () => {
      try {
        await navigator.share(shareData);
-     } catch (err) {
-       resultPara.textContent = "Error: " + e;
-     }
+     } 
   });
 
 
