@@ -21,13 +21,13 @@ const CursoPage = async ({ params }: CursosPageProps) => {
   if (!cursos) {
     return notFound();
   }
-
+ /*
   const shareData = {
      title: "MDN",
      text: "Aprenda desenvolvimento web no MDN!",
      url: "https://developer.mozilla.org",
   };
- /*
+ 
   const btn = document.querySelector(".button");
 
   btn.addEventListener("click", async () => {
