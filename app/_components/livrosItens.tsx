@@ -12,7 +12,7 @@ const LivrosItens = ({ livros }: LivrosItemProps) => {
   return (
     <Card className="max-w-[100%]">
       <CardContent className="p-0">
-        <div className="relative h-[159px] w-full">
+        <div className="relative h-[200px] w-full">
           <Image
             fill
             className="object-cover"
