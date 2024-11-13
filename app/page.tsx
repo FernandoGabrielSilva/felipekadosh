@@ -2,7 +2,7 @@ import Image from "next/image";
 import CardsComponents from "./_components/CardsComponents";
 import { Button } from "./_components/ui/button";
 import Link from "next/link";
-import { Clock } from "lucide-react";
+import { CircleArrowRight, Clock } from "lucide-react";
 
 export default function Home() {
   return (
@@ -81,7 +81,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
+      <section className="flex flex-col p-2 justify-center items-center">
         <div>
           <div className="flex justify-center mb-2">
             <h3 className="text-center border rounded-full py-2 px-4 text-base">
@@ -126,6 +126,60 @@ export default function Home() {
                 description="Objetivo:  analisar indicadores de performance, mapear oportunidades de melhoria e definir novos planos de ação."
               />
             </div>
+          </div>
+        </div>
+      </section>
+      <section className="flex flex-col p-2 justify-center items-center">
+        <div>
+          <div className="flex justify-center mb-2">
+            <h3 className="text-center border rounded-full py-2 px-4 text-base">
+              Veja o que você recebe
+            </h3>
+          </div>
+          <div className="flex justify-center my-3">
+            <h2 className="text-center font-semibold text-wrap text-4xl">
+              Entregáveis da Consulta
+            </h2>
+          </div>
+          <div>
+            <ul className="grid grid-cols-1 gap-2">
+              <li className="flex gap-2">
+                <CircleArrowRight /> Treinamento de equipe
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Geração de leads qualificados
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Script de negociação
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Fluxos de prospecção
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Playbook de vendas
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Matriz de objeções
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Dashboard de indicações
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Metas, remuneração e comissionamento
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Metadologia de onboardinhg e rampeamento
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Planejamento estratégico comercial
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Implementação de ferramentas
+              </li>
+              <li className="flex gap-2">
+                <CircleArrowRight /> Metodoligia de gestão comercial
+              </li>
+            </ul>
           </div>
         </div>
       </section>
