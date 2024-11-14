@@ -21,13 +21,13 @@ export default function Home() {
             </div>
             <div className="absolute top-2/3">
               <div>
-                <h2 className="text-xl text-center font-bold pt-5">
+                <h2 className="text-2xl text-center font-bold pt-5">
                   Aumente suas vendas com previsibilidade através de um processo
                   de vendas eficiente.
                 </h2>
               </div>
               <div>
-                <p className="text-sm text-center font-normal pt-5">
+                <p className="text-lg text-center font-normal pt-5">
                   Tenha sua Equipe de Vendas Interna estruturada em 45 dias e
                   aumente suas vendas em 30% através do método que gerou 120
                   milhões, sem aumentar o investimento em anúncios e com menos
@@ -45,7 +45,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col p-2 justify-center items-center">
+      <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
         <div>
           <div className="flex justify-center mb-2">
             <h3 className="text-center border rounded-full py-2 px-4 text-base">
@@ -81,7 +81,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col p-2 justify-center items-center">
+      <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
         <div>
           <div className="flex justify-center mb-2">
             <h3 className="text-center border rounded-full py-2 px-4 text-base">
@@ -129,7 +129,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col p-2 justify-center items-center">
+      <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
         <div>
           <div className="flex justify-center mb-2">
             <h3 className="text-center border rounded-full py-2 px-4 text-base">
@@ -143,47 +143,66 @@ export default function Home() {
           </div>
           <div>
             <ul className="grid grid-cols-1 gap-2">
-              <li className="flex gap-2">
-                <CircleArrowRight /> Treinamento de equipe
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Treinamento de equipe
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Geração de leads qualificados
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Geração de leads qualificados
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Script de negociação
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Script de negociação
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Fluxos de prospecção
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Fluxos de prospecção
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Playbook de vendas
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Playbook de vendas
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Matriz de objeções
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Matriz de objeções
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Dashboard de indicações
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Dashboard de indicações
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Metas, remuneração e comissionamento
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Metas, remuneração e
+                comissionamento
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Metadologia de onboardinhg e rampeamento
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Metadologia de onboardinhg e
+                rampeamento
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Planejamento estratégico comercial
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Planejamento estratégico
+                comercial
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Implementação de ferramentas
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Implementação de ferramentas
               </li>
-              <li className="flex gap-2">
-                <CircleArrowRight /> Metodoligia de gestão comercial
+              <li className="flex gap-2 border-l-4">
+                <CircleArrowRight size={20} /> Metodoligia de gestão comercial
               </li>
             </ul>
           </div>
         </div>
       </section>
-      <section className="flex flex-col p-2 justify-center items-center">
+      <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
+        <div>
+          <div className="flex justify-center mb-2">
+            <h3 className="text-center border rounded-full py-2 px-4 text-base">
+              Recrutamento
+            </h3>
+          </div>
+          <div className="flex justify-center my-3">
+            <h2 className="text-center font-semibold text-wrap text-xl">
+              Recrute profissionais de vendas qualificados e alcance novos
+              patamares de faturamento com previsibilidade
+            </h2>
+          </div>
+          <div></div>
+        </div>
+      </section>
+      <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
         <div className="w-full">
           <div className="flex justify-center mb-2">
             <h3 className="text-center border rounded-full py-2 px-4 text-base">
