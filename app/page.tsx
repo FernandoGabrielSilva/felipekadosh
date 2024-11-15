@@ -23,7 +23,7 @@ export default function Home() {
               <div>
                 <h2 className="text-2xl text-center font-bold pt-5">
                   Aumente suas vendas com
-                  <span className="text-primary">previsibilidade</span> através
+                  <span className="text-primary"> previsibilidade</span> através
                   de um processo de vendas eficiente.
                 </h2>
               </div>
@@ -93,7 +93,7 @@ export default function Home() {
           <div className="flex justify-center my-3">
             <h2 className="text-center font-semibold text-wrap text-4xl">
               Implementação da
-              <span className="text-primary">Máquina de Vendas</span>
+              <span className="text-primary"> Máquina de Vendas</span>
             </h2>
           </div>
           <div className="flex items-center justify-center my-3">
@@ -213,7 +213,7 @@ export default function Home() {
           <div className="flex justify-center my-3">
             <h2 className="text-center font-semibold text-wrap text-xl">
               <span className="text-primary">
-                Recrute profissionais de vendas qualificados
+                Recrute profissionais de vendas qualificados{" "}
               </span>
               e alcance novos patamares de faturamento com previsibilidade
             </h2>
@@ -269,11 +269,11 @@ export default function Home() {
           <div>
             <h3 className="text-center font-medium text-wrap text-xl">
               Tenha sua
-              <span className="text-primary">Equipe de Vendas Interna</span>
+              <span className="text-primary"> Equipe de Vendas Interna </span>
               estruturada em 45 dias e
-              <span className="text-primary">aumente suas vendas em 30%</span>
+              <span className="text-primary"> aumente suas vendas em 30% </span>
               através do método que gerou
-              <span className="text-primary">120 milhões</span>, sem aumentar o
+              <span className="text-primary"> 120 milhões</span>, sem aumentar o
               investimento em anúncios e com menos de 4 horas por semana
             </h3>
             <div className="flex justify-center p-4">
