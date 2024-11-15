@@ -147,43 +147,52 @@ export default function Home() {
           <div>
             <ul className="grid grid-cols-1 gap-2">
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Treinamento de equipe
+                <CircleArrowRight size={20} className="text-primary" />
+                Treinamento de equipe
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Geração de leads qualificados
+                <CircleArrowRight size={20} className="text-primary" /> Geração
+                de leads qualificados
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Script de negociação
+                <CircleArrowRight size={20} className="text-primary" /> Script
+                de negociação
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Fluxos de prospecção
+                <CircleArrowRight size={20} className="text-primary" /> Fluxos
+                de prospecção
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Playbook de vendas
+                <CircleArrowRight size={20} className="text-primary" /> Playbook
+                de vendas
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Matriz de objeções
+                <CircleArrowRight size={20} className="text-primary" /> Matriz
+                de objeções
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Dashboard de indicações
+                <CircleArrowRight size={20} className="text-primary" />
+                Dashboard de indicações
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Metas, remuneração e
-                comissionamento
+                <CircleArrowRight size={20} className="text-primary" /> Metas,
+                remuneração e comissionamento
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Metadologia de onboardinhg e
-                rampeamento
+                <CircleArrowRight size={20} className="text-primary" />
+                Metadologia de onboardinhg e rampeamento
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Planejamento estratégico
-                comercial
+                <CircleArrowRight size={20} className="text-primary" />
+                Planejamento estratégico comercial
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Implementação de ferramentas
+                <CircleArrowRight size={20} className="text-primary" />
+                Implementação de ferramentas
               </li>
               <li className="flex gap-2 border-l-4">
-                <CircleArrowRight size={20} /> Metodoligia de gestão comercial
+                <CircleArrowRight size={20} className="text-primary" />
+                Metodoligia de gestão comercial
               </li>
             </ul>
           </div>
