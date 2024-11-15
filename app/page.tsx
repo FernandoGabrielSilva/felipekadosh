@@ -2,7 +2,7 @@ import Image from "next/image";
 import CardsComponents from "./_components/CardsComponents";
 import { Button } from "./_components/ui/button";
 import Link from "next/link";
-import { CircleArrowRight, Clock } from "lucide-react";
+import { CircleArrowDown, CircleArrowRight, Clock } from "lucide-react";
 
 export default function Home() {
   return (
@@ -204,21 +204,27 @@ export default function Home() {
               <li className="border-2 p-6 w-[95%] rounded-b-[2rem] rounded-t-xl bg-card">
                 Reunião de Fit Cultura
               </li>
+              <CircleArrowDown />
               <li className="border-2 p-6 w-[90%] rounded-b-[2rem] rounded-t-xl bg-card">
                 Divulgação e Triagem
               </li>
+              <CircleArrowDown />
               <li className="border-2 p-6 w-[85%] rounded-b-[2rem] rounded-t-xl bg-card">
                 Pré-entrevistas
               </li>
+              <CircleArrowDown />
               <li className="border-2 p-6 w-[80%] rounded-b-[2rem] rounded-t-xl bg-card">
                 Teste de perfil comportamental
               </li>
+              <CircleArrowDown />
               <li className="border-2 p-6 w-[75%] rounded-b-[2rem] rounded-t-xl bg-card">
                 Case técnico
               </li>
+              <CircleArrowDown />
               <li className="border-2 p-6 w-[70%] rounded-b-[2rem] rounded-t-xl bg-card">
                 Entrevista final
               </li>
+              <CircleArrowDown />
               <li className="border-2 p-6 w-[65%] rounded-b-[2rem] rounded-t-xl bg-card">
                 Onboarding
               </li>
