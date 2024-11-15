@@ -247,6 +247,21 @@ export default function Home() {
               Felipe Kadosh
             </h2>
           </div>
+          <div>
+            <h3 className="text-center font-medium text-wrap text-xl">
+              Tenha sua Equipe de Vendas Interna estruturada em 45 dias e
+              aumente suas vendas em 30% através do método que gerou 120
+              milhões, sem aumentar o investimento em anúncios e com menos de 4
+              horas por semana
+            </h3>
+            <div className="flex justify-center p-4">
+              <Link href="#" className="w-full">
+                <Button variant="default" className="w-full">
+                  AGENDAR UMA CONSULTORIA
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </main>
