@@ -22,8 +22,9 @@ export default function Home() {
             <div className="absolute top-2/3">
               <div>
                 <h2 className="text-2xl text-center font-bold pt-5">
-                  Aumente suas vendas com previsibilidade através de um processo
-                  de vendas eficiente.
+                  Aumente suas vendas com
+                  <span className="text-primary">previsibilidade</span> através
+                  de um processo de vendas eficiente.
                 </h2>
               </div>
               <div>
@@ -54,7 +55,8 @@ export default function Home() {
           </div>
           <div className="flex justify-center my-3">
             <h2 className="text-center font-semibold text-wrap text-4xl">
-              Método Equipe de Vendas Interna
+              Método
+              <span className="text-primary"> Equipe de Vendas Interna</span>
             </h2>
           </div>
           <div className="flex items-center justify-center my-3">
@@ -90,7 +92,8 @@ export default function Home() {
           </div>
           <div className="flex justify-center my-3">
             <h2 className="text-center font-semibold text-wrap text-4xl">
-              Implementação da Máquina de Vendas
+              Implementação da
+              <span className="text-primary">Máquina de Vendas</span>
             </h2>
           </div>
           <div className="flex items-center justify-center my-3">
@@ -138,7 +141,7 @@ export default function Home() {
           </div>
           <div className="flex justify-center my-3">
             <h2 className="text-center font-semibold text-wrap text-4xl">
-              Entregáveis da Consulta
+              <span className="text-primary">Entregáveis</span> da Consulta
             </h2>
           </div>
           <div>
@@ -195,12 +198,14 @@ export default function Home() {
           </div>
           <div className="flex justify-center my-3">
             <h2 className="text-center font-semibold text-wrap text-xl">
-              Recrute profissionais de vendas qualificados e alcance novos
-              patamares de faturamento com previsibilidade
+              <span className="text-primary">
+                Recrute profissionais de vendas qualificados
+              </span>
+              e alcance novos patamares de faturamento com previsibilidade
             </h2>
           </div>
           <div className="w-screen">
-            <ul className="w-full text-center flex flex-col items-center font-semibold text-medium">
+            <ul className="w-full text-center flex flex-col items-center font-semibold text-medium text-primary">
               <li className="border-2 p-6 w-[95%] rounded-b-[2rem] rounded-t-xl bg-card">
                 Reunião de Fit Cultura
               </li>
@@ -243,16 +248,19 @@ export default function Home() {
             <h2 className="font-semibold text-wrap text-4xl px-3">Quem é:</h2>
           </div>
           <div className="flex my-3">
-            <h2 className="font-medium text-wrap text-2xl px-3">
+            <h2 className="font-medium text-wrap text-2xl px-3 text-primary">
               Felipe Kadosh
             </h2>
           </div>
           <div>
             <h3 className="text-center font-medium text-wrap text-xl">
-              Tenha sua Equipe de Vendas Interna estruturada em 45 dias e
-              aumente suas vendas em 30% através do método que gerou 120
-              milhões, sem aumentar o investimento em anúncios e com menos de 4
-              horas por semana
+              Tenha sua
+              <span className="text-primary">Equipe de Vendas Interna</span>
+              estruturada em 45 dias e
+              <span className="text-primary">aumente suas vendas em 30%</span>
+              através do método que gerou
+              <span className="text-primary">120 milhões</span>, sem aumentar o
+              investimento em anúncios e com menos de 4 horas por semana
             </h3>
             <div className="flex justify-center p-4">
               <Link href="#" className="w-full">
