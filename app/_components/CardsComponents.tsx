@@ -19,7 +19,7 @@ export default function CardsComponents(props: CardComponentsProps) {
     <>
       <Card>
         <CardHeader>
-          <CardTitle>{props.title}</CardTitle>
+          <CardTitle className={`${props.className}`}>{props.title}</CardTitle>
           <CardDescription>
             <div className="flex gap-2 items-center">
               {props.children}
