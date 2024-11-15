@@ -199,7 +199,31 @@ export default function Home() {
               patamares de faturamento com previsibilidade
             </h2>
           </div>
-          <div></div>
+          <div className="w-screen">
+            <ul className="w-full text-center flex flex-col items-center font-semibold text-medium">
+              <li className="border-2 p-6 w-[95%] rounded-b-[2rem] rounded-t-xl bg-card">
+                Reunião de Fit Cultura
+              </li>
+              <li className="border-2 p-6 w-[90%] rounded-b-[2rem] rounded-t-xl bg-card">
+                Divulgação e Triagem
+              </li>
+              <li className="border-2 p-6 w-[85%] rounded-b-[2rem] rounded-t-xl bg-card">
+                Pré-entrevistas
+              </li>
+              <li className="border-2 p-6 w-[80%] rounded-b-[2rem] rounded-t-xl bg-card">
+                Teste de perfil comportamental
+              </li>
+              <li className="border-2 p-6 w-[75%] rounded-b-[2rem] rounded-t-xl bg-card">
+                Case técnico
+              </li>
+              <li className="border-2 p-6 w-[70%] rounded-b-[2rem] rounded-t-xl bg-card">
+                Entrevista final
+              </li>
+              <li className="border-2 p-6 w-[65%] rounded-b-[2rem] rounded-t-xl bg-card">
+                Onboarding
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
       <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
