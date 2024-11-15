@@ -100,31 +100,36 @@ export default function Home() {
             <div className="grid grid-cols-1 w-[95%] gap-3">
               <CardsComponents
                 title="Kick-Off do Projeto"
-                children={<Clock size={15} />}
+                className="text-primary"
+                children={<Clock size={15} className="text-primary" />}
                 subtitulo="Duração: 2 Semanas"
                 description="Objetivo: realizar o diagnóstico da operação atual, aprofundar em suas soluções e mapear a jornada de compra do perfil de cliente ideal."
               />
               <CardsComponents
                 title="Processos Comerciais"
-                children={<Clock size={15} />}
+                className="text-primary"
+                children={<Clock size={15} className="text-primary" />}
                 subtitulo="Duração: 4 Semanas"
                 description="Objetivos: estruturar o processo que a equipe comercial irá executar para reduzir a variabilidade de ações e gerar receita previsível."
               />
               <CardsComponents
                 title="Método de Gestão"
-                children={<Clock size={15} />}
+                className="text-primary"
+                children={<Clock size={15} className="text-primary" />}
                 subtitulo="Duração: 1 Semanas"
                 description="Objetivo: implementar a rotina de gestão e melhoria contínua, e os indicadores de performance do setor comercial."
               />
               <CardsComponents
                 title="Treinamento da Equipe"
-                children={<Clock size={15} />}
+                className="text-primary"
+                children={<Clock size={15} className="text-primary" />}
                 subtitulo="Duração: Contínuo"
                 description="Objetivo: desenvolvimento de competências técnicas comportamentais necessárias para que a equipe conduza o processo de vendas com maestria."
               />
               <CardsComponents
                 title="Melhoria Contínua"
-                children={<Clock size={15} />}
+                className="text-primary"
+                children={<Clock size={15} className="text-primary" />}
                 subtitulo="Duração: 11 Meses"
                 description="Objetivo:  analisar indicadores de performance, mapear oportunidades de melhoria e definir novos planos de ação."
               />
