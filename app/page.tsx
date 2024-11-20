@@ -7,19 +7,19 @@ import { CircleArrowDown, CircleArrowRight, Clock } from "lucide-react";
 export default function Home() {
   return (
     <main>
-      <section className="grid grid-cols-1 items-center h-dvh">
-        <div className="flex flex-col items-center p-4">
-          <div className="flex flex-col items-center relative w-full h-full -mt-40">
+      <section className="flex items-center h-dvh">
+        <div className="flex items-center p-4">
+          <div className="grid grid-cols-1 items-center relative -mt-40 w-full h-full md:mt-0 md:grid-cols-2">
             <div className="w-full h-full">
               <Image
                 src="https://i.postimg.cc/HxNFhyCK/20240420-2134222.png"
                 alt="Imagem de Perfil"
-                width={1000}
-                height={1000}
+                width={450}
+                height={450}
                 className="w-full h-auto"
               />
             </div>
-            <div className="absolute top-2/3">
+            <div className="absolute top-2/3 md:static">
               <div>
                 <h2 className="text-2xl text-center font-bold pt-5">
                   Aumente suas vendas com
@@ -60,7 +60,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="flex items-center justify-center my-3">
-            <div className="grid grid-cols-1 w-[95%] gap-3">
+            <div className="grid grid-cols-1 w-[95%] gap-3 md:grid-cols-2">
               <CardsComponents
                 title="Recrutamento e Seleção"
                 description="Auxiliamos no recrutamento, seleção e treinamento dos membros de
@@ -218,7 +218,7 @@ export default function Home() {
               e alcance novos patamares de faturamento com previsibilidade
             </h2>
           </div>
-          <div className="w-screen">
+          <div className="w-full">
             <ul className="w-full text-center flex flex-col items-center font-semibold text-medium text-primary">
               <li className="border-2 p-6 w-[95%] rounded-b-[2rem] rounded-t-xl bg-card">
                 Reunião de Fit Cultura
