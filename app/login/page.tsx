@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "../_components/ui/card";
 import { Button } from "../_components/ui/button";
-import { SignUpButton } from "@clerk/nextjs";
+import { SignInButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
@@ -41,9 +41,9 @@ const Login = async () => {
               </form>
             </CardContent>
             <CardFooter>
-              <SignUpButton>
+              <SignInButton>
                 <Button className="w-full">Login</Button>
-              </SignUpButton>
+              </SignInButton>
             </CardFooter>
           </Card>
         </div>
