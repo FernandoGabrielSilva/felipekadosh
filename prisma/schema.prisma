@@ -21,12 +21,20 @@ model Users {
 }
 
 model Products {
-  id            String   @id @default(cuid())
-  name          String
-  description   String
-  nomeCategoria String
-  imageUrl      String
-  linkUrl       String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  category    Category
+  imageUrl    String
+  linkUrl     String
+  date        DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum Category {
+  Cursos
+  Livros
+  Eletronicos
+  Outros
 }
