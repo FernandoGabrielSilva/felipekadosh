@@ -17,7 +17,7 @@ export interface CardComponentsProps {
 export default function CardsComponents(props: CardComponentsProps) {
   return (
     <>
-      <Card>
+      <Card className={`${props.className}`}>
         <CardHeader>
           <CardTitle className={`${props.className}`}>{props.title}</CardTitle>
           <CardDescription>
