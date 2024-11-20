@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "./_components/ThemeProvider";
 import { Baloo_2 } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh",
@@ -23,7 +24,11 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`${Baloo.className} antialiased`}>
-        <ClerkProvider>
+        <ClerkProvider
+          appearance={{
+            baseTheme: dark,
+          }}
+        >
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"

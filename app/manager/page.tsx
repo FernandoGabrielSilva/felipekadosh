@@ -27,7 +27,7 @@ const Manager = async () => {
     <main>
       <header>
         <div>
-          <UserButton />
+          <UserButton showName />
         </div>
       </header>
       <div className="flex flex-col items-center w-dvw h-dvh">
