@@ -40,7 +40,7 @@ const Manager = async () => {
           <div className="w-full">
             <Input placeholder="Filter name..." />
           </div>
-          <div className="w-full h-dvh">
+          <div className="w-full h-dvh mt-1">
             <DataTable columns={productsColumns} data={products} />
           </div>
         </div>

@@ -1,16 +1,26 @@
 "use client";
 
+import { Button } from "@/app/_components/ui/button";
 import { Products } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import { PencilIcon, TrashIcon } from "lucide-react";
 
 export const productsColumns: ColumnDef<Products>[] = [
   {
     accessorKey: "name",
     header: "Titulo",
+    cell: ({ row: { original: products } }) => (
+      <p className="text-wrap max-h-[2.3rem] text-ellipsis">{products.name}</p>
+    ),
   },
   {
     accessorKey: "description",
     header: "Descrição",
+    cell: ({ row: { original: products } }) => (
+      <p className="text-wrap max-h-[2.3rem] text-ellipsis">
+        {products.description}
+      </p>
+    ),
   },
   {
     accessorKey: "category",
@@ -20,7 +30,12 @@ export const productsColumns: ColumnDef<Products>[] = [
     accessorKey: "linkUrl",
     header: "Link do Produto",
     cell: ({ row: { original: products } }) => (
-      <a href={products.linkUrl} target="_blank" rel="noopener noreferrer">
+      <a
+        href={products.linkUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary text-wrap max-h-[2.3rem] text-ellipsis"
+      >
         {products.linkUrl}
       </a>
     ),
@@ -38,5 +53,15 @@ export const productsColumns: ColumnDef<Products>[] = [
   {
     accessorKey: "actions",
     header: "",
+    cell: () => {
+      <div className="space-x-1">
+        <Button variant="ghost" size="icon" className="text-muted-foreground">
+          <PencilIcon />
+        </Button>
+        <Button variant="ghost" size="icon" className="text-muted-foreground">
+          <TrashIcon />
+        </Button>
+      </div>;
+    },
   },
 ];
