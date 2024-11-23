@@ -1,17 +1,13 @@
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-} from "@radix-ui/react-dropdown-menu";
 import { table } from "console";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, PackagePlus } from "lucide-react";
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 import { Button } from "../_components/ui/button";
 import { Input } from "../_components/ui/input";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { db } from "../_lib/prisma";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
@@ -23,19 +19,68 @@ const Manager = async () => {
   if (!userId) {
     redirect("/login");
   }
+  const products = await db.products.findMany({});
   return (
     <main>
-      <header>
-        <div>
-          <UserButton showName />
+      <div className="flex items-center justify-center py-6">
+        <div className="flex items-center w-[90%]">
+          <div className="w-full flex justify-end items-center">
+            <UserButton showName />
+          </div>
         </div>
-      </header>
-      <div className="flex flex-col items-center w-dvw h-dvh">
-        <div className="flex items-center py-4 w-[90%]">
-          <Input placeholder="Filter name..." />
-          <DropdownMenu>
-            <DropdownMenuContent align="end"></DropdownMenuContent>
-          </DropdownMenu>
+      </div>
+      <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center w-[90%]">
+          <div className="w-full flex justify-between items-center pb-4">
+            <h1 className="md:text-2xl font-bold">Produtos</h1>
+            <Button className="flex items-center md:text-base">
+              Adicionar Produto <PackagePlus />
+            </Button>
+          </div>
+          <div className="w-full">
+            <Input placeholder="Filter name..." />
+          </div>
+          <div className="w-full h-dvh">
+            <div className="rounded-md border relative overflow-auto">
+              <table>
+                <thead className="border-b">
+                  <tr>
+                    <th className="p-2 border-r">Título</th>
+                    <th className="p-2 border-r">Descrição</th>
+                    <th className="p-2 border-r">Categoria</th>
+                    <th className="p-2 border-r">Link do Produto</th>
+                    <th className="p-2">Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.map((product) => (
+                    <tr key={product.id}>
+                      <td className="p-2 border-r">{product.name}</td>
+                      <td className="p-2 overflow-auto text-ellipsis border-r">
+                        {product.description}
+                      </td>
+                      <td className="p-2 border-r">{product.category}</td>
+                      <td className="p-2 border-r">
+                        <Link href={product.linkUrl} target="_blank">
+                          {product.linkUrl}
+                        </Link>
+                      </td>
+                      <td className="p-2">
+                        {new Date(product.updatedAt).toLocaleDateString(
+                          "pt-BR",
+                          {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </main>
