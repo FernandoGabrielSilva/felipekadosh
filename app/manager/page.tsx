@@ -52,7 +52,7 @@ const Manager = async () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {products.map((product) => (
+                  {products.map((product) => (
                     <tr key={product.id}>
                       <td className="p-2 border-r">{product.name}</td>
                       <td className="p-2 overflow-auto text-ellipsis border-r">
@@ -75,7 +75,7 @@ const Manager = async () => {
                         )}
                       </td>
                     </tr>
-                  ))} */}
+                  ))}
                 </tbody>
               </table>
             </div>
