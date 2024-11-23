@@ -6,7 +6,8 @@ import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { db } from "../_lib/prisma";
-import Link from "next/link";
+import { DataTable } from "../_components/ui/data-table";
+import { productsColumns } from "./_columns";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
@@ -40,45 +41,7 @@ const Manager = async () => {
             <Input placeholder="Filter name..." />
           </div>
           <div className="w-full h-dvh">
-            <div className="rounded-md border relative overflow-auto">
-              <table>
-                <thead className="border-b">
-                  <tr>
-                    <th className="p-2 border-r">Título</th>
-                    <th className="p-2 border-r">Descrição</th>
-                    <th className="p-2 border-r">Categoria</th>
-                    <th className="p-2 border-r">Link do Produto</th>
-                    <th className="p-2">Data</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products.map((product) => (
-                    <tr key={product.id}>
-                      <td className="p-2 border-r">{product.name}</td>
-                      <td className="p-2 overflow-auto text-ellipsis border-r">
-                        {product.description}
-                      </td>
-                      <td className="p-2 border-r">{product.category}</td>
-                      <td className="p-2 border-r">
-                        <Link href={product.linkUrl} target="_blank">
-                          {product.linkUrl}
-                        </Link>
-                      </td>
-                      <td className="p-2">
-                        {new Date(product.updatedAt).toLocaleDateString(
-                          "pt-BR",
-                          {
-                            day: "2-digit",
-                            month: "long",
-                            year: "numeric",
-                          }
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <DataTable columns={productsColumns} data={products} />
           </div>
         </div>
       </div>
