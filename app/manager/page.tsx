@@ -1,5 +1,4 @@
-import { table } from "console";
-import { ChevronDown, PackagePlus } from "lucide-react";
+import { PackagePlus } from "lucide-react";
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 import { Button } from "../_components/ui/button";
 import { Input } from "../_components/ui/input";
