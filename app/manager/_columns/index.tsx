@@ -10,14 +10,14 @@ export const productsColumns: ColumnDef<Products>[] = [
     accessorKey: "name",
     header: "Titulo",
     cell: ({ row: { original: products } }) => (
-      <p className="text-wrap max-h-[2.3rem] text-ellipsis">{products.name}</p>
+      <p className="text-wrap max-h-[2.2rem] text-ellipsis">{products.name}</p>
     ),
   },
   {
     accessorKey: "description",
     header: "Descrição",
     cell: ({ row: { original: products } }) => (
-      <p className="text-wrap max-h-[2.3rem] text-ellipsis">
+      <p className="text-wrap max-h-[2.2rem] text-ellipsis">
         {products.description}
       </p>
     ),
@@ -34,7 +34,7 @@ export const productsColumns: ColumnDef<Products>[] = [
         href={products.linkUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-primary text-wrap max-h-[2.3rem] text-ellipsis"
+        className="text-primary text-wrap max-h-[2.2rem] text-ellipsis"
       >
         {products.linkUrl}
       </a>
@@ -46,22 +46,24 @@ export const productsColumns: ColumnDef<Products>[] = [
     cell: ({ row: { original: products } }) =>
       new Date(products.updatedAt).toLocaleDateString("pt-BR", {
         day: "2-digit",
-        month: "long",
+        month: "numeric",
         year: "numeric",
       }),
   },
   {
     accessorKey: "actions",
-    header: "",
+    header: "Editar/Deletar",
     cell: () => {
-      <div className="space-x-1">
-        <Button variant="ghost" size="icon" className="text-muted-foreground">
-          <PencilIcon />
-        </Button>
-        <Button variant="ghost" size="icon" className="text-muted-foreground">
-          <TrashIcon />
-        </Button>
-      </div>;
+      return (
+        <div className="space-x-1">
+          <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <PencilIcon />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <TrashIcon />
+          </Button>
+        </div>
+      );
     },
   },
 ];
