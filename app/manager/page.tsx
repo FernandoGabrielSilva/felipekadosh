@@ -29,6 +29,7 @@ const Manager = async ({
     where: {
       name: {
         contains: query,
+        mode: "insensitive",
       },
     },
   });
