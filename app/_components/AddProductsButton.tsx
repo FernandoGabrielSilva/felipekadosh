@@ -127,7 +127,7 @@ const AddProductsButton = () => {
                   onClientUploadComplete={(res) => {
                     // Do something with the response
                     setImages(res[0].appUrl);
-                    console.log(res);
+                    //console.log(res);
                     //const json = JSON.stringify(res);
                     // Do something with the response
                     //console.log(json);
