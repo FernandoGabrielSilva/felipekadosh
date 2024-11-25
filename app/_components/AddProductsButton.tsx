@@ -31,6 +31,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { useState } from "react";
+import { UploadDropzone } from "../utils/uploadthing";
+import Image from "next/image";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -79,6 +82,7 @@ const AddProductsButton = () => {
     },
   });
 
+  const [images, setImages] = useState("");
   const onSubmit = (data: FormSchema) => {};
 
   return (
@@ -86,6 +90,7 @@ const AddProductsButton = () => {
       onOpenChange={(open) => {
         if (!open) {
           form.reset();
+          setImages("");
         }
       }}
     >
@@ -100,7 +105,41 @@ const AddProductsButton = () => {
           <DialogDescription>Insira as informações</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="w-full relative">
+              {images ? (
+                <Image
+                  src={images}
+                  alt="Image Product"
+                  width={1000}
+                  height={1000}
+                  className="object-contain max-h-[160px]"
+                />
+              ) : (
+                <UploadDropzone
+                  //className="h-full"
+                  appearance={{
+                    container: "w-full h-full",
+                    uploadIcon: "hidden",
+                    allowedContent: "hidden",
+                  }}
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res) => {
+                    // Do something with the response
+                    setImages(res[0].appUrl);
+                    console.log(res);
+                    //const json = JSON.stringify(res);
+                    // Do something with the response
+                    //console.log(json);
+                    //alert("Upload Completed");
+                  }}
+                  onUploadError={(error: Error) => {
+                    // Do something with the error.
+                    alert(`ERROR! ${error.message}`);
+                  }}
+                />
+              )}
+            </div>
             <FormField
               control={form.control}
               name="name"
@@ -168,7 +207,7 @@ const AddProductsButton = () => {
               )}
             />
 
-            <DialogFooter>
+            <DialogFooter className="gap-2 md:gap-0">
               <DialogClose asChild>
                 <Button type="button" variant="outline">
                   Cancelar

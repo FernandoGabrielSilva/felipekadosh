@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "i.postimg.cc",
       },
+      {
+        hostname: "utfs.io",
+      },
     ],
   },
 };
