@@ -83,7 +83,7 @@ const AddProductsButton = () => {
       name: "",
       description: "",
       category: Category.Outros,
-      imageUrl: "",
+      imageUrl: images,
       linkUrl: "",
     },
   });
@@ -210,7 +210,7 @@ const AddProductsButton = () => {
                 control={form.control}
                 name="imageUrl"
                 render={({ field }) => (
-                  <FormItem className="hidden">
+                  <FormItem className="overflow-hidden h-0">
                     <FormLabel>Link da Imagem</FormLabel>
                     <FormControl>
                       <Input placeholder="Link da Imagem..." {...field} />
