@@ -3,6 +3,7 @@
 import { db } from "@/app/_lib/prisma";
 import { addProductSchema } from "./schema";
 import { Category } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 interface AddProductParams {
   name: string;
@@ -17,4 +18,5 @@ export const addProduct = async (params: AddProductParams) => {
   await db.products.create({
     data: params,
   });
+  revalidatePath("/manager");
 };

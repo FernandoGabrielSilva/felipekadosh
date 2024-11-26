@@ -77,6 +77,7 @@ type FormSchema = z.infer<typeof formSchema>;
 
 const AddProductsButton = () => {
   const [images, setImages] = useState("");
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -89,13 +90,21 @@ const AddProductsButton = () => {
   });
 
   const onSubmit = async (data: FormSchema) => {
-    await addProduct(data);
-    console.log(data);
+    try {
+      await addProduct(data);
+      setDialogIsOpen(false);
+      form.reset();
+      setImages("");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <Dialog
+      open={dialogIsOpen}
       onOpenChange={(open) => {
+        setDialogIsOpen(open);
         if (!open) {
           form.reset();
           setImages("");
