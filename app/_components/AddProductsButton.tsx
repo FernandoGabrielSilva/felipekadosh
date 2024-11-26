@@ -34,6 +34,7 @@ import {
 import { useState } from "react";
 import { UploadDropzone } from "../utils/uploadthing";
 import Image from "next/image";
+import { addProduct } from "../_actions/add-product";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -44,6 +45,9 @@ const formSchema = z.object({
   }),
   category: z.nativeEnum(Category, {
     required_error: "A categoria do produto é obrigatória",
+  }),
+  imageUrl: z.string().trim().min(1, {
+    message: "A imagem do produto é obrigatório",
   }),
   linkUrl: z.string().trim().min(1, {
     message: "O link do produto é obrigatório",
@@ -72,18 +76,22 @@ const PRODUCTS_CATEGORY_OPTIONS = [
 type FormSchema = z.infer<typeof formSchema>;
 
 const AddProductsButton = () => {
+  const [images, setImages] = useState("");
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       description: "",
       category: Category.Outros,
+      imageUrl: "",
       linkUrl: "",
     },
   });
 
-  const [images, setImages] = useState("");
-  const onSubmit = (data: FormSchema) => {};
+  const onSubmit = async (data: FormSchema) => {
+    await addProduct(data);
+    console.log(data);
+  };
 
   return (
     <Dialog
@@ -108,16 +116,9 @@ const AddProductsButton = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="w-full relative">
               {images ? (
-                <Image
-                  src={images}
-                  alt="Image Product"
-                  width={1000}
-                  height={1000}
-                  className="object-contain max-h-[160px]"
-                />
+                <p className="hidden"></p>
               ) : (
                 <UploadDropzone
-                  //className="h-full"
                   appearance={{
                     container: "w-full h-full",
                     uploadIcon: "hidden",
@@ -125,16 +126,9 @@ const AddProductsButton = () => {
                   }}
                   endpoint="imageUploader"
                   onClientUploadComplete={(res) => {
-                    // Do something with the response
                     setImages(res[0].appUrl);
-                    //console.log(res);
-                    //const json = JSON.stringify(res);
-                    // Do something with the response
-                    //console.log(json);
-                    //alert("Upload Completed");
                   }}
                   onUploadError={(error: Error) => {
-                    // Do something with the error.
                     alert(`ERROR! ${error.message}`);
                   }}
                 />
@@ -193,6 +187,39 @@ const AddProductsButton = () => {
                 </FormItem>
               )}
             />
+            {images ? (
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Link da Imagem</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Link da Imagem..."
+                        {...field}
+                        value={images}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem className="hidden">
+                    <FormLabel>Link da Imagem</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Link da Imagem..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               control={form.control}
               name="linkUrl"
@@ -200,13 +227,12 @@ const AddProductsButton = () => {
                 <FormItem>
                   <FormLabel>Link do Produto</FormLabel>
                   <FormControl>
-                    <Input placeholder="Link do produto..." {...field} />
+                    <Input placeholder="Link do Produto.." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <DialogFooter className="gap-2 md:gap-0">
               <DialogClose asChild>
                 <Button type="button" variant="outline">
