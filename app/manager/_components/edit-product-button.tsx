@@ -1,39 +1,34 @@
 "use client";
-import { PackagePlus } from "lucide-react";
-import { Button } from "./ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
 import { z } from "zod";
-import { Category } from "@prisma/client";
+import { Category, Products } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Form, useForm } from "react-hook-form";
+import { upsertProducts } from "@/app/_actions/add-product";
+import { Button } from "@/app/_components/ui/button";
+import { DialogHeader, DialogFooter } from "@/app/_components/ui/dialog";
 import {
-  Form,
-  FormControl,
   FormField,
   FormItem,
   FormLabel,
+  FormControl,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
+} from "@/app/_components/ui/form";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "@/app/_components/ui/dialog";
 import {
   Select,
-  SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { useState } from "react";
-import { UploadDropzone } from "../utils/uploadthing";
-import { upsertProducts } from "../_actions/add-product";
+  SelectContent,
+  SelectItem,
+} from "@/app/_components/ui/select";
+import { Input } from "@/app/_components/ui/input";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -74,12 +69,20 @@ const PRODUCTS_CATEGORY_OPTIONS = [
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const AddProductsButton = () => {
-  const [images, setImages] = useState("");
-  const [dialogIsOpen, setDialogIsOpen] = useState(false);
+interface DefaultProp {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  defaultValues?: Products;
+}
+
+const EditProductsButton = ({
+  isOpen,
+  setIsOpen,
+  defaultValues,
+}: DefaultProp) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       name: "",
       description: "",
       category: Category.Outros,
@@ -91,9 +94,8 @@ const AddProductsButton = () => {
   const onSubmit = async (data: FormSchema) => {
     try {
       await upsertProducts(data);
-      setDialogIsOpen(false);
+      setIsOpen(false);
       form.reset();
-      setImages("");
     } catch (error) {
       console.error(error);
     }
@@ -101,47 +103,22 @@ const AddProductsButton = () => {
 
   return (
     <Dialog
-      open={dialogIsOpen}
+      open={isOpen}
       onOpenChange={(open) => {
-        setDialogIsOpen(open);
+        setIsOpen(open);
         if (!open) {
           form.reset();
-          setImages("");
         }
       }}
     >
-      <DialogTrigger asChild>
-        <Button className="flex items-center md:text-base">
-          Adicionar Produto <PackagePlus />
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild></DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Adicionar Produto</DialogTitle>
+          <DialogTitle>Editar Produto</DialogTitle>
           <DialogDescription>Insira as informações</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="w-full relative">
-              {images ? (
-                <p className="hidden"></p>
-              ) : (
-                <UploadDropzone
-                  appearance={{
-                    container: "w-full h-full",
-                    uploadIcon: "hidden",
-                    allowedContent: "hidden",
-                  }}
-                  endpoint="imageUploader"
-                  onClientUploadComplete={(res) => {
-                    setImages(res[0].appUrl);
-                  }}
-                  onUploadError={(error: Error) => {
-                    alert(`ERROR! ${error.message}`);
-                  }}
-                />
-              )}
-            </div>
             <FormField
               control={form.control}
               name="name"
@@ -195,39 +172,19 @@ const AddProductsButton = () => {
                 </FormItem>
               )}
             />
-            {images ? (
-              <FormField
-                control={form.control}
-                name="imageUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Link da Imagem</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Link da Imagem..."
-                        {...field}
-                        value={images}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ) : (
-              <FormField
-                control={form.control}
-                name="imageUrl"
-                render={({ field }) => (
-                  <FormItem className="overflow-hidden h-0">
-                    <FormLabel>Link da Imagem</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Link da Imagem..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Link da Imagem</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Link da Imagem..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="linkUrl"
@@ -256,4 +213,4 @@ const AddProductsButton = () => {
   );
 };
 
-export default AddProductsButton;
+export default EditProductsButton;

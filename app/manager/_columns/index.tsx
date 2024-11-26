@@ -3,7 +3,8 @@
 import { Button } from "@/app/_components/ui/button";
 import { Products } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { PencilIcon, TrashIcon } from "lucide-react";
+import EditButton from "../_components/EditButton";
+import { TrashIcon } from "lucide-react";
 
 export const productsColumns: ColumnDef<Products>[] = [
   {
@@ -53,12 +54,10 @@ export const productsColumns: ColumnDef<Products>[] = [
   {
     accessorKey: "actions",
     header: "Editar/Deletar",
-    cell: () => {
+    cell: ({ row: { original: products } }) => {
       return (
         <div className="space-x-1">
-          <Button variant="ghost" size="icon" className="text-muted-foreground">
-            <PencilIcon />
-          </Button>
+          <EditButton products={products} />
           <Button variant="ghost" size="icon" className="text-muted-foreground">
             <TrashIcon />
           </Button>
