@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
-import { Products } from "@prisma/client";
-import { ColumnDef } from "@tanstack/react-table";
 import EditButton from "../_components/EditButton";
 import { TrashIcon } from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
+import { Products } from "@prisma/client";
 
 // Definindo as colunas da tabela de produtos
 export const productsColumns: ColumnDef<Products>[] = [
@@ -12,21 +12,41 @@ export const productsColumns: ColumnDef<Products>[] = [
     accessorKey: "name",
     header: "Título",
     cell: ({ row: { original: products } }) => (
-      <p className="text-wrap max-h-[2.2rem] text-ellipsis">{products.name}</p>
+      <p className="text-wrap max-h-[2.2rem] text-ellipsis max-w-[200px] min-w-[50px]">
+        {products.name}
+      </p>
     ),
   },
   {
     accessorKey: "description",
     header: "Descrição",
     cell: ({ row: { original: products } }) => (
-      <p className="text-wrap max-h-[2.2rem] text-ellipsis">{products.description}</p>
+      <p className="text-wrap max-h-[2.2rem] text-ellipsis max-w-[200px] min-w-[50px]">
+        {products.description}
+      </p>
     ),
   },
   {
     accessorKey: "category",
     header: "Categoria",
     cell: ({ row: { original: products } }) => (
-      <span className="text-wrap max-h-[2.2rem] text-ellipsis">{products.category}</span>
+      <span className="text-wrap max-h-[2.2rem] text-ellipsis">
+        {products.category}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "imageUrl",
+    header: "Link da Imagem",
+    cell: ({ row: { original: products } }) => (
+      <a
+        href={products.imageUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary text-wrap max-h-[2.2rem] text-ellipsis max-w-[200px] min-w-[50px]"
+      >
+        {products.imageUrl}
+      </a>
     ),
   },
   {
@@ -37,7 +57,7 @@ export const productsColumns: ColumnDef<Products>[] = [
         href={products.linkUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-primary text-wrap max-h-[2.2rem] text-ellipsis"
+        className="text-primary text-wrap max-h-[2.2rem] text-ellipsis max-w-[200px] min-w-[50px]"
       >
         {products.linkUrl}
       </a>
@@ -58,7 +78,7 @@ export const productsColumns: ColumnDef<Products>[] = [
     header: "Ações",
     cell: ({ row: { original: products } }) => {
       // Log para desenvolvimento, pode ser removido na produção
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === "development") {
         console.log("Produto para ações:", products);
       }
       return (
@@ -74,4 +94,3 @@ export const productsColumns: ColumnDef<Products>[] = [
     },
   },
 ];
-

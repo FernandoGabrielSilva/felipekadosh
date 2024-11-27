@@ -33,7 +33,7 @@ const Manager = async ({
   const products = await db.products.findMany({
     where: {
       name: {
-        contains: query,  // Filtra os produtos pelo nome, insensível a maiúsculas e minúsculas
+        contains: query, // Filtra os produtos pelo nome, insensível a maiúsculas e minúsculas
         mode: "insensitive",
       },
     },
@@ -44,6 +44,7 @@ const Manager = async ({
       category: true,
       imageUrl: true,
       linkUrl: true,
+      createdAt: true,
       updatedAt: true,
     },
   });
@@ -58,26 +59,25 @@ const Manager = async ({
         </div>
       </div>
       <div className="flex flex-col items-center">
-	      <div className="flex flex-col items-center w-[90%]">
-		<div className="w-full flex justify-between items-center pb-4">
-		  <h1 className="md:text-2xl font-bold">Produtos</h1>
-		  <AddProductsButton /> {/* Botão para adicionar produtos */}
-		</div>
+        <div className="flex flex-col items-center w-[90%]">
+          <div className="w-full flex justify-between items-center pb-4">
+            <h1 className="md:text-2xl font-bold">Produtos</h1>
+            <AddProductsButton /> {/* Botão para adicionar produtos */}
+          </div>
 
-		{/* Componente de pesquisa */}
-		<div className="w-full">
-		  <SearchInput />
-		</div>
+          {/* Componente de pesquisa */}
+          <div className="w-full">
+            <SearchInput />
+          </div>
 
-		{/* Tabela de dados */}
-		<div className="w-full h-dvh mt-1">
-		  <DataTable columns={productsColumns} data={products} />
-		</div>
-	      </div>
-       </div>
+          {/* Tabela de dados */}
+          <div className="w-full h-dvh mt-1">
+            <DataTable columns={productsColumns} data={products} />
+          </div>
+        </div>
+      </div>
     </main>
   );
 };
 
 export default Manager;
-
