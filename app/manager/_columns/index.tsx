@@ -6,10 +6,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import EditButton from "../_components/EditButton";
 import { TrashIcon } from "lucide-react";
 
+// Definindo as colunas da tabela de produtos
 export const productsColumns: ColumnDef<Products>[] = [
   {
     accessorKey: "name",
-    header: "Titulo",
+    header: "Título",
     cell: ({ row: { original: products } }) => (
       <p className="text-wrap max-h-[2.2rem] text-ellipsis">{products.name}</p>
     ),
@@ -18,14 +19,15 @@ export const productsColumns: ColumnDef<Products>[] = [
     accessorKey: "description",
     header: "Descrição",
     cell: ({ row: { original: products } }) => (
-      <p className="text-wrap max-h-[2.2rem] text-ellipsis">
-        {products.description}
-      </p>
+      <p className="text-wrap max-h-[2.2rem] text-ellipsis">{products.description}</p>
     ),
   },
   {
     accessorKey: "category",
     header: "Categoria",
+    cell: ({ row: { original: products } }) => (
+      <span className="text-wrap max-h-[2.2rem] text-ellipsis">{products.category}</span>
+    ),
   },
   {
     accessorKey: "linkUrl",
@@ -53,11 +55,17 @@ export const productsColumns: ColumnDef<Products>[] = [
   },
   {
     accessorKey: "actions",
-    header: "Editar/Deletar",
+    header: "Ações",
     cell: ({ row: { original: products } }) => {
+      // Log para desenvolvimento, pode ser removido na produção
+      if (process.env.NODE_ENV === 'development') {
+        console.log("Produto para ações:", products);
+      }
       return (
         <div className="space-x-1">
+          {/* Botão de editar */}
           <EditButton products={products} />
+          {/* Botão de deletar */}
           <Button variant="ghost" size="icon" className="text-muted-foreground">
             <TrashIcon />
           </Button>
@@ -66,3 +74,4 @@ export const productsColumns: ColumnDef<Products>[] = [
     },
   },
 ];
+

@@ -15,13 +15,34 @@ interface UpsertProductsParams {
 }
 
 export const upsertProducts = async (params: UpsertProductsParams) => {
-  upsertProductsSchema.parse(params);
-  await db.products.upsert({
-    where: {
-      id: params.id,
-    },
-    update: params,
-    create: params,
-  });
-  revalidatePath("/manager");
+  try {
+    // Validação dos parâmetros
+    upsertProductsSchema.parse(params);
+
+    // Divisão da lógica de criação/atualização
+    if (params.id) {
+      // Atualiza o produto ou cria um novo caso o ID não seja encontrado
+      await db.products.upsert({
+        where: { id: params.id },
+        update: params,
+        create: params,
+      });
+    } else {
+      // Criação do novo produto caso o ID esteja ausente
+      await db.products.create({
+        data: params,
+      });
+    }
+
+    // Revalidação do cache após a operação
+    revalidatePath("/manager");
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Erro ao salvar o produto:", error.message);
+    } else {
+      console.error("Erro desconhecido ao salvar o produto");
+    }
+    throw new Error("Erro ao salvar o produto.");
+  }
 };
+

@@ -6,6 +6,7 @@ import { upsertProducts } from "@/app/_actions/add-product";
 import { Button } from "@/app/_components/ui/button";
 import { DialogHeader, DialogFooter } from "@/app/_components/ui/dialog";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import {
   Form,
   FormField,
@@ -41,7 +42,7 @@ const formSchema = z.object({
     required_error: "A categoria do produto é obrigatória",
   }),
   imageUrl: z.string().trim().min(1, {
-    message: "A imagem do produto é obrigatório",
+    message: "A imagem do produto é obrigatória",
   }),
   linkUrl: z.string().trim().min(1, {
     message: "O link do produto é obrigatório",
@@ -59,7 +60,7 @@ const PRODUCTS_CATEGORY_OPTIONS = [
   },
   {
     value: Category.Eletronicos,
-    label: "Eletronicos",
+    label: "Eletrônicos",
   },
   {
     value: Category.Outros,
@@ -91,13 +92,21 @@ const EditProductsButton = ({
     },
   });
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit = async (data: FormSchema) => {
     try {
-      await upsertProducts(data);
+      setLoading(true);
+      await upsertProducts({
+        id: defaultValues?.id,  // Aqui estamos passando o 'id' para o upsert
+        ...data,
+      });
       setIsOpen(false);
       form.reset();
     } catch (error) {
-      console.error(error);
+      console.error("Erro ao salvar o produto:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -152,7 +161,7 @@ const EditProductsButton = ({
                   <FormLabel>Categoria</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    value={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -178,7 +187,7 @@ const EditProductsButton = ({
                 <FormItem>
                   <FormLabel>Link da Imagem</FormLabel>
                   <FormControl>
-                    <Input placeholder="Link da Imagem..." {...field} />
+                    <Input placeholder="Link da Imagem..." {...field} readonly />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -203,7 +212,9 @@ const EditProductsButton = ({
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button type="submit">Adicionar</Button>
+              <Button type="submit" disabled={loading}>
+                {loading ? "Carregando..." : "Adicionar"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>
@@ -213,3 +224,4 @@ const EditProductsButton = ({
 };
 
 export default EditProductsButton;
+
