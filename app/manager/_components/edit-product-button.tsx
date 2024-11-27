@@ -187,7 +187,7 @@ const EditProductsButton = ({
                 <FormItem>
                   <FormLabel>Link da Imagem</FormLabel>
                   <FormControl>
-                    <Input placeholder="Link da Imagem..." {...field} readonly />
+                    <Input placeholder="Link da Imagem..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
