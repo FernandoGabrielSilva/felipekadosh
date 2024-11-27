@@ -32,6 +32,7 @@ import {
 import { useState } from "react";
 import { UploadDropzone } from "../utils/uploadthing";
 import { upsertProducts } from "../_actions/add-product";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -104,10 +105,12 @@ const UpsertProductsButton = ({
         id: defaultValues?.id, // Aqui estamos passando o 'id' para o upsert
         ...data,
       });
+      toast.success("Produto Adicionado/Atualizado!");
       setIsOpen(false);
       form.reset();
     } catch (error) {
       console.error("Erro ao salvar o produto:", error);
+      toast.error("Não foi possivel Adicionado/Atualizado produto.");
     } finally {
       setLoading(false);
     }

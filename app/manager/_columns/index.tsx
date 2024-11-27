@@ -11,7 +11,7 @@ export const productsColumns: ColumnDef<Products>[] = [
     accessorKey: "name",
     header: "Título",
     cell: ({ row: { original: products } }) => (
-      <p className="text-wrap max-h-[2.2rem] text-ellipsis max-w-[200px] min-w-[50px]">
+      <p className="text-wrap max-h-[2.2rem] text-ellipsis max-w-[350px] min-w-[70px]">
         {products.name}
       </p>
     ),
@@ -20,7 +20,7 @@ export const productsColumns: ColumnDef<Products>[] = [
     accessorKey: "description",
     header: "Descrição",
     cell: ({ row: { original: products } }) => (
-      <p className="text-wrap max-h-[2.2rem] text-ellipsis max-w-[200px] min-w-[50px]">
+      <p className="text-wrap max-h-[2.2rem] text-ellipsis max-w-[350px] min-w-[70px]">
         {products.description}
       </p>
     ),
@@ -42,9 +42,10 @@ export const productsColumns: ColumnDef<Products>[] = [
         href={products.linkUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-primary text-wrap max-h-[2.2rem] text-ellipsis max-w-[200px] min-w-[50px]"
       >
-        {products.linkUrl}
+	      <p className="font-bold text-primary text-wrap max-h-[2.2rem] text-ellipsis max-w-[250px] min-w-[50px]">
+		{products.linkUrl}
+	      </p>
       </a>
     ),
   },
