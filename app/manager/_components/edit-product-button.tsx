@@ -2,11 +2,12 @@
 import { z } from "zod";
 import { Category, Products } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, useForm } from "react-hook-form";
 import { upsertProducts } from "@/app/_actions/add-product";
 import { Button } from "@/app/_components/ui/button";
 import { DialogHeader, DialogFooter } from "@/app/_components/ui/dialog";
+import { useForm } from "react-hook-form";
 import {
+  Form,
   FormField,
   FormItem,
   FormLabel,
@@ -15,7 +16,6 @@ import {
 } from "@/app/_components/ui/form";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogTitle,
   DialogDescription,
@@ -111,7 +111,6 @@ const EditProductsButton = ({
         }
       }}
     >
-      <DialogTrigger asChild></DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Editar Produto</DialogTitle>
