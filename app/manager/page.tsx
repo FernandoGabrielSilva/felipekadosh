@@ -47,6 +47,9 @@ const Manager = async ({
       createdAt: true,
       updatedAt: true,
     },
+    orderBy: {
+      updatedAt: "desc";
+    },
   });
 
   return (
