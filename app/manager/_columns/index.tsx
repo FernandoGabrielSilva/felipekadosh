@@ -65,7 +65,7 @@ export const productsColumns: ColumnDef<Products>[] = [
     cell: ({ row: { original: products } }) => {
       // Log para desenvolvimento, pode ser removido na produção
       if (process.env.NODE_ENV === "development") {
-        console.log("Produto para ações:", products);
+        //console.log("Produto para ações:", products);
       }
       return (
         <div className="space-x-1">

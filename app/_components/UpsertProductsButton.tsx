@@ -1,35 +1,37 @@
 "use client";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import { z } from "zod";
 import { Category, Products } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { upsertProducts } from "@/app/_actions/add-product";
-import { Button } from "@/app/_components/ui/button";
-import { DialogHeader, DialogFooter } from "@/app/_components/ui/dialog";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
-} from "@/app/_components/ui/form";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-  DialogClose,
-} from "@/app/_components/ui/dialog";
+} from "./ui/form";
+import { Input } from "./ui/input";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
-} from "@/app/_components/ui/select";
-import { Input } from "@/app/_components/ui/input";
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { useState } from "react";
+import { UploadDropzone } from "../utils/uploadthing";
+import { upsertProducts } from "../_actions/add-product";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -42,7 +44,7 @@ const formSchema = z.object({
     required_error: "A categoria do produto é obrigatória",
   }),
   imageUrl: z.string().trim().min(1, {
-    message: "A imagem do produto é obrigatória",
+    message: "A imagem do produto é obrigatório",
   }),
   linkUrl: z.string().trim().min(1, {
     message: "O link do produto é obrigatório",
@@ -60,7 +62,7 @@ const PRODUCTS_CATEGORY_OPTIONS = [
   },
   {
     value: Category.Eletronicos,
-    label: "Eletrônicos",
+    label: "Eletronicos",
   },
   {
     value: Category.Outros,
@@ -76,11 +78,12 @@ interface DefaultProp {
   defaultValues?: Products;
 }
 
-const EditProductsButton = ({
+const UpsertProductsButton = ({
   isOpen,
   setIsOpen,
   defaultValues,
 }: DefaultProp) => {
+  const [images, setImages] = useState("");
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues ?? {
@@ -98,7 +101,7 @@ const EditProductsButton = ({
     try {
       setLoading(true);
       await upsertProducts({
-        id: defaultValues?.id,  // Aqui estamos passando o 'id' para o upsert
+        id: defaultValues?.id, // Aqui estamos passando o 'id' para o upsert
         ...data,
       });
       setIsOpen(false);
@@ -122,11 +125,31 @@ const EditProductsButton = ({
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Editar Produto</DialogTitle>
+          <DialogTitle>Informações do Produto</DialogTitle>
           <DialogDescription>Insira as informações</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="w-full relative">
+              {images ? (
+                <p className="hidden"></p>
+              ) : (
+                <UploadDropzone
+                  appearance={{
+                    container: "w-full h-full",
+                    uploadIcon: "hidden",
+                    allowedContent: "hidden",
+                  }}
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res) => {
+                    setImages(res[0].appUrl);
+                  }}
+                  onUploadError={(error: Error) => {
+                    alert(`ERROR! ${error.message}`);
+                  }}
+                />
+              )}
+            </div>
             <FormField
               control={form.control}
               name="name"
@@ -161,7 +184,7 @@ const EditProductsButton = ({
                   <FormLabel>Categoria</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    value={field.value}
+                    defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -180,19 +203,39 @@ const EditProductsButton = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="imageUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Link da Imagem</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Link da Imagem..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {images ? (
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Link da Imagem</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Link da Imagem..."
+                        {...field}
+                        value={images}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem className="hidden">
+                    <FormLabel>Link da Imagem</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Link da Imagem..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               control={form.control}
               name="linkUrl"
@@ -213,7 +256,7 @@ const EditProductsButton = ({
                 </Button>
               </DialogClose>
               <Button type="submit" disabled={loading}>
-                {loading ? "Carregando..." : "Adicionar"}
+                {loading ? "Carregando..." : "Confirmar"}
               </Button>
             </DialogFooter>
           </form>
@@ -223,5 +266,4 @@ const EditProductsButton = ({
   );
 };
 
-export default EditProductsButton;
-
+export default UpsertProductsButton;

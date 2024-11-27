@@ -1,9 +1,9 @@
 "use client";
 import { useState, useCallback } from "react";
-import EditProductsButton from "./edit-product-button";
 import { PencilIcon } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import { Products } from "@prisma/client";
+import UpsertProductsButton from "@/app/_components/UpsertProductsButton";
 
 interface EditProductsProps {
   products: Products;
@@ -28,7 +28,7 @@ const EditButton = ({ products }: EditProductsProps) => {
         <PencilIcon />
       </Button>
 
-      <EditProductsButton
+      <UpsertProductsButton
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}
         defaultValues={products}
@@ -38,4 +38,3 @@ const EditButton = ({ products }: EditProductsProps) => {
 };
 
 export default EditButton;
-

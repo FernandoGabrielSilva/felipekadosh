@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import { db } from "../_lib/prisma";
 import { DataTable } from "../_components/ui/data-table";
 import { productsColumns } from "./_columns";
-import AddProductsButton from "../_components/AddProductsButton";
 import SearchInput from "../_components/SearchInput";
+import AddProductButton from "../_components/AddProductButton";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
@@ -62,7 +62,8 @@ const Manager = async ({
         <div className="flex flex-col items-center w-[90%]">
           <div className="w-full flex justify-between items-center pb-4">
             <h1 className="md:text-2xl font-bold">Produtos</h1>
-            <AddProductsButton /> {/* Botão para adicionar produtos */}
+            <AddProductButton />
+            {/* Botão para adicionar produtos */}
           </div>
 
           {/* Componente de pesquisa */}
