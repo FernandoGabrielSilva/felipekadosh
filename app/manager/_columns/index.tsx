@@ -36,20 +36,6 @@ export const productsColumns: ColumnDef<Products>[] = [
     ),
   },
   {
-    accessorKey: "imageUrl",
-    header: "Link da Imagem",
-    cell: ({ row: { original: products } }) => (
-      <a
-        href={products.imageUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-primary text-wrap max-h-[2.2rem] text-ellipsis max-w-[200px] min-w-[50px]"
-      >
-        {products.imageUrl}
-      </a>
-    ),
-  },
-  {
     accessorKey: "linkUrl",
     header: "Link do Produto",
     cell: ({ row: { original: products } }) => (
