@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "./_components/ThemeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh",
@@ -31,6 +32,7 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
         </ClerkProvider>
+        <Toaster />
       </body>
     </html>
   );

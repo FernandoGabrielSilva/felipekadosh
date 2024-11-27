@@ -14,7 +14,7 @@ const AddProductButton = () => {
 
   return (
     <>
-      <Button className="flex items-center md:text-base">
+      <Button className="flex items-center md:text-base" onClick={toggleDialog}>
         Adicionar Produto <PackagePlus />
       </Button>
 

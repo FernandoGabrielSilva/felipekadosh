@@ -1,10 +1,9 @@
 "use client";
 
-import { Button } from "@/app/_components/ui/button";
 import EditButton from "../_components/EditButton";
-import { TrashIcon } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Products } from "@prisma/client";
+import DeleteButton from "../_components/DeleteButton";
 
 // Definindo as colunas da tabela de produtos
 export const productsColumns: ColumnDef<Products>[] = [
@@ -72,9 +71,7 @@ export const productsColumns: ColumnDef<Products>[] = [
           {/* Botão de editar */}
           <EditButton products={products} />
           {/* Botão de deletar */}
-          <Button variant="ghost" size="icon" className="text-muted-foreground">
-            <TrashIcon />
-          </Button>
+          <DeleteButton productId={ products.id} />
         </div>
       );
     },
