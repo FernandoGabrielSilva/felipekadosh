@@ -71,7 +71,7 @@ const Manager = async ({
 
           {/* Componente de pesquisa */}
           <div className="w-full">
-            <SearchInput />
+            <SearchInput input="Filtrar por nome..." />
           </div>
 
           {/* Tabela de dados */}

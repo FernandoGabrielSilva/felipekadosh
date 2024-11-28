@@ -145,7 +145,7 @@ const UpsertProductsButton = ({
                   }}
                   endpoint="imageUploader"
                   onClientUploadComplete={(res) => {
-                    setImages(res[0].appUrl);
+                    setImages(res[0].url);
                   }}
                   onUploadError={(error: Error) => {
                     alert(`ERROR! ${error.message}`);
@@ -218,6 +218,7 @@ const UpsertProductsButton = ({
                         placeholder="Link da Imagem..."
                         {...field}
                         value={images}
+                        maxLength={200}
                       />
                     </FormControl>
                     <FormMessage />
