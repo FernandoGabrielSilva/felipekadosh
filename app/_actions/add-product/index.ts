@@ -36,6 +36,7 @@ export const upsertProducts = async (params: UpsertProductsParams) => {
 
     // Revalidação do cache após a operação
     revalidatePath("/manager");
+    revalidatePath("/products");
   } catch (error) {
     if (error instanceof Error) {
       console.error("Erro ao salvar o produto:", error.message);
@@ -45,4 +46,3 @@ export const upsertProducts = async (params: UpsertProductsParams) => {
     throw new Error("Erro ao salvar o produto.");
   }
 };
-

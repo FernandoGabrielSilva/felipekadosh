@@ -16,4 +16,5 @@ export const DeleteProduct = async ({ productId }: DeleteProductSchema) => {
     },
   });
   revalidatePath("/manager");
+  revalidatePath("/products");
 };
