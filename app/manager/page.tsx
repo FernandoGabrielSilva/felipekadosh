@@ -81,7 +81,7 @@ const Manager = async ({
           </div>
 
           {/* Componente de pesquisa */}
-          <div className="w-full gap-1">
+          <div className="w-full flex flex-col gap-2 items-end">
             <SearchInput input="Filtrar por nome..." />
             {/* Filtro por categoria */}
             <CategoryFilter

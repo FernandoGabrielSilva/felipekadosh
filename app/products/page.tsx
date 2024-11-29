@@ -45,7 +45,7 @@ const Products = async ({
     <main className="flex flex-col items-center">
       <div className="w-[95%]">
         {/* Pesquisa */}
-        <div className="flex w-full mt-6 mb-4 gap-1">
+        <div className="flex flex-col w-full mt-6 mb-4 gap-2 items-end">
           <SearchInput input="Pesquisar..." />
           {/* Filtro por categoria */}
           <CategoryFilter
