@@ -38,14 +38,10 @@ export const productsColumns: ColumnDef<Products>[] = [
     accessorKey: "linkUrl",
     header: "Link do Produto",
     cell: ({ row: { original: products } }) => (
-      <a
-        href={products.linkUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-	      <p className="font-bold text-primary text-wrap max-h-[2.2rem] text-ellipsis max-w-[250px] min-w-[50px]">
-		{products.linkUrl}
-	      </p>
+      <a href={products.linkUrl} target="_blank" rel="noopener noreferrer">
+        <p className="font-bold text-primary text-wrap max-h-[2.2rem] text-ellipsis max-w-[250px] min-w-[50px]">
+          {products.linkUrl}
+        </p>
       </a>
     ),
   },
@@ -72,7 +68,7 @@ export const productsColumns: ColumnDef<Products>[] = [
           {/* Botão de editar */}
           <EditButton products={products} />
           {/* Botão de deletar */}
-          <DeleteButton productId={ products.id} />
+          <DeleteButton productId={products.id} />
         </div>
       );
     },

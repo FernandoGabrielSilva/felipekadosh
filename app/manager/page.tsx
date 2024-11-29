@@ -6,7 +6,7 @@ import { db } from "../_lib/prisma";
 import { DataTable } from "../_components/ui/data-table";
 import { productsColumns } from "./_columns";
 import SearchInput from "../_components/SearchInput";
-import AddProductButton from "../_components/AddProductButton";
+import AddProductButton from "./_components/AddProductButton";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",

@@ -1,8 +1,8 @@
 "use client";
 import { useState, useCallback } from "react";
-import { Button } from "@/app/_components/ui/button";
 import { PackagePlus } from "lucide-react";
 import UpsertProductsButton from "./UpsertProductsButton";
+import { Button } from "@/app/_components/ui/button";
 
 const AddProductButton = () => {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);

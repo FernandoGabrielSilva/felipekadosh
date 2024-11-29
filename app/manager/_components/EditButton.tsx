@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { PencilIcon } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import { Products } from "@prisma/client";
-import UpsertProductsButton from "@/app/_components/UpsertProductsButton";
+import UpsertProductsButton from "./UpsertProductsButton";
 
 interface EditProductsProps {
   products: Products;

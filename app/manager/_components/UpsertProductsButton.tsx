@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "./ui/button";
+import { Button } from "@/app/_components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -8,7 +8,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "./ui/dialog";
+} from "@/app/_components/ui/dialog";
 import { z } from "zod";
 import { Category, Products } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,15 +20,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
+} from "@/app/_components/ui/form";
+import { Input } from "@/app/_components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "@/app/_components/ui/select";
 import { useState } from "react";
 import { UploadDropzone } from "../utils/uploadthing";
 import { upsertProducts } from "../_actions/add-product";
