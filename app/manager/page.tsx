@@ -9,6 +9,7 @@ import SearchInput from "../_components/SearchInput";
 import AddProductButton from "./_components/AddProductButton";
 import CategoryFilter from "../_components/CategoryFilter";
 import { Category } from "@prisma/client";
+import PaginationComponent from "../_components/PaginationComponent";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
@@ -21,6 +22,8 @@ const Manager = async ({
   searchParams?: {
     query?: string;
     category?: Category;
+    page?: string; // Página atual
+    perPage?: string; // Itens por página
   };
 }) => {
   // Verifica se o usuário está autenticado
@@ -32,6 +35,9 @@ const Manager = async ({
   // Obtém os parâmetros de pesquisa 'query' e 'category', caso existam
   const query = searchParams?.query || "";
   const selectedCategory = searchParams?.category || "all";
+  const page = parseInt(searchParams?.page || "1", 10); // Página padrão é 1
+  const perPage = parseInt(searchParams?.perPage || "10", 10); // Padrão de 10 itens por página
+  const skip = (page - 1) * perPage; // Calcular o deslocamento
 
   // Realiza a busca de produtos no banco de dados
   const products = await db.products.findMany({
@@ -55,13 +61,23 @@ const Manager = async ({
     orderBy: {
       updatedAt: "desc",
     },
+    skip,
+    take: perPage,
   });
 
-  // Obtém as categorias disponíveis
-  const categories = await db.products.findMany({
-    select: { category: true },
-    distinct: ["category"], // Evita categorias duplicadas
+  // Conta o total de produtos
+  const totalProducts = await db.products.count({
+    where: {
+      name: {
+        contains: query,
+        mode: "insensitive",
+      },
+      ...(selectedCategory !== "all" && { category: selectedCategory }),
+    },
   });
+
+  // Total de páginas
+  const totalPages = Math.ceil(totalProducts / perPage);
 
   return (
     <main>
@@ -85,7 +101,7 @@ const Manager = async ({
             <SearchInput input="Filtrar por nome..." />
             {/* Filtro por categoria */}
             <CategoryFilter
-              categories={categories.map((cat) => cat.category)}
+              categories={["all", "Category1", "Category2"]} // Substitua pelas categorias reais
               selectedCategory={selectedCategory}
             />
           </div>
@@ -93,6 +109,10 @@ const Manager = async ({
           {/* Tabela de dados */}
           <div className="w-full h-dvh mt-1">
             <DataTable columns={productsColumns} data={products} />
+          </div>
+          {/* Paginação */}
+          <div className="mt-6 flex justify-center">
+            <PaginationComponent currentPage={page} totalPages={totalPages} />
           </div>
         </div>
       </div>
