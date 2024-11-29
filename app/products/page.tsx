@@ -58,6 +58,12 @@ const Products = async ({
   // Total de páginas
   const totalPages = Math.ceil(totalProducts / perPage);
 
+  // Obtem as categorias disponiveis
+  const categories = await db.products.findMany({
+    select: { category: true },
+    distinct: ["category"], //Evita categorias duplicadas
+  });
+
   return (
     <main className="flex flex-col items-center">
       <div className="w-[95%]">
@@ -66,7 +72,7 @@ const Products = async ({
           <SearchInput input="Pesquisar..." />
           {/* Filtro por categoria */}
           <CategoryFilter
-            categories={["all", "Category1", "Category2"]} // Substitua pelas categorias reais
+            categories={categories.map((cat) => cat.category)} // Substitua pelas categorias reais
             selectedCategory={selectedCategory}
           />
         </div>

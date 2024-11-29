@@ -79,6 +79,12 @@ const Manager = async ({
   // Total de páginas
   const totalPages = Math.ceil(totalProducts / perPage);
 
+  // Obtem as categorias disponiveis
+  const categories = await db.products.findMany({
+    select: { category: true },
+    distinct: ["category"], //Evita categorias duplicadas
+  });
+
   return (
     <main>
       <div className="flex items-center justify-center py-6">
@@ -101,13 +107,13 @@ const Manager = async ({
             <SearchInput input="Filtrar por nome..." />
             {/* Filtro por categoria */}
             <CategoryFilter
-              categories={["all", "Category1", "Category2"]} // Substitua pelas categorias reais
+              categories={categories.map((cat) => cat.category)} // Substitua pelas categorias reais
               selectedCategory={selectedCategory}
             />
           </div>
 
           {/* Tabela de dados */}
-          <div className="w-full h-dvh mt-1">
+          <div className="w-full mt-1">
             <DataTable columns={productsColumns} data={products} />
           </div>
           {/* Paginação */}
