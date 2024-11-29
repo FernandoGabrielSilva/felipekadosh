@@ -8,14 +8,36 @@ export const metadata: Metadata = {
   description: "Gerenciado por Felipe Kadosh",
 };
 
-const Products = async () => {
-  const products = await db.products.findMany({});
+const Products = async ({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+  };
+}) => {
+  // Obtém o parâmetro de pesquisa 'query', caso exista
+  const query = searchParams?.query || "";
+
+  // Realiza a busca de produtos no banco de dados
+  const products = await db.products.findMany({
+    where: {
+      name: {
+        contains: query, // Filtra os produtos pelo nome, insensível a maiúsculas e minúsculas
+        mode: "insensitive",
+      },
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+  });
   return (
     <main className="flex flex-col items-center">
       <div className="w-[95%]">
+        {/* Pesquisa */}
         <div className="w-full mt-6 mb-4">
           <SearchInput input="Pesquisar..." />
         </div>
+        {/* Lista de Produtos */}
         <div className="grid grid-cols-2 gap-2 w-full md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
           {products.map((product) => (
             <ProductsItem product={product} key={product.id} />
