@@ -7,9 +7,11 @@ import { CircleArrowDown, CircleArrowRight, Clock } from "lucide-react";
 export default function Home() {
   return (
     <main>
+      {/* INICIAL */}
       <section className="flex items-center h-dvh">
         <div className="flex items-center p-4 md:justify-center">
           <div className="grid grid-cols-1 items-center relative -mt-40 w-full h-full md:mt-0 md:grid-cols-2 md:w-[80%]">
+            {/* IMAGEM */}
             <div className="w-full h-full">
               <Image
                 src="https://i.postimg.cc/HxNFhyCK/20240420-2134222.png"
@@ -19,6 +21,7 @@ export default function Home() {
                 className="w-full h-auto"
               />
             </div>
+            {/* TEXTO */}
             <div className="absolute top-2/3 md:static">
               <div>
                 <h2 className="text-2xl text-center font-bold pt-5 md:text-4xl md:text-start">
@@ -29,11 +32,12 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-lg text-center font-normal pt-5 md:text-2xl md:text-justify">
-                  Tenha sua Equipe de Vendas Interna estruturada em 45 dias e
-                  aumente suas vendas em 30% através do método que gerou 120
+                  Tenha sua Equipe de Vendas Interna estruturada em 37 dias e
+                  aumente suas vendas em 30% através do método que gerou 1.5
                   milhões, sem aumentar o investimento em anúncios e com menos
-                  de 4 horas por semana.
+                  de 5 horas por semana.
                 </p>
+                {/* BOTÃO QUE LEVA PRO WHATSAPP */}
                 <div className="flex justify-center p-4 md:p-0 md:my-5">
                   <Link href="#" className="w-full">
                     <Button variant="default" className="w-full md:text-xl">
@@ -46,6 +50,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* EQUIPE DE VENDAS */}
       <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
         <div className="flex flex-col items-center">
           <div className="flex justify-center mb-2">
@@ -60,6 +65,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="flex items-center justify-center my-3 md:w-[70%]">
+            {/* CARDS */}
             <div className="grid grid-cols-1 w-[95%] gap-3 md:grid-cols-2">
               <CardsComponents
                 title="Recrutamento e Seleção"
@@ -74,16 +80,18 @@ export default function Home() {
             CRM, Omnichannel, VOIP e Sales Engagement."
               />
               <CardsComponents
-                title="Método de Gestão"
+                title="Comunicação"
                 className="md:col-span-2"
-                description="Desenvolvemos a estrutura de gestão que será utilizada pelas
-            lideranças, atravês da criação do dashboard de indicadores, ritos de
-            gestão, plano de carreira e processo de onboarding da equipe."
+                description="
+                Aumentamos a eficiência da equipe comercial, através da criação de
+                ferramentas de comunicação comercial e de marketing, como
+                Omnichannel, VOIP e Sales Engagement."
               />
             </div>
           </div>
         </div>
       </section>
+      {/* MAQUINA DE VENDAS */}
       <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
         <div className="flex flex-col items-center">
           <div className="flex justify-center mb-2">
@@ -98,6 +106,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="flex items-center justify-center my-3">
+            {/* CARDS */}
             <div className="grid grid-cols-1 w-[95%] gap-3 md:grid-cols-2 md:w-[70%]">
               <CardsComponents
                 title="Kick-Off do Projeto"
@@ -114,11 +123,12 @@ export default function Home() {
                 description="Objetivos: estruturar o processo que a equipe comercial irá executar para reduzir a variabilidade de ações e gerar receita previsível."
               />
               <CardsComponents
-                title="Método de Gestão"
+                title="Comunicação"
                 className="text-primary"
                 children={<Clock size={15} className="text-primary" />}
                 subtitulo="Duração: 1 Semanas"
-                description="Objetivo: implementar a rotina de gestão e melhoria contínua, e os indicadores de performance do setor comercial."
+                description="Objetivo: Aumentamos a eficiência da equipe comercial, através da criação de
+                ferramentas de comunicação comercial e de marketing."
               />
               <CardsComponents
                 title="Treinamento da Equipe"
@@ -138,6 +148,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* ENTREGAVEIS DA CONSULTA */}
       <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
         <div>
           <div className="flex justify-center mb-2">
@@ -150,6 +161,7 @@ export default function Home() {
               <span className="text-primary">Entregáveis</span> da Consulta
             </h2>
           </div>
+          {/* FUNIL */}
           <div>
             <ul className="grid grid-cols-1 gap-2 md:grid-cols-2  md:text-xl md:gap-4">
               <li className="flex gap-2 border-l-4 items-center">
@@ -169,20 +181,8 @@ export default function Home() {
                 de prospecção
               </li>
               <li className="flex gap-2 border-l-4 items-center">
-                <CircleArrowRight size={20} className="text-primary" /> Playbook
-                de vendas
-              </li>
-              <li className="flex gap-2 border-l-4 items-center">
                 <CircleArrowRight size={20} className="text-primary" /> Matriz
                 de objeções
-              </li>
-              <li className="flex gap-2 border-l-4 items-center">
-                <CircleArrowRight size={20} className="text-primary" />
-                Dashboard de indicações
-              </li>
-              <li className="flex gap-2 border-l-4 items-center">
-                <CircleArrowRight size={20} className="text-primary" /> Metas,
-                remuneração e comissionamento
               </li>
               <li className="flex gap-2 border-l-4 items-center">
                 <CircleArrowRight size={20} className="text-primary" />
@@ -204,6 +204,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* RECRUTAMENTO */}
       <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
         <div className="md:w-[70%]">
           <div className="flex justify-center mb-2">
@@ -253,38 +254,71 @@ export default function Home() {
         </div>
       </section>
       <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col w-full items-center md:w-[70%]">
+          <div className="flex justify-center mb-2">
+            <h3 className="text-center border rounded-full py-2 px-4 text-base">
+              Produtos
+            </h3>
+          </div>
+          <div className="flex flex-col items-center mt-4">
+            <p className="text-center font-medium text-wrap text-xl md:text-2xl md:w-[60%]">
+              Vender não é um dom, mas é uma arte reproduzida dos seu
+              conhecimentos, e agora te pergunto, será que você está tendo
+              conhecimentos suficientes?
+            </p>
+          </div>
+          <div className="flex justify-center p-4 md:my-4 md:w-[40%]">
+            <Link href="/products" className="w-full">
+              <Button variant="default" className="w-full md:text-xl">
+                BUSCAR CONHECIMENTO
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+      {/* SOBRE */}
+      <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
+        <div className="flex flex-col w-full items-center">
           <div className="flex justify-center mb-2">
             <h3 className="text-center border rounded-full py-2 px-4 text-base">
               Sobre
             </h3>
           </div>
-          <div className="md:w-[70%]">
+          <div className="md:w-[70%] flex flex-col items-start">
             <div className="flex my-3">
               <h2 className="font-semibold text-wrap text-4xl px-3">Quem é:</h2>
             </div>
-            <div className="flex my-3">
-              <h2 className="font-medium text-wrap text-2xl px-3 text-primary">
+            <div className="flex flex-col my-3">
+              <h2 className="font-medium text-wrap text-2xl px-3 text-primary mb-2">
                 Felipe Kadosh
               </h2>
+              <p className="text-center font-medium text-wrap text-xl md:text-2xl">
+                Entusiasta de processos comerciais e da formação de equipes
+                fortes e orientadas por propósito. Atua há 5 anos na área de
+                vendas, onde descobriu sua paixão por conectar pessoas e
+                negócios a soluções de alto valor agregado. Já agregou mais de 1
+                milhão em receita aos seus clientes e às empresas em que
+                trabalhou, onde pode conhecer as boas práticas que fazem grandes
+                empresas obterem sucesso com suas máquinas de vendas.
+              </p>
             </div>
           </div>
           <div className="flex flex-col items-center md:w-[70%]">
             <div className="md:w-[60%]">
-              <h3 className="text-center font-medium text-wrap text-xl md:text-4xl">
+              <h3 className="text-center font-medium text-wrap text-xl md:text-2xl">
                 Tenha sua
                 <span className="text-primary"> Equipe de Vendas Interna </span>
-                estruturada em 45 dias e
+                estruturada em 37 dias e
                 <span className="text-primary">
                   {" "}
                   aumente suas vendas em 30%{" "}
                 </span>
                 através do método que gerou
-                <span className="text-primary"> 120 milhões</span>, sem aumentar
-                o investimento em anúncios e com menos de 4 horas por semana
+                <span className="text-primary"> 1.5 milhões</span>, sem aumentar
+                o investimento em anúncios e com menos de 5 horas por semana
               </h3>
             </div>
-            <div className="flex justify-center p-4 md:my-4">
+            <div className="flex justify-center p-4 md:my-4 md:w-[50%]">
               <Link href="#" className="w-full">
                 <Button variant="default" className="w-full md:text-xl">
                   AGENDAR UMA CONSULTORIA
