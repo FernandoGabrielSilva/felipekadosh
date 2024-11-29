@@ -37,12 +37,18 @@ const Products = async ({
         <div className="w-full mt-6 mb-4">
           <SearchInput input="Pesquisar..." />
         </div>
-        {/* Lista de Produtos */}
-        <div className="grid grid-cols-2 gap-2 w-full md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
-          {products.map((product) => (
-            <ProductsItem product={product} key={product.id} />
-          ))}
-        </div>
+        {/* Verifica se há produtos */}
+        {products.length === 0 ? (
+          <div className="text-center mt-8">
+            <p className="text-gray-500 text-lg">Nenhum produto encontrado.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-2 w-full md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
+            {products.map((product) => (
+              <ProductsItem product={product} key={product.id} />
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );
