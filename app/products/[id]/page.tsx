@@ -21,9 +21,9 @@ const ProductPage = async ({ params }: ProductPageProps) => {
 
   // Renderizar a página com os dados do produto
   return (
-    <main className="flex flex-col lg:flex-row">
+    <main className="flex flex-col lg:flex-row lg:h-full">
       {/* IMAGEM */}
-      <div className="relative w-full h-[250px] lg:h-full lg:w-1/2">
+      <div className="relative w-full h-[250px] lg:h-dvh lg:w-1/2">
         <Image
           src={product?.imageUrl}
           alt={product?.name}
@@ -47,7 +47,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         /> */}
       </div>
       {/* TEXTO */}
-      <div className="flex flex-col lg:h-full lg:w-1/2">
+      <div className="flex flex-col lg:h-dvh lg:w-1/2">
         <div className="p-5 border-b border-solid">
           <h1 className="text-xl font-bold">{product.name}</h1>
           <p className="font-semibold text-gray-500">

@@ -7,6 +7,8 @@ import { DataTable } from "../_components/ui/data-table";
 import { productsColumns } from "./_columns";
 import SearchInput from "../_components/SearchInput";
 import AddProductButton from "./_components/AddProductButton";
+import CategoryFilter from "../_components/CategoryFilter";
+import { Category } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
@@ -18,6 +20,7 @@ const Manager = async ({
 }: {
   searchParams?: {
     query?: string;
+    category?: Category;
   };
 }) => {
   // Verifica se o usuário está autenticado
@@ -26,8 +29,9 @@ const Manager = async ({
     redirect("/login"); // Se não estiver autenticado, redireciona
   }
 
-  // Obtém o parâmetro de pesquisa 'query', caso exista
+  // Obtém os parâmetros de pesquisa 'query' e 'category', caso existam
   const query = searchParams?.query || "";
+  const selectedCategory = searchParams?.category || "all";
 
   // Realiza a busca de produtos no banco de dados
   const products = await db.products.findMany({
@@ -36,6 +40,7 @@ const Manager = async ({
         contains: query, // Filtra os produtos pelo nome, insensível a maiúsculas e minúsculas
         mode: "insensitive",
       },
+      ...(selectedCategory !== "all" && { category: selectedCategory }), // Aplica filtro de categoria, se selecionada
     },
     select: {
       id: true,
@@ -50,6 +55,12 @@ const Manager = async ({
     orderBy: {
       updatedAt: "desc",
     },
+  });
+
+  // Obtém as categorias disponíveis
+  const categories = await db.products.findMany({
+    select: { category: true },
+    distinct: ["category"], // Evita categorias duplicadas
   });
 
   return (
@@ -70,8 +81,13 @@ const Manager = async ({
           </div>
 
           {/* Componente de pesquisa */}
-          <div className="w-full">
+          <div className="w-full gap-1">
             <SearchInput input="Filtrar por nome..." />
+            {/* Filtro por categoria */}
+            <CategoryFilter
+              categories={categories.map((cat) => cat.category)}
+              selectedCategory={selectedCategory}
+            />
           </div>
 
           {/* Tabela de dados */}

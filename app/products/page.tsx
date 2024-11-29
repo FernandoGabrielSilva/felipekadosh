@@ -2,6 +2,8 @@ import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 import SearchInput from "../_components/SearchInput";
 import { db } from "../_lib/prisma";
 import ProductsItem from "../_components/ProductsItem";
+import { Category } from "@prisma/client";
+import CategoryFilter from "../_components/CategoryFilter";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Producs",
@@ -13,10 +15,12 @@ const Products = async ({
 }: {
   searchParams?: {
     query?: string;
+    category?: Category;
   };
 }) => {
-  // Obtém o parâmetro de pesquisa 'query', caso exista
+  // Obtém os parâmetros de pesquisa 'query' e 'category', caso existam
   const query = searchParams?.query || "";
+  const selectedCategory = searchParams?.category || "all";
 
   // Realiza a busca de produtos no banco de dados
   const products = await db.products.findMany({
@@ -25,17 +29,29 @@ const Products = async ({
         contains: query, // Filtra os produtos pelo nome, insensível a maiúsculas e minúsculas
         mode: "insensitive",
       },
+      ...(selectedCategory !== "all" && { category: selectedCategory }), // Aplica filtro de categoria, se selecionada
     },
     orderBy: {
       updatedAt: "desc",
     },
   });
+
+  // Obtém as categorias disponíveis
+  const categories = await db.products.findMany({
+    select: { category: true },
+    distinct: ["category"], // Evita categorias duplicadas
+  });
   return (
     <main className="flex flex-col items-center">
       <div className="w-[95%]">
         {/* Pesquisa */}
-        <div className="w-full mt-6 mb-4">
+        <div className="flex w-full mt-6 mb-4 gap-1">
           <SearchInput input="Pesquisar..." />
+          {/* Filtro por categoria */}
+          <CategoryFilter
+            categories={categories.map((cat) => cat.category)}
+            selectedCategory={selectedCategory}
+          />
         </div>
         {/* Verifica se há produtos */}
         {products.length === 0 ? (
