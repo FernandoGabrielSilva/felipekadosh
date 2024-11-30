@@ -34,7 +34,7 @@ const ShareButton = ({ title, text }: ShareButtonProp) => {
       <Button
         size="icon"
         variant="outline"
-        className="absolute right-4 top-4 p-2"
+        className="absolute right-4 top-4 p-2 md:hidden"
         asChild
         onClick={share}
       >
