@@ -5,10 +5,51 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ShareButton from "../_components/ShareButton";
+import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 
 interface ProductPageProps {
   params: { id: string };
 }
+
+// Função para configurar a metadata da página
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
+  const product = await db.products.findUnique({ where: { id: params.id } });
+
+  if (!product) {
+    return {
+      title: "Produto não encontrado",
+      description: "O produto solicitado não existe.",
+    };
+  }
+
+  const productUrl = `https://felipekadosh/products/${params.id}`;
+
+  return {
+    title: product.name,
+    description: product.description.slice(0, 150),
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      url: productUrl,
+      images: [
+        {
+          url: product.imageUrl,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description: product.description,
+      images: [product.imageUrl],
+    },
+  };
+}
+
+// Componente principal da página
 
 const ProductPage = async ({ params }: ProductPageProps) => {
   //Chamar banco de dados
