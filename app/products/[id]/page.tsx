@@ -62,7 +62,11 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         </div>
         <div className="mt-3 flex flex-col items-center">
           <Button variant="default" className="w-[90%]" asChild>
-            <Link href={product.linkUrl} target="_blank">
+            <Link
+              href={product.linkUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               ADQUIRIR
             </Link>
           </Button>
