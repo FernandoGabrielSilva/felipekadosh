@@ -25,17 +25,21 @@ export async function generateMetadata({
   }
 
   const productUrl = `https://felipekadosh/products/${params.id}`;
+  const imageUrl = product.imageUrl;
 
   return {
     title: product.name,
     description: product.description.slice(0, 150),
     openGraph: {
+      type: "website",
       title: product.name,
       description: product.description,
       url: productUrl,
       images: [
         {
-          url: product.imageUrl,
+          url: imageUrl,
+          width: 1200,
+          height: 630,
           alt: product.name,
         },
       ],
@@ -44,11 +48,10 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: product.name,
       description: product.description,
-      images: [product.imageUrl],
+      images: [imageUrl],
     },
   };
 }
-
 // Componente principal da página
 
 const ProductPage = async ({ params }: ProductPageProps) => {
