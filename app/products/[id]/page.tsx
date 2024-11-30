@@ -4,7 +4,7 @@ import { ChevronLeftIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-//import ShareButton from "../_components/ShareButton";
+import ShareButton from "../_components/ShareButton";
 
 interface ProductPageProps {
   params: { id: string };
@@ -40,11 +40,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
             <ChevronLeftIcon />
           </Link>
         </Button>
-        {/* <ShareButton
-          title={product.name}
-          description={product.description}
-          image={product.imageUrl}
-        /> */}
+        <ShareButton title={product.name} text={product.description} />
       </div>
       {/* TEXTO */}
       <div className="flex flex-col lg:h-dvh lg:w-1/2">
