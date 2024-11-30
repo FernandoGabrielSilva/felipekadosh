@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CircleArrowDown, CircleArrowRight, Clock } from "lucide-react";
 
 export default function Home() {
+  const currentYear = new Date().getFullYear(); // Obtém o ano atual dinamicamente
   return (
     <main>
       {/* INICIAL */}
@@ -253,6 +254,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* PRODUTOS */}
       <section className="mt-[15%] flex flex-col p-2 justify-center items-center">
         <div className="flex flex-col w-full items-center md:w-[70%]">
           <div className="flex justify-center mb-2">
@@ -328,6 +330,22 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <footer className="flex flex-col items-center mt-4 text-center text-sm text-gray-600 py-2">
+        <p>
+          &copy; {currentYear} | Todos os direitos reservados para Felipe Kadosh
+        </p>
+        <p>
+          Feito por{" "}
+          <Link
+            href="https://fernandogabriel.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            Fernando Gabriel
+          </Link>
+        </p>
+      </footer>
     </main>
   );
 }
