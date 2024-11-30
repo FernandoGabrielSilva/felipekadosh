@@ -40,7 +40,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
             <ChevronLeftIcon />
           </Link>
         </Button>
-        <ShareButton title={product.name} text={product.description} />
+        <ShareButton />
       </div>
       {/* TEXTO */}
       <div className="flex flex-col lg:h-dvh lg:w-1/2">

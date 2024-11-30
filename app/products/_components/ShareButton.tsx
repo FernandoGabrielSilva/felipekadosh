@@ -3,17 +3,11 @@
 import { Button } from "@/app/_components/ui/button";
 import { Share2 } from "lucide-react";
 
-interface ShareButtonProp {
-  // Adicione os props necessários para o botão de compartilhamento
-  // Ex: link, title, description, etc.
-  title: string;
-  text: string;
-}
-
-const ShareButton = ({ title, text }: ShareButtonProp) => {
+const ShareButton = () => {
+  const currentUrl = window.location.href; // Obtém o link atual do navegador
   const shareData = {
-    title,
-    text,
+    url: currentUrl,
+    // Adicione os outros dados necessários para o compartilhamento
   };
 
   const share = async () => {
