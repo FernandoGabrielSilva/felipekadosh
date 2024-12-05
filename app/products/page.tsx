@@ -1,7 +1,7 @@
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 import SearchInput from "../_components/SearchInput";
 import { db } from "../_lib/prisma";
-import ProductsItem from "../_components/ProductsItem";
+import ProductsItem from "./_components/ProductsItem";
 import { Category } from "@prisma/client";
 import CategoryFilter from "../_components/CategoryFilter";
 import PaginationComponent from "../_components/PaginationComponent";

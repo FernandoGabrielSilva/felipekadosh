@@ -1,7 +1,7 @@
 import { Products } from "@prisma/client";
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent } from "@/app/_components/ui/card";
 import Image from "next/image";
-import { Button } from "./ui/button";
+import { Button } from "@/app/_components/ui/button";
 import Link from "next/link";
 
 interface ProductsItemProps {
@@ -28,7 +28,7 @@ const ProductsItem = ({ product }: ProductsItemProps) => {
           )}
         </div>
         {/* TEXTO */}
-        <div className="pt-3 pb-0 md:pb-2 px-1">
+        <div className="pt-3 pb-0 w-full md:pb-2 px-1">
           <h3 className="font-semibold truncate">{product.name}</h3>
           <p className="text-sm text-gray-500">Categoria: {product.category}</p>
           <p className="text-sm text-gray-400 overflow-hidden text-ellipsis h-10">
