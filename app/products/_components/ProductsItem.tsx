@@ -12,7 +12,7 @@ const ProductsItem = ({ product }: ProductsItemProps) => {
     <Card className="min-w-[150px]">
       <CardContent className="gap-1 flex p-0 md:flex-col md:gap-0">
         {/* IMAGEM */}
-        <div className="relative h-[150px] w-full">
+        <div className="relative h-[150px] w-[calc(100%-150px)] md:w-full">
           {product.imageUrl ? (
             <Image
               fill
