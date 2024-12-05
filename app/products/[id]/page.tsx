@@ -15,12 +15,17 @@ interface ProductPageProps {
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-  const product = await db.products.findUnique({ where: { id: params.id } });
+  let product = null;
+  try {
+    product = await db.products.findUnique({ where: { id: params.id } });
+  } catch (error) {
+    console.error("Erro ao buscar metadados do produto:", error);
+  }
 
   if (!product) {
     return {
       title: "Produto não encontrado",
-      description: "O produto solicitado não existe.",
+      description: "O produto solicitado não existe ou ocorreu um erro.",
     };
   }
 
@@ -52,18 +57,20 @@ export async function generateMetadata({
     },
   };
 }
+
 // Componente principal da página
-
 const ProductPage = async ({ params }: ProductPageProps) => {
-  //Chamar banco de dados
-  const product = await db.products.findUnique({ where: { id: params.id } });
+  let product = null;
+  try {
+    product = await db.products.findUnique({ where: { id: params.id } });
+  } catch (err) {
+    console.error("Erro ao acessar o banco de dados:", err);
+  }
 
-  //Caso não exista o produto
   if (!product) {
     return notFound();
   }
 
-  // Renderizar a página com os dados do produto
   return (
     <main className="flex flex-col lg:flex-row lg:h-full">
       {/* IMAGEM */}
@@ -80,12 +87,13 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           className="absolute top-4 left-4"
           asChild
         >
-          <Link href="/products">
+          <Link href="/products" aria-label="Voltar para a lista de produtos">
             <ChevronLeftIcon />
           </Link>
         </Button>
         <ShareButton />
       </div>
+
       {/* TEXTO */}
       <div className="flex flex-col pb-2 h-[calc(100dvh-250px)] lg:h-dvh lg:w-1/2">
         <div className="p-5 border-b border-solid">
@@ -96,9 +104,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         </div>
         <div className="p-5 border-b h-[calc(100dvh-403.19px)] overflow-hidden border-solid md:h-[calc(100dvh-153.19px)]">
           <h2 className="text-lg font-bold mb-2">Descrição</h2>
-          <p className="overflow-auto h-full">
-            {product.description}
-          </p>
+          <p className="overflow-auto h-full">{product.description}</p>
         </div>
         <div className="py-3 flex flex-col items-center">
           <Button variant="default" className="w-[90%]" asChild>
@@ -106,6 +112,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
               href={product.linkUrl}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`Adquirir ${product.name}`}
             >
               ADQUIRIR
             </Link>
@@ -117,3 +124,4 @@ const ProductPage = async ({ params }: ProductPageProps) => {
 };
 
 export default ProductPage;
+
