@@ -96,7 +96,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         </div>
         <div className="p-5 border-b h-[calc(100dvh-403.19px)] overflow-hidden border-solid md:h-[calc(100dvh-153.19px)]">
           <h2 className="text-lg font-bold mb-2">Descrição</h2>
-          <p className="overflow-auto h-full lg:h-[65dvh]">
+          <p className="overflow-auto h-full">
             {product.description}
           </p>
         </div>
