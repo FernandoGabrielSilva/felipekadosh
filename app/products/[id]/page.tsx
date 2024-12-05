@@ -87,20 +87,20 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         <ShareButton />
       </div>
       {/* TEXTO */}
-      <div className="flex flex-col lg:h-dvh lg:w-1/2">
+      <div className="flex flex-col pb-2 h-[calc(100dvh-250px)] lg:h-dvh lg:w-1/2">
         <div className="p-5 border-b border-solid">
           <h1 className="text-xl font-bold">{product.name}</h1>
           <p className="font-semibold text-gray-500">
             Categoria: {product.category}
           </p>
         </div>
-        <div className="p-5 border-b border-solid">
+        <div className="p-5 border-b h-[calc(100dvh-403.19px)] overflow-hidden border-solid md:h-[calc(100dvh-153.19px)]">
           <h2 className="text-lg font-bold mb-2">Descrição</h2>
-          <p className="overflow-auto h-[40dvh] lg:h-[65dvh]">
+          <p className="overflow-auto h-full lg:h-[65dvh]">
             {product.description}
           </p>
         </div>
-        <div className="mt-3 flex flex-col items-center">
+        <div className="py-3 flex flex-col items-center">
           <Button variant="default" className="w-[90%]" asChild>
             <Link
               href={product.linkUrl}

@@ -65,8 +65,8 @@ const Products = async ({
   });
 
   return (
-    <main className="flex flex-col items-center">
-      <div className="w-[95%]">
+    <main className="flex flex-col items-center h-dvh">
+      <div className="flex flex-col w-[95%]">
         {/* Pesquisa */}
         <div className="flex flex-col w-full mt-6 mb-4 gap-2 items-end">
           <SearchInput input="Pesquisar..." />
@@ -82,16 +82,16 @@ const Products = async ({
             <p className="text-gray-500 text-lg">Nenhum produto encontrado.</p>
           </div>
         ) : (
-          <div className="flex flex-col h-[80dvh] justify-between">
+          <div className="flex flex-col h-[calc(100dvh-120px)] justify-between">
             {/* Produtos */}
-            <div className="grid grid-cols-2 gap-2 w-full md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
+            <div className="grid grid-cols-1 gap-2 w-full md:grid-cols-4 lg:grid-cols-5">
               {products.map((product) => (
                 <ProductsItem product={product} key={product.id} />
               ))}
             </div>
 
             {/* Paginação */}
-            <div className="mt-6 flex justify-center">
+            <div className="py-4 flex justify-center">
               <PaginationComponent currentPage={page} totalPages={totalPages} />
             </div>
           </div>
