@@ -81,14 +81,15 @@ export async function generateMetadata({
 }
 
 // Componente de compartilhamento
-const ShareButton = ({ productUrl }: { productUrl: string }) => {
+const ShareButton = ({ productUrl, productName, productDescription, productImage }: { productUrl: string, productName: string, productDescription: string, productImage: string }) => {
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Confira este produto!",
-          text: "Dê uma olhada neste incrível produto!",
+          title: productName,
+          text: productDescription,
           url: productUrl,
+          files: productImage ? [new File([], productImage)] : undefined,
         });
       } catch (error) {
         console.error("Erro ao compartilhar:", error);
@@ -135,7 +136,12 @@ const ProductPage = async ({ params }: ProductPageProps) => {
             <ChevronLeftIcon />
           </Link>
         </Button>
-        <ShareButton productUrl={productUrl} />
+        <ShareButton 
+          productUrl={productUrl} 
+          productName={product.name} 
+          productDescription={product.description.slice(0, 150)} 
+          productImage={product.imageUrl || "/placeholder.png"} 
+        />
       </div>
 
       {/* TEXTO */}
