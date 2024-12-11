@@ -35,8 +35,12 @@ export async function generateMetadata({
     };
   }
 
-  const productUrl = `https://felipekadosh/products/${params.id}`;
-  const imageUrl = product.imageUrl;
+  // Verifique a URL gerada para Open Graph
+  const productUrl = `https://felipekadosh.com/products/${params.id}`;
+  const imageUrl = product.imageUrl ? `https://felipekadosh.com/${product.imageUrl}` : 'https://felipekadosh.com/default-image.jpg'; // Garantir que a imagem tenha uma URL completa
+
+  console.log("productUrl:", productUrl);  // Verifique a URL gerada
+  console.log("imageUrl:", imageUrl);      // Verifique a URL da imagem
 
   return {
     title: product.name,
@@ -73,6 +77,9 @@ export async function generateMetadata({
 
 // Componente principal da página
 const ProductPage = async ({ params }: ProductPageProps) => {
+  // Verificar se o parâmetro id está sendo passado corretamente
+  console.log('params.id:', params.id);  // Verifique se o id está correto
+  
   const product = await fetchProductMetadata(params.id);
 
   if (!product || !product.name || !product.imageUrl || !product.description) {
