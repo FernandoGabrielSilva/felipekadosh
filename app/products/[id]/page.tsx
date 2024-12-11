@@ -35,46 +35,12 @@ export async function generateMetadata({
     };
   }
 
-  // A URL da imagem é proveniente diretamente do banco de dados
-  const imageUrl = product.imageUrl;  // URL da imagem armazenada no banco de dados
-
-  // Verifique se a URL é válida (deve ser uma URL pública)
-  if (!imageUrl || !imageUrl.startsWith("http")) {
-    console.error("URL da imagem não é válida:", imageUrl);
-    return {
-      title: product.name,
-      description: product.description.slice(0, 150),
-      openGraph: {
-        type: "website",
-        title: product.name,
-        description: product.description,
-        url: `https://felipekadosh.com/products/${params.id}`,
-        images: [
-          {
-            url: 'https://felipekadosh.com/default-image.jpg', // Imagem de fallback
-            width: 1200,
-            height: 630,
-            alt: `Imagem do produto: ${product.name}`,
-          },
-        ],
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: product.name,
-        description: product.description,
-        images: ['https://felipekadosh.com/default-image.jpg'], // Imagem de fallback
-      },
-      alternates: {
-        canonical: `https://felipekadosh.com/products/${params.id}`,
-      },
-      robots: {
-        index: true,
-        follow: true,
-      },
-    };
-  }
-
+  // Verifique a URL gerada para Open Graph
   const productUrl = `https://felipekadosh.com/products/${params.id}`;
+  const imageUrl = product.imageUrl ? `https://felipekadosh.com/${product.imageUrl}` : 'https://felipekadosh.com/default-image.jpg'; // Garantir que a imagem tenha uma URL completa
+
+  console.log("productUrl:", productUrl);  // Verifique a URL gerada
+  console.log("imageUrl:", imageUrl);      // Verifique a URL da imagem
 
   return {
     title: product.name,
@@ -86,7 +52,7 @@ export async function generateMetadata({
       url: productUrl,
       images: [
         {
-          url: imageUrl,  // Agora a URL da imagem vem diretamente do banco de dados
+          url: imageUrl,
           width: 1200,
           height: 630,
           alt: `Imagem do produto: ${product.name}`,
@@ -97,7 +63,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: product.name,
       description: product.description,
-      images: [imageUrl],  // A URL da imagem do banco
+      images: [imageUrl],
     },
     alternates: {
       canonical: productUrl,
@@ -111,6 +77,9 @@ export async function generateMetadata({
 
 // Componente principal da página
 const ProductPage = async ({ params }: ProductPageProps) => {
+  // Verificar se o parâmetro id está sendo passado corretamente
+  console.log('params.id:', params.id);  // Verifique se o id está correto
+  
   const product = await fetchProductMetadata(params.id);
 
   if (!product || !product.name || !product.imageUrl || !product.description) {
@@ -122,7 +91,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
       {/* IMAGEM */}
       <div className="relative w-full h-[200px] lg:h-dvh lg:w-1/2">
         <Image
-          src={product.imageUrl}  // Aqui usamos a URL da imagem diretamente do banco
+          src={product.imageUrl}
           alt={product.name}
           fill
           className="object-cover"
