@@ -156,7 +156,6 @@ const UpsertProductsButton = ({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="w-full relative">
-              {!images ? (
                 <UploadDropzone
                   appearance={{
                     container: "w-full h-full",
@@ -173,15 +172,6 @@ const UpsertProductsButton = ({
                     alert(`ERROR! ${error.message}`);
                   }}
                 />
-              ) : (
-                <div className="relative">
-                  <img
-                    src={images}
-                    alt="Imagem do Produto"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
             </div>
             <FormField
               control={form.control}
