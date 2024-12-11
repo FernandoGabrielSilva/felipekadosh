@@ -10,7 +10,7 @@ interface ProductsItemProps {
 const ProductsItem = ({ product }: ProductsItemProps) => {
   return (
     <Card className="min-w-[150px]">
-      <CardContent className="gap-1 flex p-0 md:flex-col md:gap-0">
+      <CardContent className="flex-rows-2 gap-1 p-0 flex  md:flex-col md:gap-0">
         {/* IMAGEM */}
         <div className="relative h-[150px] w-[calc(100%-150px)] md:w-full">
           {product.imageUrl ? (
@@ -29,7 +29,7 @@ const ProductsItem = ({ product }: ProductsItemProps) => {
         </div>
         {/* TEXTO */}
         <div className="pt-3 pb-0 w-full md:pb-2 px-1">
-          <h3 className="font-semibold truncate">{product.name}</h3>
+          <h3 className="font-semibold overflow-hidden text-ellipsis h-6">{product.name}</h3>
           <p className="text-sm text-gray-500">Categoria: {product.category}</p>
           <p className="text-sm text-gray-400 overflow-hidden text-ellipsis h-10">
             {product.description}

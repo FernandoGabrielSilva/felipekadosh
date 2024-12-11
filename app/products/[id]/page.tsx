@@ -11,16 +11,22 @@ interface ProductPageProps {
   params: { id: string };
 }
 
+// Função auxiliar para buscar os dados do produto
+async function fetchProductMetadata(id: string) {
+  try {
+    const product = await db.products.findUnique({ where: { id } });
+    return product;
+  } catch (error) {
+    console.error("Erro ao buscar produto:", error);
+    return null;
+  }
+}
+
 // Função para configurar a metadata da página
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-  let product = null;
-  try {
-    product = await db.products.findUnique({ where: { id: params.id } });
-  } catch (error) {
-    console.error("Erro ao buscar metadados do produto:", error);
-  }
+  const product = await fetchProductMetadata(params.id);
 
   if (!product) {
     return {
@@ -45,7 +51,7 @@ export async function generateMetadata({
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: product.name,
+          alt: `Imagem do produto: ${product.name}`,
         },
       ],
     },
@@ -55,29 +61,31 @@ export async function generateMetadata({
       description: product.description,
       images: [imageUrl],
     },
+    alternates: {
+      canonical: productUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }
 
 // Componente principal da página
 const ProductPage = async ({ params }: ProductPageProps) => {
-  let product = null;
-  try {
-    product = await db.products.findUnique({ where: { id: params.id } });
-  } catch (err) {
-    console.error("Erro ao acessar o banco de dados:", err);
-  }
+  const product = await fetchProductMetadata(params.id);
 
-  if (!product) {
+  if (!product || !product.name || !product.imageUrl || !product.description) {
     return notFound();
   }
 
   return (
     <main className="flex flex-col lg:flex-row lg:h-full">
       {/* IMAGEM */}
-      <div className="relative w-full h-[250px] lg:h-dvh lg:w-1/2">
+      <div className="relative w-full h-[200px] lg:h-dvh lg:w-1/2">
         <Image
-          src={product?.imageUrl}
-          alt={product?.name}
+          src={product.imageUrl}
+          alt={product.name}
           fill
           className="object-cover"
         />
@@ -95,16 +103,16 @@ const ProductPage = async ({ params }: ProductPageProps) => {
       </div>
 
       {/* TEXTO */}
-      <div className="flex flex-col pb-2 h-[calc(100dvh-250px)] lg:h-dvh lg:w-1/2">
+      <div className="flex flex-col pb-2 h-[calc(100dvh-200px)] lg:h-dvh lg:w-1/2">
         <div className="p-5 border-b border-solid">
           <h1 className="text-xl font-bold">{product.name}</h1>
           <p className="font-semibold text-gray-500">
-            Categoria: {product.category}
+            Categoria: {product.category || "Não especificado"}
           </p>
         </div>
         <div className="p-5 border-b h-[calc(100dvh-403.19px)] overflow-hidden border-solid md:h-[calc(100dvh-153.19px)]">
           <h2 className="text-lg font-bold mb-2">Descrição</h2>
-          <p className="overflow-auto h-full">{product.description}</p>
+          <p className="overflow-auto h-full pb-5 whitespace-pre-wrap">{product.description}</p>
         </div>
         <div className="py-3 flex flex-col items-center">
           <Button variant="default" className="w-[90%]" asChild>

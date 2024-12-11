@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/app/_components/ui/button";
+import { Textarea} from "@/app/_components/ui/textarea";
 import {
   Dialog,
   DialogClose,
@@ -173,7 +174,7 @@ const UpsertProductsButton = ({
                 <FormItem>
                   <FormLabel>Descrição</FormLabel>
                   <FormControl>
-                    <Input placeholder="Descrição do produto..." {...field} />
+                    <Textarea placeholder="Descrição do produto..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -218,7 +219,6 @@ const UpsertProductsButton = ({
                         placeholder="Link da Imagem..."
                         {...field}
                         value={images}
-                        maxLength={200}
                       />
                     </FormControl>
                     <FormMessage />
