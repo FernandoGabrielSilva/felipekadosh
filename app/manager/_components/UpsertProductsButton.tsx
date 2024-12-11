@@ -1,6 +1,7 @@
 "use client";
+
 import { Button } from "@/app/_components/ui/button";
-import { Textarea} from "@/app/_components/ui/textarea";
+import { Textarea } from "@/app/_components/ui/textarea";
 import {
   Dialog,
   DialogClose,
@@ -30,7 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/_components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UploadDropzone } from "../utils/uploadthing";
 import { upsertProducts } from "../_actions/add-product";
 import { toast } from "sonner";
@@ -46,7 +47,7 @@ const formSchema = z.object({
     required_error: "A categoria do produto é obrigatória",
   }),
   imageUrl: z.string().trim().min(1, {
-    message: "A imagem do produto é obrigatório",
+    message: "A imagem do produto é obrigatória",
   }),
   linkUrl: z.string().trim().min(1, {
     message: "O link do produto é obrigatório",
@@ -85,7 +86,7 @@ const UpsertProductsButton = ({
   setIsOpen,
   defaultValues,
 }: DefaultProp) => {
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState<string>(""); // URL da imagem
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues ?? {
@@ -99,22 +100,42 @@ const UpsertProductsButton = ({
 
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (defaultValues) {
+      // Preenche o formulário com os dados do produto quando o modal for aberto
+      setImages(defaultValues.imageUrl);
+      form.reset({ ...defaultValues, imageUrl: defaultValues.imageUrl });
+    } else {
+      setImages(""); // Reseta a imagem se não houver um produto selecionado
+    }
+  }, [defaultValues, isOpen, form]);
+
   const onSubmit = async (data: FormSchema) => {
     try {
+      if (!images) {
+        toast.error("Por favor, carregue uma imagem.");
+        return; // Impede o envio do formulário sem imagem
+      }
+
       setLoading(true);
       await upsertProducts({
-        id: defaultValues?.id, // Aqui estamos passando o 'id' para o upsert
+        id: defaultValues?.id, // Passando o 'id' para o upsert
         ...data,
       });
       toast.success("Produto Adicionado/Atualizado!");
-      setIsOpen(false);
-      form.reset();
+      resetForm(); // Chama a função para resetar o formulário e a imagem
     } catch (error) {
       console.error("Erro ao salvar o produto:", error);
-      toast.error("Não foi possivel Adicionado/Atualizado produto.");
+      toast.error("Não foi possível adicionar/atualizar o produto.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const resetForm = () => {
+    form.reset(); // Resetando o formulário
+    setImages(""); // Resetando o estado da imagem
+    setIsOpen(false); // Fechando o modal
   };
 
   return (
@@ -123,21 +144,19 @@ const UpsertProductsButton = ({
       onOpenChange={(open) => {
         setIsOpen(open);
         if (!open) {
-          form.reset();
+          resetForm(); // Resetar o formulário e imagem quando o modal for fechado
         }
       }}
     >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Informações do Produto</DialogTitle>
-          <DialogDescription>Insira as informações</DialogDescription>
+          <DialogDescription>Insira as informações do produto</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="w-full relative">
-              {images ? (
-                <p className="hidden"></p>
-              ) : (
+              {!images ? (
                 <UploadDropzone
                   appearance={{
                     container: "w-full h-full",
@@ -146,12 +165,22 @@ const UpsertProductsButton = ({
                   }}
                   endpoint="imageUploader"
                   onClientUploadComplete={(res) => {
-                    setImages(res[0].url);
+                    const imageUrl = res[0].url;
+                    setImages(imageUrl); // Atualiza o estado local com a URL da imagem
+                    form.setValue("imageUrl", imageUrl); // Preenche o campo imageUrl automaticamente
                   }}
                   onUploadError={(error: Error) => {
                     alert(`ERROR! ${error.message}`);
                   }}
                 />
+              ) : (
+                <div className="relative">
+                  <img
+                    src={images}
+                    alt="Imagem do Produto"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               )}
             </div>
             <FormField
@@ -159,9 +188,9 @@ const UpsertProductsButton = ({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Titulo</FormLabel>
+                  <FormLabel>Título</FormLabel>
                   <FormControl>
-                    <Input placeholder="Titulo do produto..." {...field} />
+                    <Input placeholder="Título do produto..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -192,7 +221,7 @@ const UpsertProductsButton = ({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione a categoria do produto..." />
+                        <SelectValue placeholder="Selecione a categoria..." />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -207,39 +236,23 @@ const UpsertProductsButton = ({
                 </FormItem>
               )}
             />
-            {images ? (
-              <FormField
-                control={form.control}
-                name="imageUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Link da Imagem</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Link da Imagem..."
-                        {...field}
-                        value={images}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ) : (
-              <FormField
-                control={form.control}
-                name="imageUrl"
-                render={({ field }) => (
-                  <FormItem className="hidden">
-                    <FormLabel>Link da Imagem</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Link da Imagem..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem className="hidden">
+                  <FormLabel>Link da Imagem</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Link da Imagem..."
+                      {...field}
+                      value={images} // Mantém o valor da URL da imagem
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="linkUrl"
@@ -247,7 +260,7 @@ const UpsertProductsButton = ({
                 <FormItem>
                   <FormLabel>Link do Produto</FormLabel>
                   <FormControl>
-                    <Input placeholder="Link do Produto.." {...field} />
+                    <Input placeholder="Link do Produto..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -255,7 +268,11 @@ const UpsertProductsButton = ({
             />
             <DialogFooter className="gap-2 md:gap-0">
               <DialogClose asChild>
-                <Button type="button" variant="outline">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => resetForm()} // Resetar quando clicar em Cancelar
+                >
                   Cancelar
                 </Button>
               </DialogClose>
@@ -271,3 +288,4 @@ const UpsertProductsButton = ({
 };
 
 export default UpsertProductsButton;
+
