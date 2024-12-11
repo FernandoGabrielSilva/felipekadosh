@@ -4,7 +4,6 @@ import { ChevronLeftIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ShareButton from "../_components/ShareButton";
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 
 interface ProductPageProps {
@@ -13,8 +12,16 @@ interface ProductPageProps {
 
 // Função auxiliar para buscar os dados do produto
 async function fetchProductMetadata(id: string) {
+  if (!id) {
+    console.error("ID do produto não fornecido.");
+    return null;
+  }
+
   try {
     const product = await db.products.findUnique({ where: { id } });
+    if (!product) {
+      console.warn(`Produto com ID ${id} não encontrado.`);
+    }
     return product;
   } catch (error) {
     console.error("Erro ao buscar produto:", error);
@@ -35,8 +42,10 @@ export async function generateMetadata({
     };
   }
 
-  const productUrl = `https://felipekadosh/products/${params.id}`;
-  const imageUrl = product.imageUrl;
+  const productUrl = `https://felipekadosh.com/products/${params.id}`;
+  const imageUrl = product.imageUrl?.startsWith("http")
+    ? product.imageUrl
+    : `https://felipekadosh.com${product.imageUrl || "/placeholder.png"}`;
 
   return {
     title: product.name,
@@ -71,6 +80,31 @@ export async function generateMetadata({
   };
 }
 
+// Componente de compartilhamento
+const ShareButton = ({ productUrl }: { productUrl: string }) => {
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Confira este produto!",
+          text: "Dê uma olhada neste incrível produto!",
+          url: productUrl,
+        });
+      } catch (error) {
+        console.error("Erro ao compartilhar:", error);
+      }
+    } else {
+      alert("Compartilhamento não suportado neste dispositivo.");
+    }
+  };
+
+  return (
+    <Button onClick={handleShare} variant="outline" size="icon">
+      Compartilhar
+    </Button>
+  );
+};
+
 // Componente principal da página
 const ProductPage = async ({ params }: ProductPageProps) => {
   const product = await fetchProductMetadata(params.id);
@@ -79,12 +113,14 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     return notFound();
   }
 
+  const productUrl = `https://felipekadosh.com/products/${params.id}`;
+
   return (
     <main className="flex flex-col lg:flex-row lg:h-full">
       {/* IMAGEM */}
       <div className="relative w-full h-[200px] lg:h-dvh lg:w-1/2">
         <Image
-          src={product.imageUrl}
+          src={product.imageUrl || "/placeholder.png"}
           alt={product.name}
           fill
           className="object-cover"
@@ -99,7 +135,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
             <ChevronLeftIcon />
           </Link>
         </Button>
-        <ShareButton />
+        <ShareButton productUrl={productUrl} />
       </div>
 
       {/* TEXTO */}
@@ -112,7 +148,9 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         </div>
         <div className="p-5 border-b h-[calc(100dvh-403.19px)] overflow-hidden border-solid md:h-[calc(100dvh-153.19px)]">
           <h2 className="text-lg font-bold mb-2">Descrição</h2>
-          <p className="overflow-auto h-full pb-5 whitespace-pre-wrap">{product.description}</p>
+          <p className="overflow-auto h-full pb-5 whitespace-pre-wrap">
+            {product.description}
+          </p>
         </div>
         <div className="py-3 flex flex-col items-center">
           <Button variant="default" className="w-[90%]" asChild>
