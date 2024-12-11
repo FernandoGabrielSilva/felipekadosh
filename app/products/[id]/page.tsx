@@ -89,7 +89,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   return (
     <main className="flex flex-col lg:flex-row lg:h-full">
       {/* IMAGEM */}
-      <div className="relative w-full h-[200px] lg:h-dvh lg:w-1/2">
+      <div className="relative w-full h-[250px] lg:h-dvh lg:w-1/2">
         <Image
           src={product.imageUrl}
           alt={product.name}
@@ -110,7 +110,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
       </div>
 
       {/* TEXTO */}
-      <div className="flex flex-col pb-2 h-[calc(100dvh-200px)] lg:h-dvh lg:w-1/2">
+      <div className="flex flex-col pb-2 h-[calc(100dvh-250px)] lg:h-dvh lg:w-1/2">
         <div className="p-5 border-b border-solid">
           <h1 className="text-xl font-bold">{product.name}</h1>
           <p className="font-semibold text-gray-500">
