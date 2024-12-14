@@ -30,10 +30,10 @@ const UnifiedFilter = ({ categories, selectedFilter }: UnifiedFilterProps) => {
   return (
     <Select onValueChange={handleFilterChange} defaultValue={selectedFilter}>
       <SelectTrigger className="w-[150px]">
-     	<div className="flex gap-2 items-center">
-		<Filter size={15}/>
-		<SelectValue placeholder="Filtro">Filtros</SelectValue> {/* Sempre exibe "Filtro" */}
-     	</div>
+        <div className="flex gap-2 items-center">
+          <Filter size={15}/>
+          <SelectValue placeholder="Filtro">Filtros</SelectValue> {/* Sempre exibe "Filtro" */}
+        </div>
       </SelectTrigger>
       <SelectContent>
         {/* Filtros por categoria */}
@@ -56,29 +56,30 @@ const UnifiedFilter = ({ categories, selectedFilter }: UnifiedFilterProps) => {
         <div className="px-2 py-1 text-sm font-medium text-gray-500">Ordenar Por</div>
         <div className="space-y-1">
           <SelectItem value={`${selectedCategory}|name|asc`}>
-          	<div className="flex gap-2 items-center">
-          		<BookA size={15} /> Name
-          	</div></SelectItem>
+            <div className="flex gap-2 items-center">
+              <BookA size={15} /> Name
+            </div>
+          </SelectItem>
           <SelectItem value={`${selectedCategory}|updatedAt|asc`}>
-          	<div className="flex gap-2 items-center">
-          		<CalendarFold size={15} /> Data
-          	</div>
+            <div className="flex gap-2 items-center">
+              <CalendarFold size={15} /> Data
+            </div>
           </SelectItem>
         </div>
 
         {/* Separador para direção de ordenação */}
         <div className="px-2 py-1 text-sm font-medium text-gray-500">Direção</div>
         <div className="space-y-1">
-		<SelectItem value={`${selectedCategory}|${orderBy}|asc`}>
-			<div className="flex gap-2 items-center">
-				<ArrowUpNarrowWide size={15} /> Crescente
-			</div>
-		</SelectItem>
-		<SelectItem value={`${selectedCategory}|${orderBy}|desc`}>
-			<div className="flex gap-2 items-center">
-				<ArrowDownNarrowWide size={15}  /> Decrescente
-			</div>
-		</SelectItem>     
+          <SelectItem value={`${selectedCategory}|${orderBy}|asc`}>
+            <div className="flex gap-2 items-center">
+              <ArrowUpNarrowWide size={15} /> Crescente
+            </div>
+          </SelectItem>
+          <SelectItem value={`${selectedCategory}|${orderBy}|desc`}>
+            <div className="flex gap-2 items-center">
+              <ArrowDownNarrowWide size={15}  /> Decrescente
+            </div>
+          </SelectItem>     
         </div>
       </SelectContent>
     </Select>

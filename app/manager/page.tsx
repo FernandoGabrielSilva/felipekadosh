@@ -7,7 +7,7 @@ import SearchInput from "../_components/SearchInput";
 import AddProductButton from "./_components/AddProductButton";
 import UnifiedFilter from "../_components/UnifiedFilters";
 import PaginationComponent from "../_components/PaginationComponent";
-import { Category } from "@prisma/client"; // Importando o enum Category do Prisma
+import { Category } from "@prisma/client"; // Certifique-se de importar o tipo Category
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
@@ -32,24 +32,23 @@ const Manager = async ({
   const perPage = parseInt(searchParams?.perPage || "10", 10);
   const skip = (page - 1) * perPage;
 
-  // Validação do valor de selectedCategory
-  const validCategory: Category | undefined =
-    selectedCategory && selectedCategory !== "Filto..." && selectedCategory !== "all"
-      ? (selectedCategory as Category) // Garantindo que selectedCategory seja tratado como um valor da enum Category
-      : undefined; // Se não for válido, passa undefined
+  // Validação do valor de selectedCategory com o enum Category do Prisma
+  const validCategory = selectedCategory !== "Filto..." && Object.values(Category).includes(selectedCategory as Category)
+    ? selectedCategory as Category
+    : undefined;
 
   // Valida se `orderBy` tem um valor válido
   const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
   const validOrderDirection = orderDirection === "asc" || orderDirection === "desc" ? orderDirection : "asc";
 
-  // Busca no banco
+  // Busca no banco de dados
   const products = await db.products.findMany({
     where: {
       name: {
         contains: query,
         mode: "insensitive",
       },
-      ...(validCategory && { category: validCategory }), // Aplica o filtro de categoria somente se validCategory for válido
+      ...(validCategory && { category: validCategory }), // Se categoria válida, aplica o filtro
     },
     orderBy: {
       [validOrderBy]: validOrderDirection as "asc" | "desc", // Ordenação válida
@@ -70,6 +69,7 @@ const Manager = async ({
 
   const totalPages = Math.ceil(totalProducts / perPage);
 
+  // Obter categorias distintas do banco de dados
   const categories = await db.products.findMany({
     select: { category: true },
     distinct: ["category"],
@@ -94,10 +94,11 @@ const Manager = async ({
           {/* Componente de pesquisa */}
           <div className="w-full flex flex-col gap-2 items-end">
             <SearchInput input="Filtrar por nome..." />
-            <UnifiedFilter
-              categories={categories.map((cat) => cat.category)}
-              selectedFilter={filter}
-            />
+             {/* Filtro unificado */}
+          <UnifiedFilter
+            categories={categories.map((cat) => cat.category)}
+            selectedFilter={filter}
+          />
           </div>
 
           {/* Tabela de dados */}
