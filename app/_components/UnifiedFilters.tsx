@@ -1,5 +1,4 @@
 "use client";
-// Componente Filters: combina filtros de categoria, ordenação e direção
 
 import { useRouter } from "next/navigation";
 import {
@@ -9,10 +8,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { Filter, BookA, CalendarFold, ArrowUpNarrowWide, ArrowDownNarrowWide } from "lucide-react";
+import {
+  Filter,
+  BookOpen,
+  MonitorPlay,
+  ShoppingBag,
+  PcCase,
+  MoreHorizontal,
+  CalendarFold,
+  ChartNoAxesGantt,
+  Text,
+  ArrowDownAZ,
+  ArrowDownZA,
+} from "lucide-react";
+
+enum Category {
+  Cursos = "Cursos",
+  Livros = "Livros",
+  Eletronicos = "Eletronicos",
+  Outros = "Outros",
+}
+
+// Mapeamento de ícones para as categorias do enum
+const iconMap: Record<Category, React.ElementType> = {
+  [Category.Cursos]: MonitorPlay,
+  [Category.Livros]: BookOpen,
+  [Category.Eletronicos]: PcCase,
+  [Category.Outros]: MoreHorizontal, // Ícone padrão para "Outros"
+};
 
 interface UnifiedFilterProps {
-  categories: string[];
+  categories: Category[];
   selectedFilter: string; // Formato: "categoria|campo|direção"
 }
 
@@ -31,7 +57,7 @@ const UnifiedFilter = ({ categories, selectedFilter }: UnifiedFilterProps) => {
     <Select onValueChange={handleFilterChange} defaultValue={selectedFilter}>
       <SelectTrigger className="w-[150px]">
         <div className="flex gap-2 items-center">
-          <Filter size={15}/>
+          <Filter size={15} />
           <SelectValue placeholder="Filtro">Filtros</SelectValue> {/* Sempre exibe "Filtro" */}
         </div>
       </SelectTrigger>
@@ -40,16 +66,24 @@ const UnifiedFilter = ({ categories, selectedFilter }: UnifiedFilterProps) => {
         <div className="px-2 py-1 text-sm font-medium text-gray-500">Categoria</div>
         <div className="space-y-1">
           <SelectItem value={`all|${orderBy}|${orderDirection}`}>
-            Todas as Categorias
+            <div className="flex gap-2 items-center">
+              <ChartNoAxesGantt size={15} /> Todas as Categorias
+            </div>
           </SelectItem>
-          {categories.map((category) => (
-            <SelectItem
-              key={category}
-              value={`${category}|${orderBy}|${orderDirection}`}
-            >
-              {category}
-            </SelectItem>
-          ))}
+          {categories.map((category) => {
+            const Icon = iconMap[category]; // Busca o ícone correspondente no mapeamento
+            return (
+              <SelectItem
+                key={category}
+                value={`${category}|${orderBy}|${orderDirection}`}
+              >
+                <div className="flex gap-2 items-center">
+                  <Icon size={15} />
+                  {category}
+                </div>
+              </SelectItem>
+            );
+          })}
         </div>
 
         {/* Separador para ordenação */}
@@ -57,7 +91,7 @@ const UnifiedFilter = ({ categories, selectedFilter }: UnifiedFilterProps) => {
         <div className="space-y-1">
           <SelectItem value={`${selectedCategory}|name|asc`}>
             <div className="flex gap-2 items-center">
-              <BookA size={15} /> Name
+              <Text size={15} /> Nome
             </div>
           </SelectItem>
           <SelectItem value={`${selectedCategory}|updatedAt|asc`}>
@@ -72,14 +106,14 @@ const UnifiedFilter = ({ categories, selectedFilter }: UnifiedFilterProps) => {
         <div className="space-y-1">
           <SelectItem value={`${selectedCategory}|${orderBy}|asc`}>
             <div className="flex gap-2 items-center">
-              <ArrowUpNarrowWide size={15} /> Crescente
+              <ArrowDownAZ size={15} /> Crescente
             </div>
           </SelectItem>
           <SelectItem value={`${selectedCategory}|${orderBy}|desc`}>
             <div className="flex gap-2 items-center">
-              <ArrowDownNarrowWide size={15}  /> Decrescente
+              <ArrowDownZA size={15} /> Decrescente
             </div>
-          </SelectItem>     
+          </SelectItem>
         </div>
       </SelectContent>
     </Select>
