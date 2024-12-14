@@ -1,14 +1,11 @@
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
 import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 import { db } from "../_lib/prisma";
 import { DataTable } from "../_components/ui/data-table";
 import { productsColumns } from "./_columns";
 import SearchInput from "../_components/SearchInput";
 import AddProductButton from "./_components/AddProductButton";
 import UnifiedFilter from "../_components/UnifiedFilters";
-import { Category } from "@prisma/client";
 import PaginationComponent from "../_components/PaginationComponent";
 
 export const metadata: Metadata = {
@@ -30,15 +27,15 @@ const Manager = async ({
   const filter = searchParams?.filter || "all|name|asc"; // Formato: "categoria|ordenarPor|direção"
   const [selectedCategory, orderBy, orderDirection] = filter.split("|");
 
-  const page = parseInt(searchParams?.page || "1", 10);
+  const page = Math.max(parseInt(searchParams?.page || "1", 10), 1);
   const perPage = parseInt(searchParams?.perPage || "10", 10);
   const skip = (page - 1) * perPage;
 
   // Validação do valor de selectedCategory
-  const validCategory = selectedCategory !== "Filto..." ? selectedCategory : "all";
+  const validCategory = selectedCategory && selectedCategory !== "Filto..." ? selectedCategory : "all";
 
   // Valida se `orderBy` tem um valor válido
-  const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
+  const validOrderBy = ["name", "updatedAt"].includes(orderBy) ? orderBy : "name";
   const validOrderDirection = orderDirection === "asc" || orderDirection === "desc" ? orderDirection : "asc";
 
   // Busca no banco
@@ -48,7 +45,7 @@ const Manager = async ({
         contains: query,
         mode: "insensitive",
       },
-      ...(validCategory !== "all" && { category: validCategory }), // Só filtra por categoria se não for "all"
+      category: validCategory !== "all" ? validCategory : undefined,
     },
     orderBy: {
       [validOrderBy]: validOrderDirection as "asc" | "desc", // Ordenação válida
@@ -63,16 +60,16 @@ const Manager = async ({
         contains: query,
         mode: "insensitive",
       },
-      ...(validCategory !== "all" && { category: validCategory }),
+      category: validCategory !== "all" ? validCategory : undefined,
     },
   });
 
   const totalPages = Math.ceil(totalProducts / perPage);
 
-  const categories = await db.products.findMany({
-    select: { category: true },
-    distinct: ["category"],
+  const categories = await db.products.aggregate({
+    _distinct: ["category"]
   });
+
   return (
     <main>
       <div className="flex items-center justify-center py-6">
@@ -87,23 +84,19 @@ const Manager = async ({
           <div className="w-full flex justify-between items-center pb-4">
             <h1 className="md:text-2xl font-bold">Produtos</h1>
             <AddProductButton />
-            {/* Botão para adicionar produtos */}
           </div>
 
           {/* Componente de pesquisa */}
           <div className="w-full flex flex-col gap-2 items-end">
             <SearchInput input="Filtrar por nome..." />
-            {/* Filtro unificado */}
-          <UnifiedFilter
-            categories={categories.map((cat) => cat.category)}
-            selectedFilter={filter}
-          />
+            <UnifiedFilter categories={categories.map((cat) => cat.category)} selectedFilter={filter} />
           </div>
 
           {/* Tabela de dados */}
           <div className="w-full mt-1">
             <DataTable columns={productsColumns} data={products} />
           </div>
+
           {/* Paginação */}
           <div className="mt-6 flex justify-center">
             <PaginationComponent currentPage={page} totalPages={totalPages} />
@@ -115,3 +108,4 @@ const Manager = async ({
 };
 
 export default Manager;
+
