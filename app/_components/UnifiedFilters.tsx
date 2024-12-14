@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
-import { Filter, BookOpen, MonitorPlay, PcCase, MoreHorizontal, CalendarFold, ChartNoAxesGantt, Text, ArrowDownAZ, ArrowDownZA } from "lucide-react";
+import { Filter, BookOpen, MonitorPlay, PcCase, MoreHorizontal, CalendarFold, ChartNoAxesGantt, Text, ArrowUpAZ, ArrowDownZA } from "lucide-react";
 import { Category } from "@prisma/client"; // Importando o enum diretamente do Prisma
 
 // Mapeamento de ícones para as categorias do enum
@@ -82,7 +82,7 @@ const UnifiedFilter = ({ categories, selectedFilter }: UnifiedFilterProps) => {
         <div className="space-y-1">
           <SelectItem value={`${selectedCategory}|${orderBy}|asc`}>
             <div className="flex gap-2 items-center">
-              <ArrowDownAZ size={15} /> Crescente
+              <ArrowUpAZ size={15} /> Crescente
             </div>
           </SelectItem>
           <SelectItem value={`${selectedCategory}|${orderBy}|desc`}>
