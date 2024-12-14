@@ -32,30 +32,30 @@ const Manager = async ({
   const perPage = parseInt(searchParams?.perPage || "10", 10);
   const skip = (page - 1) * perPage;
 
-  // Validação do valor de selectedCategory
-  const validCategory = selectedCategory && selectedCategory !== "Filto..." && selectedCategory !== "all"
-    ? selectedCategory as Category // Convertendo para o tipo Category se for válido
-    : undefined; // Se não for válido, passa undefined
+ // Validação do valor de selectedCategory
+const validCategory = selectedCategory && selectedCategory !== "Filto..." && selectedCategory !== "all"
+  ? selectedCategory as Category // Garantindo que `selectedCategory` seja tratado como o tipo `Category`
+  : undefined; // Se não for válido, passa undefined
 
   // Valida se `orderBy` tem um valor válido
   const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
   const validOrderDirection = orderDirection === "asc" || orderDirection === "desc" ? orderDirection : "asc";
 
   // Busca no banco
-  const products = await db.products.findMany({
-    where: {
-      name: {
-        contains: query,
-        mode: "insensitive",
-      },
-      ...(validCategory && { category: validCategory }), // Só filtra por categoria se for um valor válido
+const products = await db.products.findMany({
+  where: {
+    name: {
+      contains: query,
+      mode: "insensitive",
     },
-    orderBy: {
-      [validOrderBy]: validOrderDirection as "asc" | "desc", // Ordenação válida
-    },
-    skip,
-    take: perPage,
-  });
+    ...(validCategory && { category: validCategory }), // Aplica o filtro de categoria somente se for válido
+  },
+  orderBy: {
+    [validOrderBy]: validOrderDirection as "asc" | "desc",
+  },
+  skip,
+  take: perPage,
+});
 
   const totalProducts = await db.products.count({
     where: {
