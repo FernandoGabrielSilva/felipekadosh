@@ -33,21 +33,13 @@ const Manager = async ({
   const skip = (page - 1) * perPage;
 
   // Validação do valor de selectedCategory
-  // Garantindo que selectedCategory seja um valor válido do enum Category ou "all"
-  const validCategory: Category | undefined =
-    selectedCategory !== "Filto..." &&
-    selectedCategory !== "all" &&
-    Object.values(Category).includes(selectedCategory as Category)
-      ? (selectedCategory as Category) // Convertendo para o tipo Category
-      : undefined;
+  const validCategory = selectedCategory && selectedCategory !== "Filto..." && selectedCategory !== "all"
+    ? selectedCategory as Category // Convertendo para o tipo Category se for válido
+    : undefined; // Se não for válido, passa undefined
 
   // Valida se `orderBy` tem um valor válido
-  const validOrderBy =
-    orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
-  const validOrderDirection =
-    orderDirection === "asc" || orderDirection === "desc"
-      ? orderDirection
-      : "asc";
+  const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
+  const validOrderDirection = orderDirection === "asc" || orderDirection === "desc" ? orderDirection : "asc";
 
   // Busca no banco
   const products = await db.products.findMany({
@@ -123,3 +115,4 @@ const Manager = async ({
 };
 
 export default Manager;
+
