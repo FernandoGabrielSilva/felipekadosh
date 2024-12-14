@@ -39,8 +39,12 @@ const Manager = async ({
       : undefined;
 
   // Valida se `orderBy` tem um valor válido
-  const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
-  const validOrderDirection = orderDirection === "asc" || orderDirection === "desc" ? orderDirection : "asc";
+  const validOrderBy =
+    orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
+  const validOrderDirection =
+    orderDirection === "asc" || orderDirection === "desc"
+      ? orderDirection
+      : "asc";
 
   // Busca no banco
   const products = await db.products.findMany({
@@ -116,4 +120,3 @@ const Manager = async ({
 };
 
 export default Manager;
-
