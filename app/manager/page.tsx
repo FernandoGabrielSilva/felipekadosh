@@ -7,7 +7,7 @@ import { DataTable } from "../_components/ui/data-table";
 import { productsColumns } from "./_columns";
 import SearchInput from "../_components/SearchInput";
 import AddProductButton from "./_components/AddProductButton";
-import CategoryFilter from "../_components/CategoryFilter";
+import UnifiedFilter from "../_components/UnifiedFilters";
 import { Category } from "@prisma/client";
 import PaginationComponent from "../_components/PaginationComponent";
 
@@ -21,70 +21,58 @@ const Manager = async ({
 }: {
   searchParams?: {
     query?: string;
-    category?: Category;
-    page?: string; // Página atual
-    perPage?: string; // Itens por página
+    filter?: string; // Combinação de categoria e ordenação
+    page?: string;
+    perPage?: string;
   };
 }) => {
-  // Verifica se o usuário está autenticado
-  const { userId } = await auth();
-  if (!userId) {
-    redirect("/login"); // Se não estiver autenticado, redireciona
-  }
-
-  // Obtém os parâmetros de pesquisa 'query' e 'category', caso existam
   const query = searchParams?.query || "";
-  const selectedCategory = searchParams?.category || "all";
-  const page = parseInt(searchParams?.page || "1", 10); // Página padrão é 1
-  const perPage = parseInt(searchParams?.perPage || "10", 10); // Padrão de 10 itens por página
-  const skip = (page - 1) * perPage; // Calcular o deslocamento
+  const filter = searchParams?.filter || "all|name|asc"; // Formato: "categoria|ordenarPor|direção"
+  const [selectedCategory, orderBy, orderDirection] = filter.split("|");
 
-  // Realiza a busca de produtos no banco de dados
+  const page = parseInt(searchParams?.page || "1", 10);
+  const perPage = parseInt(searchParams?.perPage || "10", 10);
+  const skip = (page - 1) * perPage;
+
+  // Validação do valor de selectedCategory
+  const validCategory = selectedCategory !== "Filto..." ? selectedCategory : "all";
+
+  // Valida se `orderBy` tem um valor válido
+  const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
+  const validOrderDirection = orderDirection === "asc" || orderDirection === "desc" ? orderDirection : "asc";
+
+  // Busca no banco
   const products = await db.products.findMany({
     where: {
       name: {
-        contains: query, // Filtra os produtos pelo nome, insensível a maiúsculas e minúsculas
+        contains: query,
         mode: "insensitive",
       },
-      ...(selectedCategory !== "all" && { category: selectedCategory }), // Aplica filtro de categoria, se selecionada
-    },
-    select: {
-      id: true,
-      name: true,
-      description: true,
-      category: true,
-      imageUrl: true,
-      linkUrl: true,
-      createdAt: true,
-      updatedAt: true,
+      ...(validCategory !== "all" && { category: validCategory }), // Só filtra por categoria se não for "all"
     },
     orderBy: {
-      updatedAt: "desc",
+      [validOrderBy]: validOrderDirection as "asc" | "desc", // Ordenação válida
     },
     skip,
     take: perPage,
   });
 
-  // Conta o total de produtos
   const totalProducts = await db.products.count({
     where: {
       name: {
         contains: query,
         mode: "insensitive",
       },
-      ...(selectedCategory !== "all" && { category: selectedCategory }),
+      ...(validCategory !== "all" && { category: validCategory }),
     },
   });
 
-  // Total de páginas
   const totalPages = Math.ceil(totalProducts / perPage);
 
-  // Obtem as categorias disponiveis
   const categories = await db.products.findMany({
     select: { category: true },
-    distinct: ["category"], //Evita categorias duplicadas
+    distinct: ["category"],
   });
-
   return (
     <main>
       <div className="flex items-center justify-center py-6">
@@ -105,11 +93,11 @@ const Manager = async ({
           {/* Componente de pesquisa */}
           <div className="w-full flex flex-col gap-2 items-end">
             <SearchInput input="Filtrar por nome..." />
-            {/* Filtro por categoria */}
-            <CategoryFilter
-              categories={categories.map((cat) => cat.category)} // Substitua pelas categorias reais
-              selectedCategory={selectedCategory}
-            />
+            {/* Filtro unificado */}
+          <UnifiedFilter
+            categories={categories.map((cat) => cat.category)}
+            selectedFilter={filter}
+          />
           </div>
 
           {/* Tabela de dados */}

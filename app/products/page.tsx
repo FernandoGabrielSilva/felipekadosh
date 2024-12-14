@@ -1,13 +1,12 @@
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
-import SearchInput from "../_components/SearchInput";
 import { db } from "../_lib/prisma";
+import UnifiedFilter from "../_components/UnifiedFilters";
 import ProductsItem from "./_components/ProductsItem";
-import { Category } from "@prisma/client";
-import CategoryFilter from "../_components/CategoryFilter";
 import PaginationComponent from "../_components/PaginationComponent";
+import SearchInput from "../_components/SearchInput";
 
 export const metadata: Metadata = {
-  title: "Felipe Kadosh | Producs",
+  title: "Felipe Kadosh | Products",
   description: "Gerenciado por Felipe Kadosh",
 };
 
@@ -16,52 +15,57 @@ const Products = async ({
 }: {
   searchParams?: {
     query?: string;
-    category?: Category;
-    page?: string; // Página atual
-    perPage?: string; // Itens por página
+    filter?: string; // Combinação de categoria e ordenação
+    page?: string;
+    perPage?: string;
   };
 }) => {
-  // Obtém os parâmetros de pesquisa 'query' e 'category', caso existam
   const query = searchParams?.query || "";
-  const selectedCategory = searchParams?.category || "all";
-  const page = parseInt(searchParams?.page || "1", 10); // Página padrão é 1
-  const perPage = parseInt(searchParams?.perPage || "10", 10); // Padrão de 10 itens por página
-  const skip = (page - 1) * perPage; // Calcular o deslocamento
+  const filter = searchParams?.filter || "all|name|asc"; // Formato: "categoria|ordenarPor|direção"
+  const [selectedCategory, orderBy, orderDirection] = filter.split("|");
 
-  // Realiza a busca de produtos no banco de dados
+  const page = parseInt(searchParams?.page || "1", 10);
+  const perPage = parseInt(searchParams?.perPage || "10", 10);
+  const skip = (page - 1) * perPage;
+
+  // Validação do valor de selectedCategory
+  const validCategory = selectedCategory !== "Filto..." ? selectedCategory : "all";
+
+  // Valida se `orderBy` tem um valor válido
+  const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
+  const validOrderDirection = orderDirection === "asc" || orderDirection === "desc" ? orderDirection : "asc";
+
+  // Busca no banco
   const products = await db.products.findMany({
     where: {
       name: {
-        contains: query, // Filtra os produtos pelo nome, insensível a maiúsculas e minúsculas
+        contains: query,
         mode: "insensitive",
       },
-      ...(selectedCategory !== "all" && { category: selectedCategory }), // Aplica filtro de categoria, se selecionada
+      ...(validCategory !== "all" && { category: validCategory }), // Só filtra por categoria se não for "all"
     },
     orderBy: {
-      updatedAt: "desc",
+      [validOrderBy]: validOrderDirection as "asc" | "desc", // Ordenação válida
     },
     skip,
     take: perPage,
   });
 
-  // Conta o total de produtos
   const totalProducts = await db.products.count({
     where: {
       name: {
         contains: query,
         mode: "insensitive",
       },
-      ...(selectedCategory !== "all" && { category: selectedCategory }),
+      ...(validCategory !== "all" && { category: validCategory }),
     },
   });
 
-  // Total de páginas
   const totalPages = Math.ceil(totalProducts / perPage);
 
-  // Obtem as categorias disponiveis
   const categories = await db.products.findMany({
     select: { category: true },
-    distinct: ["category"], //Evita categorias duplicadas
+    distinct: ["category"],
   });
 
   return (
@@ -70,20 +74,20 @@ const Products = async ({
         {/* Pesquisa */}
         <div className="flex flex-col w-full mt-6 mb-4 gap-2 items-end">
           <SearchInput input="Pesquisar..." />
-          {/* Filtro por categoria */}
-          <CategoryFilter
-            categories={categories.map((cat) => cat.category)} // Substitua pelas categorias reais
-            selectedCategory={selectedCategory}
+          {/* Filtro unificado */}
+          <UnifiedFilter
+            categories={categories.map((cat) => cat.category)}
+            selectedFilter={filter}
           />
         </div>
-        {/* Verifica se há produtos */}
+        {/* Produtos */}
         {products.length === 0 ? (
           <div className="text-center mt-8">
             <p className="text-gray-500 text-lg">Nenhum produto encontrado.</p>
           </div>
         ) : (
           <div className="flex flex-col h-[calc(100dvh-120px)] justify-between">
-            {/* Produtos */}
+            {/* Lista de Produtos */}
             <div className="grid grid-cols-1 gap-2 w-full md:grid-cols-4 lg:grid-cols-5">
               {products.map((product) => (
                 <ProductsItem product={product} key={product.id} />
@@ -102,3 +106,4 @@ const Products = async ({
 };
 
 export default Products;
+
