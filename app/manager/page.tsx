@@ -7,7 +7,7 @@ import SearchInput from "../_components/SearchInput";
 import AddProductButton from "./_components/AddProductButton";
 import UnifiedFilter from "../_components/UnifiedFilters";
 import PaginationComponent from "../_components/PaginationComponent";
-import { Category } from "@prisma/client"; // Importando o enum Category
+import { Category } from "@prisma/client"; // Importando o enum Category do Prisma
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
@@ -32,30 +32,31 @@ const Manager = async ({
   const perPage = parseInt(searchParams?.perPage || "10", 10);
   const skip = (page - 1) * perPage;
 
- // Validação do valor de selectedCategory
-const validCategory = selectedCategory && selectedCategory !== "Filto..." && selectedCategory !== "all"
-  ? selectedCategory as Category // Garantindo que `selectedCategory` seja tratado como o tipo `Category`
-  : undefined; // Se não for válido, passa undefined
+  // Validação do valor de selectedCategory
+  const validCategory: Category | undefined =
+    selectedCategory && selectedCategory !== "Filto..." && selectedCategory !== "all"
+      ? (selectedCategory as Category) // Garantindo que selectedCategory seja tratado como um valor da enum Category
+      : undefined; // Se não for válido, passa undefined
 
   // Valida se `orderBy` tem um valor válido
   const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
   const validOrderDirection = orderDirection === "asc" || orderDirection === "desc" ? orderDirection : "asc";
 
   // Busca no banco
-const products = await db.products.findMany({
-  where: {
-    name: {
-      contains: query,
-      mode: "insensitive",
+  const products = await db.products.findMany({
+    where: {
+      name: {
+        contains: query,
+        mode: "insensitive",
+      },
+      ...(validCategory && { category: validCategory }), // Aplica o filtro de categoria somente se validCategory for válido
     },
-    ...(validCategory && { category: validCategory }), // Aplica o filtro de categoria somente se for válido
-  },
-  orderBy: {
-    [validOrderBy]: validOrderDirection as "asc" | "desc",
-  },
-  skip,
-  take: perPage,
-});
+    orderBy: {
+      [validOrderBy]: validOrderDirection as "asc" | "desc", // Ordenação válida
+    },
+    skip,
+    take: perPage,
+  });
 
   const totalProducts = await db.products.count({
     where: {
