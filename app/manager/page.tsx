@@ -7,6 +7,7 @@ import SearchInput from "../_components/SearchInput";
 import AddProductButton from "./_components/AddProductButton";
 import UnifiedFilter from "../_components/UnifiedFilters";
 import PaginationComponent from "../_components/PaginationComponent";
+import { Category } from "@prisma/client"; // Importando o enum Category, se necessário
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
@@ -32,7 +33,10 @@ const Manager = async ({
   const skip = (page - 1) * perPage;
 
   // Validação do valor de selectedCategory
-  const validCategory = selectedCategory !== "Filto..." ? selectedCategory : "all";
+  const validCategory: Category | undefined =
+    selectedCategory !== "Filto..." && selectedCategory !== "all"
+      ? (selectedCategory as Category)
+      : undefined;
 
   // Valida se `orderBy` tem um valor válido
   const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
@@ -45,7 +49,7 @@ const Manager = async ({
         contains: query,
         mode: "insensitive",
       },
-      ...(validCategory !== "all" && { category: validCategory }), // Só filtra por categoria se não for "all"
+      ...(validCategory && { category: validCategory }), // Só filtra por categoria se for um valor válido
     },
     orderBy: {
       [validOrderBy]: validOrderDirection as "asc" | "desc", // Ordenação válida
@@ -60,7 +64,7 @@ const Manager = async ({
         contains: query,
         mode: "insensitive",
       },
-      ...(validCategory !== "all" && { category: validCategory }),
+      ...(validCategory && { category: validCategory }),
     },
   });
 
@@ -90,7 +94,10 @@ const Manager = async ({
           {/* Componente de pesquisa */}
           <div className="w-full flex flex-col gap-2 items-end">
             <SearchInput input="Filtrar por nome..." />
-            <UnifiedFilter categories={categories.map((cat) => cat.category)} selectedFilter={filter} />
+            <UnifiedFilter
+              categories={categories.map((cat) => cat.category)}
+              selectedFilter={filter}
+            />
           </div>
 
           {/* Tabela de dados */}
