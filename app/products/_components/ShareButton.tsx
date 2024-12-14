@@ -1,10 +1,17 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Button } from "@/app/_components/ui/button";
 import { Share2 } from "lucide-react";
 
 const ShareButton = () => {
-  const currentUrl = window.location.href; // Obtém o link atual do navegador
+  const [currentUrl, setCurrentUrl] = useState<string>("");
+
+  useEffect(() => {
+    // Atualiza o URL atual após a renderização do componente
+    setCurrentUrl(window.location.href);
+  }, []);
+
   const shareData = {
     url: currentUrl,
     // Adicione os outros dados necessários para o compartilhamento
@@ -39,3 +46,4 @@ const ShareButton = () => {
 };
 
 export default ShareButton;
+

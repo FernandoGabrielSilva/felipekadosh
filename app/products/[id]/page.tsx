@@ -37,33 +37,28 @@ export async function generateMetadata({
 
   // Verifique a URL gerada para Open Graph
   const productUrl = `https://felipekadosh.com/products/${params.id}`;
-  const imageUrl = product.imageUrl ? `https://felipekadosh.com/${product.imageUrl}` : 'https://felipekadosh.com/default-image.jpg'; // Garantir que a imagem tenha uma URL completa
-
-  console.log("productUrl:", productUrl);  // Verifique a URL gerada
-  console.log("imageUrl:", imageUrl);      // Verifique a URL da imagem
 
   return {
     title: product.name,
-    description: product.description.slice(0, 150),
+    description: product.description || "Sem descrição disponível",
     openGraph: {
-      type: "website",
       title: product.name,
-      description: product.description,
-      url: productUrl,
+      description: product.description || "Sem descrição disponível",
+      url: `https://seusite.com/products/${params.id}`, // URL do produto
       images: [
         {
-          url: imageUrl,
+          url: product.imageUrl,
+          alt: product.name,
           width: 1200,
           height: 630,
-          alt: `Imagem do produto: ${product.name}`,
         },
       ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary_large_image", // Tipo de card Twitter
       title: product.name,
-      description: product.description,
-      images: [imageUrl],
+      description: product.description || "Sem descrição disponível",
+      images: [product.imageUrl], // Imagem do produto
     },
     alternates: {
       canonical: productUrl,
