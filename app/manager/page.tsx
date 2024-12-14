@@ -33,9 +33,11 @@ const Manager = async ({
   const skip = (page - 1) * perPage;
 
   // Validação do valor de selectedCategory
-  // Garantindo que selectedCategory seja um valor válido do enum Category ou undefined
+  // Garantindo que selectedCategory seja um valor válido do enum Category ou "all"
   const validCategory: Category | undefined =
-    selectedCategory !== "Filto..." && selectedCategory !== "all"
+    selectedCategory !== "Filto..." &&
+    selectedCategory !== "all" &&
+    Object.values(Category).includes(selectedCategory as Category)
       ? (selectedCategory as Category) // Convertendo para o tipo Category
       : undefined;
 
