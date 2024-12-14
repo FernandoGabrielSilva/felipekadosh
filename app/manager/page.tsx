@@ -7,7 +7,7 @@ import SearchInput from "../_components/SearchInput";
 import AddProductButton from "./_components/AddProductButton";
 import UnifiedFilter from "../_components/UnifiedFilters";
 import PaginationComponent from "../_components/PaginationComponent";
-import { Category } from "@prisma/client"; // Importando o enum Category, se necessário
+import { Category } from "@prisma/client"; // Importando o enum Category
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
@@ -33,9 +33,10 @@ const Manager = async ({
   const skip = (page - 1) * perPage;
 
   // Validação do valor de selectedCategory
+  // Garantindo que selectedCategory seja um valor válido do enum Category ou undefined
   const validCategory: Category | undefined =
     selectedCategory !== "Filto..." && selectedCategory !== "all"
-      ? (selectedCategory as Category)
+      ? (selectedCategory as Category) // Convertendo para o tipo Category
       : undefined;
 
   // Valida se `orderBy` tem um valor válido
