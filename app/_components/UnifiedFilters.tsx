@@ -1,33 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import {
-  Select,
-  SelectItem,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
-import {
-  Filter,
-  BookOpen,
-  MonitorPlay,
-  ShoppingBag,
-  PcCase,
-  MoreHorizontal,
-  CalendarFold,
-  ChartNoAxesGantt,
-  Text,
-  ArrowDownAZ,
-  ArrowDownZA,
-} from "lucide-react";
-
-enum Category {
-  Cursos = "Cursos",
-  Livros = "Livros",
-  Eletronicos = "Eletronicos",
-  Outros = "Outros",
-}
+import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import { Filter, BookOpen, MonitorPlay, PcCase, MoreHorizontal, CalendarFold, ChartNoAxesGantt, Text, ArrowDownAZ, ArrowDownZA } from "lucide-react";
+import { Category } from "@prisma/client"; // Importando o enum diretamente do Prisma
 
 // Mapeamento de ícones para as categorias do enum
 const iconMap: Record<Category, React.ElementType> = {
