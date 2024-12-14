@@ -27,15 +27,15 @@ const Manager = async ({
   const filter = searchParams?.filter || "all|name|asc"; // Formato: "categoria|ordenarPor|direção"
   const [selectedCategory, orderBy, orderDirection] = filter.split("|");
 
-  const page = Math.max(parseInt(searchParams?.page || "1", 10), 1);
+  const page = parseInt(searchParams?.page || "1", 10);
   const perPage = parseInt(searchParams?.perPage || "10", 10);
   const skip = (page - 1) * perPage;
 
   // Validação do valor de selectedCategory
-  const validCategory = selectedCategory && selectedCategory !== "Filto..." ? selectedCategory : "all";
+  const validCategory = selectedCategory !== "Filto..." ? selectedCategory : "all";
 
   // Valida se `orderBy` tem um valor válido
-  const validOrderBy = ["name", "updatedAt"].includes(orderBy) ? orderBy : "name";
+  const validOrderBy = orderBy === "name" || orderBy === "updatedAt" ? orderBy : "name";
   const validOrderDirection = orderDirection === "asc" || orderDirection === "desc" ? orderDirection : "asc";
 
   // Busca no banco
@@ -45,7 +45,7 @@ const Manager = async ({
         contains: query,
         mode: "insensitive",
       },
-      category: validCategory !== "all" ? validCategory : undefined,
+      ...(validCategory !== "all" && { category: validCategory }), // Só filtra por categoria se não for "all"
     },
     orderBy: {
       [validOrderBy]: validOrderDirection as "asc" | "desc", // Ordenação válida
@@ -60,14 +60,15 @@ const Manager = async ({
         contains: query,
         mode: "insensitive",
       },
-      category: validCategory !== "all" ? validCategory : undefined,
+      ...(validCategory !== "all" && { category: validCategory }),
     },
   });
 
   const totalPages = Math.ceil(totalProducts / perPage);
 
-  const categories = await db.products.aggregate({
-    _distinct: ["category"]
+  const categories = await db.products.findMany({
+    select: { category: true },
+    distinct: ["category"],
   });
 
   return (
