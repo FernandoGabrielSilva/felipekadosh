@@ -13,7 +13,7 @@ interface ProductsItemProps {
 const ProductsItem = ({ product, isLoading }: ProductsItemProps) => {
   return (
     <Card className="min-w-[150px]">
-      <CardContent className="flex flex-col gap-1 p-0 md:flex-col md:gap-0">
+      <CardContent className="flex flex-row-2 gap-1 p-0 md:flex-col md:gap-0">
         {/* Skeleton ou Imagem */}
         <div className="relative h-[150px] w-full">
           {isLoading ? (
