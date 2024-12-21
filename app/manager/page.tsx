@@ -8,6 +8,7 @@ import AddProductButton from "./_components/AddProductButton";
 import UnifiedFilter from "../_components/UnifiedFilters"; // Corrigido o nome do componente
 import PaginationComponent from "../_components/PaginationComponent";
 import { Category } from "@prisma/client"; // Importando o enum Category diretamente do Prisma
+import { auth } from "@clerk/nextjs/server";
 
 export const metadata: Metadata = {
   title: "Felipe Kadosh | Manager",
