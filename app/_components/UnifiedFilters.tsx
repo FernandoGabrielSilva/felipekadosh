@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
-import { Filter, BookOpen, MonitorPlay, PcCase, MoreHorizontal, CalendarFold, ChartNoAxesGantt, Text, ArrowUpAZ, ArrowDownZA } from "lucide-react";
+import { Filter, BookOpen, MonitorPlay, PcCase, Users, MoreHorizontal, CalendarFold, ChartNoAxesGantt, Text, ArrowUpAZ, ArrowDownZA } from "lucide-react";
 import { Category } from "@prisma/client"; // Importando o enum diretamente do Prisma
 
 // Mapeamento de ícones para as categorias do enum
@@ -10,6 +10,7 @@ const iconMap: Record<Category, React.ElementType> = {
   [Category.Cursos]: MonitorPlay,
   [Category.Livros]: BookOpen,
   [Category.Eletronicos]: PcCase,
+  [Category.Costume]: Users,
   [Category.Outros]: MoreHorizontal, // Ícone padrão para "Outros"
 };
 
