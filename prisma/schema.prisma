@@ -28,5 +28,6 @@ enum Category {
   Cursos
   Livros
   Eletronicos
+  Costume
   Outros
 }

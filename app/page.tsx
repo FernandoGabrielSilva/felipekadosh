@@ -34,8 +34,8 @@ export default function Home() {
               <div>
                 <p className="text-lg text-center font-normal pt-5 md:text-2xl md:text-justify">
                   Tenha sua Equipe de Vendas Interna estruturada em 37 dias e
-                  aumente suas vendas em 30% através do método que gerou 1.5
-                  milhões, sem aumentar o investimento em anúncios e com menos
+                  aumente suas vendas em 30% através do método que gerou 800 Mil, 
+                  sem aumentar o investimento em anúncios e com menos
                   de 5 horas por semana.
                 </p>
                 {/* BOTÃO QUE LEVA PRO WHATSAPP */}
@@ -316,7 +316,7 @@ export default function Home() {
                   aumente suas vendas em 30%{" "}
                 </span>
                 através do método que gerou
-                <span className="text-primary"> 1.5 milhões</span>, sem aumentar
+                <span className="text-primary"> 800 Mil</span>, sem aumentar
                 o investimento em anúncios e com menos de 5 horas por semana
               </h3>
             </div>
