@@ -68,6 +68,10 @@ const PRODUCTS_CATEGORY_OPTIONS = [
     label: "Eletronicos",
   },
   {
+    value: Category.Costume,
+    label: "Costume",
+  },
+  {
     value: Category.Outros,
     label: "Outros",
   },

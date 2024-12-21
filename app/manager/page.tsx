@@ -24,6 +24,10 @@ const Manager = async ({
     perPage?: string;
   };
 }) => {
+  const { userId } = await auth();
+    if (!userId) {
+      redirect("/login");
+  }
   const query = searchParams?.query || "";
   const filter = searchParams?.filter || "all|name|asc"; // Formato: "categoria|ordenarPor|direção"
   const [selectedCategory, orderBy, orderDirection] = filter.split("|");
