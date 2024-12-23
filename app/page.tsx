@@ -159,7 +159,7 @@ export default function Home() {
           </div>
           <div className="flex justify-center my-3">
             <h2 className="text-center font-semibold text-wrap text-4xl">
-              <span className="text-primary">Entregáveis</span> da Consulta
+              <span className="text-primary">Entregáveis</span> da Consultoria
             </h2>
           </div>
           {/* FUNIL */}
