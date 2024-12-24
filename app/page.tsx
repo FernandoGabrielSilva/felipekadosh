@@ -3,6 +3,44 @@ import CardsComponents from "./_components/CardsComponents";
 import { Button } from "./_components/ui/button";
 import Link from "next/link";
 import { CircleArrowDown, CircleArrowRight, Clock } from "lucide-react";
+import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
+
+// Função para configurar a metadata da página
+export async function generateMetadata(): Promise<Metadata> {
+// Verifique a URL gerada para Open Graph
+  const productUrl = `https://felipekadosh.vercel.app`;
+
+  return {
+    title: "Felipe Kadosh",
+    description: "Marketing Digital",
+    openGraph: {
+      title: "Felipe Kadosh",
+      description: "Marketing Digital",
+      url: "https://felipekadosh.vercel.app/",
+      images: [
+        {
+          url: "https://i.postimg.cc/G3J1PC17/link-icon-f.png",
+          alt: "Felipe Kadosh",
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image", // Tipo de card Twitter
+      title: "Felipe Kadosh",
+      description: "Marketing Digital",
+      images: "https://i.postimg.cc/G3J1PC17/link-icon-f.png", // Imagem do produto
+    },
+    alternates: {
+      canonical: productUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default function Home() {
   const currentYear = new Date().getFullYear(); // Obtém o ano atual dinamicamente

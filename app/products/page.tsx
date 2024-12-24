@@ -5,10 +5,42 @@ import UnifiedFilter from "../_components/UnifiedFilters";
 import SearchInput from "../_components/SearchInput";
 import { Category } from "@prisma/client";
 
-export const metadata: Metadata = {
-  title: "Felipe Kadosh | Products",
-  description: "Gerenciado por Felipe Kadosh",
-};
+// Função para configurar a metadata da página
+export async function generateMetadata(): Promise<Metadata> {
+// Verifique a URL gerada para Open Graph
+  const productUrl = `https://felipekadosh.vercel.app/products`;
+
+  return {
+    title: "Felipe Kadosh | Produtos",
+    description: "Marketing Digital",
+    openGraph: {
+      title: "Felipe Kadosh",
+      description: "Marketing Digital",
+      url: "https://felipekadosh.vercel.app/products",
+      images: [
+        {
+          url: "https://i.postimg.cc/G3J1PC17/link-icon-f.png",
+          alt: "Felipe Kadosh",
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image", // Tipo de card Twitter
+      title: "Felipe Kadosh | Produtos",
+      description: "Marketing Digital",
+      images: "https://i.postimg.cc/G3J1PC17/link-icon-f.png", // Imagem do produto
+    },
+    alternates: {
+      canonical: productUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 const Products = async ({
   searchParams,
