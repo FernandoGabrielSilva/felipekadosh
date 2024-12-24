@@ -36,7 +36,7 @@ export async function generateMetadata({
   }
 
   // Verifique a URL gerada para Open Graph
-  const productUrl = `https://felipekadosh.com/products/${params.id}`;
+  const productUrl = `https://felipekadosh.vercel.app/products/${params.id}`;
 
   return {
     title: product.name,
@@ -44,7 +44,7 @@ export async function generateMetadata({
     openGraph: {
       title: product.name,
       description: product.description || "Sem descrição disponível",
-      url: `https://seusite.com/products/${params.id}`, // URL do produto
+      url: `https://felipekadosh.vercel.app/products/${params.id}`, // URL do produto
       images: [
         {
           url: product.imageUrl,

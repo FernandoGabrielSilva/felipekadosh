@@ -6,6 +6,7 @@ import { CircleArrowDown, CircleArrowRight, Clock } from "lucide-react";
 
 export default function Home() {
   const currentYear = new Date().getFullYear(); // Obtém o ano atual dinamicamente
+
   return (
     <main>
       {/* INICIAL */}
