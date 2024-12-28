@@ -18,7 +18,7 @@ model Products {
   name        String
   description String
   category    Category
-  imageUrl    String
+  imageUrl    String[]
   linkUrl     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

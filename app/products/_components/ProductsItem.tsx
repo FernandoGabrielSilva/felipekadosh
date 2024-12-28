@@ -11,6 +11,9 @@ interface ProductsItemProps {
 }
 
 const ProductsItem = ({ product, isLoading }: ProductsItemProps) => {
+  // Se o produto tiver várias imagens, pegar a primeira
+  const firstImageUrl = product?.images?.[0] || product?.imageUrl; // A primeira imagem ou a URL de imagem principal
+  
   return (
     <Card className="min-w-[150px]">
       <CardContent className="flex flex-row-2 gap-1 p-0 md:flex-col md:gap-0">
@@ -22,7 +25,7 @@ const ProductsItem = ({ product, isLoading }: ProductsItemProps) => {
             <Image
               fill
               className="object-cover rounded-xl"
-              src={product.imageUrl}
+              src={firstImageUrl}
               alt={product.name}
               sizes="(max-width: 768px) 100vw, 50vw"
             />

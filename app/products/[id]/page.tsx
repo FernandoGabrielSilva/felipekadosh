@@ -6,6 +6,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ShareButton from "../_components/ShareButton";
 import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/app/_components/ui/carousel";
 
 interface ProductPageProps {
   params: { id: string };
@@ -80,17 +87,32 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   if (!product || !product.name || !product.imageUrl || !product.description) {
     return notFound();
   }
+  
+  // Supondo que o produto tenha um array de URLs de imagens
+  const productImages = product.imageUrls || [product.imageUrl];
 
   return (
     <main className="flex flex-col lg:flex-row lg:h-full">
       {/* IMAGEM */}
       <div className="relative w-full h-[250px] lg:h-dvh lg:w-1/2">
-        <Image
-          src={product.imageUrl}
-          alt={product.name}
-          fill
-          className="object-cover"
-        />
+        <Carousel>
+          <CarouselContent>
+            {productImages.map((imageUrl, index) => (
+              <CarouselItem key={index} className="relative w-full h-full">
+                <div className="relative w-full h-[250px] lg:h-dvh">
+		    <Image
+		      src={imageUrl}
+		      alt={`${product.name} - Imagem ${index + 1}`}
+		      fill
+		      className="object-cover"
+		    />
+		</div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="absolute inset-x-1/2 left-4"/>
+          <CarouselNext className="absolute inset-y-1/2 right-4"/>
+        </Carousel>
         <Button
           size="icon"
           variant="outline"

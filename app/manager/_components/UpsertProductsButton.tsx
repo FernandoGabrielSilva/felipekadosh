@@ -35,6 +35,9 @@ import { useState, useEffect } from "react";
 import { UploadDropzone } from "../utils/uploadthing";
 import { upsertProducts } from "../_actions/add-product";
 import { toast } from "sonner";
+import { ScrollArea } from "@/app/_components/ui/scroll-area"
+import Image from "next/image";
+import { Trash } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -106,13 +109,25 @@ const UpsertProductsButton = ({
 
   useEffect(() => {
     if (defaultValues) {
-      // Preenche o formulário com os dados do produto quando o modal for aberto
-      setImages(defaultValues.imageUrl);
+      const existingImages = defaultValues.imageUrl ? defaultValues.imageUrl.split(",") : [];
+      setImages(existingImages); // Carrega as imagens existentes
       form.reset({ ...defaultValues, imageUrl: defaultValues.imageUrl });
     } else {
-      setImages(""); // Reseta a imagem se não houver um produto selecionado
+      setImages([]); // Reseta as imagens para criação de um novo produto
     }
   }, [defaultValues, isOpen, form]);
+
+  const handleImageUpload = (imageUrl: string) => {
+    const updatedImages = [...images, imageUrl];
+    setImages(updatedImages); // Atualiza o estado com a nova imagem
+    form.setValue("imageUrl", updatedImages.join(",")); // Atualiza o campo com os links das imagens
+  };
+
+  const handleImageRemove = (imageUrl: string) => {
+    const updatedImages = images.filter((img) => img !== imageUrl);
+    setImages(updatedImages); // Remove a imagem do estado
+    form.setValue("imageUrl", updatedImages.join(",")); // Atualiza o campo com os links restantes
+  };
 
   const onSubmit = async (data: FormSchema) => {
     try {
@@ -152,130 +167,155 @@ const UpsertProductsButton = ({
         }
       }}
     >
-      <DialogContent>
+      <DialogContent className="h-[90%]">
         <DialogHeader>
           <DialogTitle>Informações do Produto</DialogTitle>
           <DialogDescription>Insira as informações do produto</DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="w-full relative">
-                <UploadDropzone
-                  appearance={{
-                    container: "w-full h-full",
-                    uploadIcon: "hidden",
-                    allowedContent: "hidden",
-                  }}
-                  endpoint="imageUploader"
-                  onClientUploadComplete={(res) => {
-                    const imageUrl = res[0].url;
-                    setImages(imageUrl); // Atualiza o estado local com a URL da imagem
-                    form.setValue("imageUrl", imageUrl); // Preenche o campo imageUrl automaticamente
-                  }}
-                  onUploadError={(error: Error) => {
-                    alert(`ERROR! ${error.message}`);
-                  }}
-                />
-            </div>
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Título</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Título do produto..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+          <div className="w-full h-full flex flex-col overflow-hidden">
+            <ScrollArea className="h-full">
+		<Form {...form}>
+		  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+		    <div className="w-full relative">
+		        <UploadDropzone
+		          appearance={{
+		            container: "w-full h-full",
+		            uploadIcon: "hidden",
+		            allowedContent: "hidden",
+		          }}
+		          endpoint="imageUploader"
+		          onClientUploadComplete={(res) => {
+		            const imageUrl = res[0].url;
+		            setImages(imageUrl); // Atualiza o estado local com a URL da imagem
+		            form.setValue("imageUrl", imageUrl); // Preenche o campo imageUrl automaticamente
+		          }}
+		          onUploadError={(error: Error) => {
+		            alert(`ERROR! ${error.message}`);
+		          }}
+		        />
+		    </div>
+		    {images.length > 0 && (
+                <div className="flex flex-wrap gap-4 mt-4">
+                  {images.map((image) => (
+                    <div key={image} className="w-24 h-24 relative group">
+                      <Image
+                        src={image}
+                        alt="Produto"
+                        fill
+                        className="object-cover rounded"
+                      />
+                      <button
+                        type="button"
+                        className="absolute top-1 right-1 opacity-100 bg-red-500 text-white rounded-full p-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                        onClick={() => handleImageRemove(image)}
+                      >
+                        <Trash className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Descrição</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Descrição do produto..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Categoria</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione a categoria..." />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {PRODUCTS_CATEGORY_OPTIONS.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="imageUrl"
-              render={({ field }) => (
-                <FormItem className="hidden">
-                  <FormLabel>Link da Imagem</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Link da Imagem..."
-                      {...field}
-                      value={images} // Mantém o valor da URL da imagem
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="linkUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Link do Produto</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Link do Produto..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <DialogFooter className="gap-2 md:gap-0">
-              <DialogClose asChild>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => resetForm()} // Resetar quando clicar em Cancelar
-                >
-                  Cancelar
-                </Button>
-              </DialogClose>
-              <Button type="submit" disabled={loading}>
-                {loading ? "Carregando..." : "Confirmar"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+		    <FormField
+		      control={form.control}
+		      name="name"
+		      render={({ field }) => (
+		        <FormItem>
+		          <FormLabel>Título</FormLabel>
+		          <FormControl>
+		            <Input placeholder="Título do produto..." {...field} />
+		          </FormControl>
+		          <FormMessage />
+		        </FormItem>
+		      )}
+		    />
+		    <FormField
+		      control={form.control}
+		      name="description"
+		      render={({ field }) => (
+		        <FormItem>
+		          <FormLabel>Descrição</FormLabel>
+		          <FormControl>
+		            <Textarea placeholder="Descrição do produto..." {...field} />
+		          </FormControl>
+		          <FormMessage />
+		        </FormItem>
+		      )}
+		    />
+		    <FormField
+		      control={form.control}
+		      name="category"
+		      render={({ field }) => (
+		        <FormItem>
+		          <FormLabel>Categoria</FormLabel>
+		          <Select
+		            onValueChange={field.onChange}
+		            defaultValue={field.value}
+		          >
+		            <FormControl>
+		              <SelectTrigger>
+		                <SelectValue placeholder="Selecione a categoria..." />
+		              </SelectTrigger>
+		            </FormControl>
+		            <SelectContent>
+		              {PRODUCTS_CATEGORY_OPTIONS.map((option) => (
+		                <SelectItem key={option.value} value={option.value}>
+		                  {option.label}
+		                </SelectItem>
+		              ))}
+		            </SelectContent>
+		          </Select>
+		          <FormMessage />
+		        </FormItem>
+		      )}
+		    />
+		    <FormField
+		      control={form.control}
+		      name="imageUrl"
+		      render={({ field }) => (
+		        <FormItem className="hidden">
+		          <FormLabel>Link da Imagem</FormLabel>
+		          <FormControl>
+		            <Input
+		              placeholder="Link da Imagem..."
+		              {...field}
+		              value={images} // Mantém o valor da URL da imagem
+		            />
+		          </FormControl>
+		          <FormMessage />
+		        </FormItem>
+		      )}
+		    />
+		    <FormField
+		      control={form.control}
+		      name="linkUrl"
+		      render={({ field }) => (
+		        <FormItem>
+		          <FormLabel>Link do Produto</FormLabel>
+		          <FormControl>
+		            <Input placeholder="Link do Produto..." {...field} />
+		          </FormControl>
+		          <FormMessage />
+		        </FormItem>
+		      )}
+		    />
+		    <DialogFooter className="gap-2 md:gap-0">
+		      <DialogClose asChild>
+		        <Button
+		          type="button"
+		          variant="outline"
+		          onClick={() => resetForm()} // Resetar quando clicar em Cancelar
+		        >
+		          Cancelar
+		        </Button>
+		      </DialogClose>
+		      <Button type="submit" disabled={loading}>
+		        {loading ? "Carregando..." : "Confirmar"}
+		      </Button>
+		    </DialogFooter>
+		  </form>
+		</Form>
+	   </ScrollArea>
+	</div>
       </DialogContent>
     </Dialog>
   );
