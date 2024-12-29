@@ -12,7 +12,9 @@ interface ProductsItemProps {
 
 const ProductsItem = ({ product, isLoading }: ProductsItemProps) => {
   // Se o produto tiver várias imagens, pegar a primeira
-  const firstImageUrl = product?.images?.[0] || product?.imageUrl; // A primeira imagem ou a URL de imagem principal
+  const firstImageUrl = Array.isArray(product?.imageUrl) ? product?.imageUrl[0] : product?.imageUrl; // A primeira imagem ou a URL de imagem principal
+  
+  const imageUrlToUse = firstImageUrl || "/default-image.jpg";
   
   return (
     <Card className="min-w-[150px]">
@@ -25,8 +27,8 @@ const ProductsItem = ({ product, isLoading }: ProductsItemProps) => {
             <Image
               fill
               className="object-cover rounded-xl"
-              src={firstImageUrl}
-              alt={product.name}
+              src={imageUrlToUse}
+              alt={product?.name || "Produto"}
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           ) : (

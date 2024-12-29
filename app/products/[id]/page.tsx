@@ -54,7 +54,7 @@ export async function generateMetadata({
       url: `https://felipekadosh.vercel.app/products/${params.id}`, // URL do produto
       images: [
         {
-          url: product.imageUrl,
+          url: product.imageUrl[0],
           alt: product.name,
           width: 1200,
           height: 630,
@@ -65,7 +65,7 @@ export async function generateMetadata({
       card: "summary_large_image", // Tipo de card Twitter
       title: product.name,
       description: product.description || "Sem descrição disponível",
-      images: [product.imageUrl], // Imagem do produto
+      images: [product.imageUrl[0]], // Imagem do produto
     },
     alternates: {
       canonical: productUrl,
@@ -89,7 +89,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   }
   
   // Supondo que o produto tenha um array de URLs de imagens
-  const productImages = product.imageUrls || [product.imageUrl];
+  const productImages = product.imageUrl || []
 
   return (
     <main className="flex flex-col lg:flex-row lg:h-full">

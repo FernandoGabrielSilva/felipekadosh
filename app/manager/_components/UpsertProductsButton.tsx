@@ -85,7 +85,7 @@ type FormSchema = z.infer<typeof formSchema>;
 interface DefaultProp {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  defaultValues?: Products;
+  defaultValues?: Products & { imageUrl: string | string[] };
 }
 
 const UpsertProductsButton = ({
@@ -93,29 +93,41 @@ const UpsertProductsButton = ({
   setIsOpen,
   defaultValues,
 }: DefaultProp) => {
-  const [images, setImages] = useState<string>(""); // URL da imagem
+  const [images, setImages] = useState<string[]>([]); // URL da imagem
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues ?? {
+    defaultValues: {
       name: "",
       description: "",
       category: Category.Outros,
-      imageUrl: "",
+      imageUrl: "", // Mantém como string
       linkUrl: "",
+      ...(defaultValues && {
+        name: defaultValues.name,
+        description: defaultValues.description,
+        category: defaultValues.category,
+        imageUrl: defaultValues.imageUrl ? defaultValues.imageUrl.join(",") : "",
+        linkUrl: defaultValues.linkUrl,
+      }),
     },
   });
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (defaultValues) {
-      const existingImages = defaultValues.imageUrl ? defaultValues.imageUrl.split(",") : [];
-      setImages(existingImages); // Carrega as imagens existentes
-      form.reset({ ...defaultValues, imageUrl: defaultValues.imageUrl });
-    } else {
-      setImages([]); // Reseta as imagens para criação de um novo produto
-    }
-  }, [defaultValues, isOpen, form]);
+  if (defaultValues) {
+    // Se defaultValues.imageUrl for um array, converta para uma string
+    const existingImages = Array.isArray(defaultValues.imageUrl)
+      ? defaultValues.imageUrl.join(",") // Converte array de imagens para uma string
+      : defaultValues.imageUrl; // Caso já seja uma string, use diretamente
+
+    setImages(existingImages.split(",")); // Atualiza o estado com o array de imagens
+    form.reset({
+      ...defaultValues,
+      imageUrl: existingImages, // Passa a string com imagens para o formulário
+    });
+  }
+}, [defaultValues, form]);
 
   const handleImageUpload = (imageUrl: string) => {
     const updatedImages = [...images, imageUrl];
@@ -153,7 +165,7 @@ const UpsertProductsButton = ({
 
   const resetForm = () => {
     form.reset(); // Resetando o formulário
-    setImages(""); // Resetando o estado da imagem
+    setImages([]) // Resetando o estado da imagem
     setIsOpen(false); // Fechando o modal
   };
 
@@ -186,7 +198,7 @@ const UpsertProductsButton = ({
 		          endpoint="imageUploader"
 		          onClientUploadComplete={(res) => {
 		            const imageUrl = res[0].url;
-		            setImages(imageUrl); // Atualiza o estado local com a URL da imagem
+		            setImages((prevImages) => [...prevImages, imageUrl]); // Atualiza o estado local com a URL da imagem
 		            form.setValue("imageUrl", imageUrl); // Preenche o campo imageUrl automaticamente
 		          }}
 		          onUploadError={(error: Error) => {
