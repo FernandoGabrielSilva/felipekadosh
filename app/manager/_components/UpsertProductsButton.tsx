@@ -185,7 +185,7 @@ const UpsertProductsButton = ({
           <DialogDescription>Insira as informações do produto</DialogDescription>
         </DialogHeader>
           <div className="w-full h-full flex flex-col overflow-hidden">
-            <ScrollArea className="h-full">
+            <ScrollArea className="h-full px-2">
 		<Form {...form}>
 		  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 		    <div className="w-full relative">
