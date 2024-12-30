@@ -49,8 +49,8 @@ const formSchema = z.object({
   category: z.nativeEnum(Category, {
     required_error: "A categoria do produto é obrigatória",
   }),
-  imageUrl: z.string().trim().min(1, {
-    message: "A imagem do produto é obrigatória",
+  imageUrl: z.array(z.string().url(), { // Aceita um array de URLs
+    required_error: "A imagem do produto é obrigatória",
   }),
   linkUrl: z.string().trim().min(1, {
     message: "O link do produto é obrigatório",
@@ -100,13 +100,15 @@ const UpsertProductsButton = ({
       name: "",
       description: "",
       category: Category.Outros,
-      imageUrl: "", // Mantém como string
+      imageUrl: [], // Agora, o valor inicial será um array de imagens
       linkUrl: "",
       ...(defaultValues && {
         name: defaultValues.name,
         description: defaultValues.description,
         category: defaultValues.category,
-        imageUrl: defaultValues.imageUrl ? defaultValues.imageUrl.join(",") : "",
+        imageUrl: Array.isArray(defaultValues.imageUrl)
+          ? defaultValues.imageUrl
+          : [], // Garantir que imageUrl seja sempre um array
         linkUrl: defaultValues.linkUrl,
       }),
     },
@@ -115,44 +117,44 @@ const UpsertProductsButton = ({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-  if (defaultValues) {
-    // Se defaultValues.imageUrl for um array, converta para uma string
-    const existingImages = Array.isArray(defaultValues.imageUrl)
-      ? defaultValues.imageUrl.join(",") // Converte array de imagens para uma string
-      : defaultValues.imageUrl; // Caso já seja uma string, use diretamente
-
-    setImages(existingImages.split(",")); // Atualiza o estado com o array de imagens
-    form.reset({
-      ...defaultValues,
-      imageUrl: existingImages, // Passa a string com imagens para o formulário
-    });
-  }
-}, [defaultValues, form]);
+    if (defaultValues) {
+      const imageArray = Array.isArray(defaultValues.imageUrl)
+        ? defaultValues.imageUrl
+        : []; // Certifique-se de que a imagem esteja como array
+      setImages(imageArray); // Atualiza o estado com as imagens existentes
+      form.reset({
+        ...defaultValues,
+        imageUrl: imageArray, // Passa o array de imagens para o formulário
+      });
+    }
+  }, [defaultValues, form]);
 
   const handleImageUpload = (imageUrl: string) => {
-    const updatedImages = [...images, imageUrl];
-    setImages(updatedImages); // Atualiza o estado com a nova imagem
-    form.setValue("imageUrl", updatedImages.join(",")); // Atualiza o campo com os links das imagens
+    const updatedImages = [...images, imageUrl]; // Adiciona a nova imagem ao array
+    setImages(updatedImages); // Atualiza o estado com o array de imagens
+    form.setValue("imageUrl", updatedImages); // Atualiza o campo imageUrl como array
   };
 
   const handleImageRemove = (imageUrl: string) => {
-    const updatedImages = images.filter((img) => img !== imageUrl);
-    setImages(updatedImages); // Remove a imagem do estado
-    form.setValue("imageUrl", updatedImages.join(",")); // Atualiza o campo com os links restantes
+    const updatedImages = images.filter((img) => img !== imageUrl); // Remove a imagem
+    setImages(updatedImages); // Atualiza o estado
+    form.setValue("imageUrl", updatedImages); // Atualiza o campo imageUrl com as URLs restantes
   };
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      if (!images) {
-        toast.error("Por favor, carregue uma imagem.");
+      if (images.length === 0) {
+        toast.error("Por favor, carregue pelo menos uma imagem.");
         return; // Impede o envio do formulário sem imagem
       }
 
       setLoading(true);
+
       await upsertProducts({
         id: defaultValues?.id, // Passando o 'id' para o upsert
         ...data,
       });
+
       toast.success("Produto Adicionado/Atualizado!");
       resetForm(); // Chama a função para resetar o formulário e a imagem
     } catch (error) {
@@ -163,11 +165,17 @@ const UpsertProductsButton = ({
     }
   };
 
+
   const resetForm = () => {
     form.reset(); // Resetando o formulário
     setImages([]) // Resetando o estado da imagem
     setIsOpen(false); // Fechando o modal
   };
+  
+  // Verificação de estado para depuração
+  console.log("Formulário válido:", form.formState.isValid);
+  console.log("Erros do formulário:", form.formState.errors);
+  console.log("Loading:", loading);
 
   return (
     <Dialog
@@ -198,8 +206,7 @@ const UpsertProductsButton = ({
 		          endpoint="imageUploader"
 		          onClientUploadComplete={(res) => {
 		            const imageUrl = res[0].url;
-		            setImages((prevImages) => [...prevImages, imageUrl]); // Atualiza o estado local com a URL da imagem
-		            form.setValue("imageUrl", imageUrl); // Preenche o campo imageUrl automaticamente
+		            handleImageUpload(imageUrl); // Adiciona a imagem ao estado e campo imagem
 		          }}
 		          onUploadError={(error: Error) => {
 		            alert(`ERROR! ${error.message}`);
@@ -320,9 +327,12 @@ const UpsertProductsButton = ({
 		          Cancelar
 		        </Button>
 		      </DialogClose>
-		      <Button type="submit" disabled={loading}>
-		        {loading ? "Carregando..." : "Confirmar"}
-		      </Button>
+		      <Button
+                    type="submit"
+                    disabled={loading || !form.formState.isValid} // Desabilita se estiver carregando ou se o formulário for inválido
+                  >
+                    {loading ? "Carregando..." : "Confirmar"}
+                  </Button>
 		    </DialogFooter>
 		  </form>
 		</Form>
